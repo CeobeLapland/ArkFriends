@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ceobe.arkfriends.PanelController">
+    <top>
+        <AnchorPane fx:id="titleBar" maxWidth="800.0" prefHeight="50.0" prefWidth="800.0" style="-fx-background-color: linear-gradient(to right, #00BFFF, #1E90FF);" VBox.vgrow="ALWAYS">
+
+            <!-- 左侧应用标题 -->
+            <Label layoutY="10.0" style="-fx-text-fill: #ecf0f1; -fx-font-size: 16px; -fx-font-weight: bold;" text="ArkFriends" AnchorPane.leftAnchor="20" />
+
+            <!-- 底部边框线 -->
+            <Line endX="800.0" endY="50.0" startX="0" startY="50.0" stroke="#1a252f" strokeWidth="2" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" />
+             <Button layoutX="200.0" layoutY="10.0" onMouseEntered="#handleButtonHover" onMouseExited="#handleButtonExit" prefHeight="32" prefWidth="80" style="-fx-background-color: #00BFFF; -fx-text-fill: #ecf0f1; -fx-font-size: 14px; -fx-border-color: #4a6572; -fx-border-width: 1;" text="🚀启动" />
+             <Button layoutX="300.0" layoutY="10.0" onMouseEntered="#handleButtonHover" onMouseExited="#handleButtonExit" prefHeight="32" prefWidth="80" style="-fx-background-color: #00BFFF; -fx-text-fill: #ecf0f1; -fx-font-size: 14px; -fx-border-color: #4a6572; -fx-border-width: 1;" text="🏠干员" />
+             <Button layoutX="400.0" layoutY="10.0" onMouseEntered="#handleButtonHover" onMouseExited="#handleButtonExit" prefHeight="32" prefWidth="80" style="-fx-background-color: #00BFFF; -fx-text-fill: #ecf0f1; -fx-font-size: 14px; -fx-border-color: #4a6572; -fx-border-width: 1;" text="⚙设置">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font></Button>
+             <Button fx:id="moreButton" layoutX="500.0" layoutY="10.0" onMouseEntered="#handleButtonHover" onMouseExited="#handleButtonExit" prefHeight="32" prefWidth="80" style="-fx-background-color: #00BFFF; -fx-text-fill: #ecf0f1; -fx-font-size: 14px; -fx-border-color: #4a6572; -fx-border-width: 1;" text="📚更多" />
+         <Button layoutX="700.0" layoutY="10.0" onMouseClicked="#MinimizeWindow" onMouseEntered="#handleButtonHover" onMouseExited="#handleButtonExit" prefHeight="32" prefWidth="40.0" style="-fx-background-color: #00BFFF; -fx-text-fill: #ecf0f1; -fx-font-size: 14px; -fx-border-color: #4a6572; -fx-border-width: 1;" text="－" />
+         <Button layoutX="750.0" layoutY="10.0" onMouseClicked="#CloseWindow" onMouseEntered="#handleButtonHover" onMouseExited="#handleButtonExit" prefHeight="32" prefWidth="40.0" style="-fx-background-color: #00BFFF; -fx-text-fill: #ecf0f1; -fx-font-size: 14px; -fx-border-color: #4a6572; -fx-border-width: 1;" text="×" />
+
+        </AnchorPane>
+    </top>
+   <left>
+      <VBox prefHeight="450.0" prefWidth="200.0" style="-fx-background-color: #87CEFA;" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" translateY="20.0">
+               <image>
+                  <Image url="@../../characters/ceobe/idle/idle_001.png" />
+               </image></ImageView>
+            <Button onMouseClicked="#LaunchRunning" onMouseEntered="#handleButtonHover" onMouseExited="#handleButtonExit" prefHeight="32" prefWidth="80" scaleX="1.2" scaleY="1.2" style="-fx-background-color: #00BFFF; -fx-text-fill: #ecf0f1; -fx-font-size: 14px; -fx-border-color: #4a6572; -fx-border-width: 1;" text="加载" translateX="60.0" translateY="200.0" />
+         </children>
+      </VBox>
+   </left>
+   <center>
+      <StackPane prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <Line endX="225.0" rotate="90.0" startX="-225.0" strokeWidth="2.0" translateX="-300.0" />
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #98F5F9;" />
+         </children>
+      </StackPane>
+   </center>
+</BorderPane>

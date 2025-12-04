@@ -1,0 +1,37 @@
+{
+  "ceobe":
+  {
+    "name": "ceobe",
+    "defaultState": "idle",
+    "actions":
+    {
+      "idle":
+      {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\ceobe\\idle",
+        "fps": 24,
+        "loop": true
+      },
+      "walk":
+      {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\ceobe\\walk",
+        "fps": 24,
+        "loop": true
+      }
+    },
+    "voices":
+    {
+      "hello":
+      {
+
+      }
+    }
+  },
+  "texas":
+  {
+
+  },
+  "lapland":
+  {
+
+  }
+}
