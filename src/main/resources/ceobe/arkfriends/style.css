@@ -1,0 +1,131 @@
+/* style.css - 设置界面补充样式 */
+
+/* 设置区块标题样式 */
+.settings-section {
+    -fx-background-color: #f8fafc;
+    -fx-background-radius: 8;
+    -fx-padding: 15;
+    -fx-border-color: #e2e8f0;
+    -fx-border-radius: 8;
+    -fx-border-width: 1;
+}
+
+/* 设置子标题样式 */
+.subsection-title {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #475569;
+    -fx-padding: 0 0 5 0;
+}
+
+/* 设置项标签样式 */
+.setting-label {
+    -fx-font-size: 13px;
+    -fx-text-fill: #334155;
+    -fx-padding: 5 0 5 0;
+}
+
+/* 设置项描述样式 */
+.setting-description {
+    -fx-font-size: 11px;
+    -fx-text-fill: #94a3b8;
+    -fx-padding: 0 0 0 5;
+}
+
+/* 输入框样式 */
+.text-field {
+    -fx-background-color: white;
+    -fx-border-color: #cbd5e1;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+    -fx-padding: 8;
+    -fx-font-size: 13px;
+}
+
+.text-field:focused {
+    -fx-border-color: #3b82f6;
+    -fx-effect: dropshadow(gaussian, rgba(59, 130, 246, 0.3), 5, 0, 0, 0);
+}
+
+/* 复选框样式增强 */
+.check-box {
+    -fx-cursor: hand;
+    -fx-font-size: 13px;
+}
+
+.check-box .box {
+    -fx-background-color: white;
+    -fx-border-color: #cbd5e1;
+    -fx-border-radius: 3;
+    -fx-border-width: 1.5;
+}
+
+.check-box:selected .box {
+    -fx-background-color: #3b82f6;
+    -fx-border-color: #3b82f6;
+}
+
+.check-box:selected .mark {
+    -fx-background-color: white;
+}
+
+.check-box:hover .box {
+    -fx-border-color: #94a3b8;
+}
+
+/* 滑动条数值标签样式 */
+.slider-value {
+    -fx-font-size: 12px;
+    -fx-text-fill: #64748b;
+    -fx-font-weight: bold;
+}
+
+/* 切换按钮样式 */
+.toggle-button {
+    -fx-background-color: #f1f5f9;
+    -fx-text-fill: #334155;
+    -fx-background-radius: 4;
+    -fx-border-radius: 4;
+    -fx-padding: 5 15;
+    -fx-font-size: 13px;
+    -fx-cursor: hand;
+}
+
+.toggle-button:selected {
+    -fx-background-color: #3b82f6;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.toggle-button:hover {
+    -fx-background-color: #e2e8f0;
+}
+
+.toggle-button:selected:hover {
+    -fx-background-color: #2563eb;
+}
+
+/* 按钮悬停效果增强 */
+.button:hover {
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 6, 0, 0, 2);
+    -fx-scale-x: 1.02;
+    -fx-scale-y: 1.02;
+    -fx-transition: all 0.2s;
+}
+
+/* 保存成功提示 */
+.save-success {
+    -fx-text-fill: #10b981;
+    -fx-font-weight: bold;
+    -fx-font-size: 14;
+}
+
+/* 网格布局中的控件对齐 */
+.grid-pane {
+    -fx-alignment: center-left;
+}
+
+/* 滚动区域内容间距 */
+.vbox > .settings-section {
+    -fx-margin: 0 0 20 0;
+}

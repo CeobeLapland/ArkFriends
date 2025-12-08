@@ -1,7 +1,7 @@
 package ceobe.arkfriends;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import javafx.animation.FadeTransition;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -13,19 +13,19 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
-import javafx.util.Callback;
-import javafx.util.Duration;
-
 
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
+//import System.out;
 
 public class PanelController
 {
     public static PanelController panelController;
+
+    public boolean isLaunched=false;
 
     public Button starterButton,agentButton,settingsButton,moreButton;
     public Button minimizeButton,closeButton;
@@ -38,8 +38,8 @@ public class PanelController
 
     public CheckBox vanguardCheckBox,guardCheckBox,sniperCheckBox,alchemistCheckBox,
             medicCheckBox,assistCheckBox,reshipperCheckBox,specialistCheckBox;
-    //public Map<CheckBox,CharacterOccupation> occupationCheckBoxs;
-    public final Map<CheckBox,CharacterOccupation> occupationCheckBoxs=new HashMap<CheckBox,CharacterOccupation>(){{
+    public Map<CheckBox,CharacterOccupation> occupationCheckBoxs;
+    /*public final Map<CheckBox,CharacterOccupation> occupationCheckBoxs=new HashMap<CheckBox,CharacterOccupation>(){{
         put(vanguardCheckBox,CharacterOccupation.VANGUARD);
         put(guardCheckBox,CharacterOccupation.GUARD);
         put(sniperCheckBox,CharacterOccupation.SNIPER);
@@ -48,12 +48,14 @@ public class PanelController
         put(assistCheckBox,CharacterOccupation.ASSIST);
         put(reshipperCheckBox,CharacterOccupation.RESHIPPER);
         put(specialistCheckBox,CharacterOccupation.SPECIALIST);
-    }};
+    }};*/
+
+    //我想知道是不是把final去掉就可以了
 
     public CheckBox sixStarCheckBox,fiveStarCheckBox,fourStarCheckBox,
             threeStarCheckBox,twoStarCheckBox,oneStarCheckBox;
-    //public Map<CheckBox,Integer> starCheckBoxs;
-    public final Map<CheckBox,Integer> starCheckBoxs=new HashMap<CheckBox,Integer>(){
+    public Map<CheckBox,Integer> starCheckBoxs;
+    /*public final Map<CheckBox,Integer> starCheckBoxs=new HashMap<CheckBox,Integer>(){
         {
             put(sixStarCheckBox, 6);
             put(fiveStarCheckBox, 5);
@@ -61,7 +63,7 @@ public class PanelController
             put(threeStarCheckBox, 3);
             put(twoStarCheckBox, 2);
             put(oneStarCheckBox, 1);
-        }};
+        }};*/
 
 
     public TextField searchField;
@@ -73,6 +75,9 @@ public class PanelController
     //public Map<String,CharacterSearchData> allCharacterSearchData=new HashMap<String,CharacterSearchData>();
     public Map<String,CharacterSearchData> allCharacterSearchData=new HashMap<>();//String是name
     public Map<String,CharacterSearchData> curCharacterSearchData;//=new HashMap<>();
+
+    //public ObservableList allListItems,curListItems;
+    public ObservableList allListItems;
 
     public PanelController()
     {
@@ -96,7 +101,7 @@ public class PanelController
 
                 timer.cancel();
             }
-        },1000);//100毫秒还不行，还需要更久，不知道线程执行的怎么样
+        },2000);//100毫秒还不行，还需要更久，不知道线程执行的怎么样
 
         LoadCharacterSearchData();
 
@@ -117,13 +122,9 @@ public class PanelController
         //AddWindowsEffect();
         //这个还必须放在Launcher里面
 
-        System.out.println(allCharacterSearchData.size()+"  allCharacterSearchData.size()");
-        //curCharacterSearchData=allCharacterSearchData;
-        curCharacterSearchData=new HashMap<>(allCharacterSearchData);
-        PopulateCharacterInListView();
 
         //延迟初始化
-        /*occupationCheckBoxs=new HashMap<CheckBox,CharacterOccupation>(){{
+        occupationCheckBoxs=new HashMap<CheckBox,CharacterOccupation>(){{
             put(vanguardCheckBox,CharacterOccupation.VANGUARD);
             put(guardCheckBox,CharacterOccupation.GUARD);
             put(sniperCheckBox,CharacterOccupation.SNIPER);
@@ -141,7 +142,12 @@ public class PanelController
                 put(threeStarCheckBox, 3);
                 put(twoStarCheckBox, 2);
                 put(oneStarCheckBox, 1);
-            }};*/
+            }};
+
+        System.out.println(allCharacterSearchData.size()+"  allCharacterSearchData.size()");
+        //curCharacterSearchData=allCharacterSearchData;
+        curCharacterSearchData=new HashMap<>(allCharacterSearchData);
+        PopolateCharacterListView();
     }
 
     public void LoadCharacterSearchData()
@@ -230,8 +236,11 @@ public class PanelController
             System.out.println("Region Open");
         }
     }
+
+    //endregion
     public void LaunchRunning() throws IOException
     {
+        launchButton.setDisable(true);
         //Application.launch(Running.class);
         //Launcher.launcher.runningScene=new Scene(Launcher.launcher.mainReader.load());
         //Launcher.launcher.
@@ -240,7 +249,6 @@ public class PanelController
         AnimationController.animationController.ChangeCharacter(curCharacterName);
         AnimationController.animationController.PlayAnimation();
     }
-    //endregion
 
     public void SelectCharacterInListView(String name)
     {
@@ -265,6 +273,8 @@ public class PanelController
         //还得再写一版
         //其实不用，是我这个笨蛋忘记更新UI了呜呜呜
         //又浪费了马原课上的十五分钟
+        //System.out.println(occupationCheckBoxs.size()+"  occupationCheckBoxs.size()");
+        //System.out.println(starCheckBoxs.size()+"  starCheckBoxs.size()");
 
         // 收集被选中的职业
         Set<CharacterOccupation> selectedOccupations = new HashSet<>();
@@ -272,7 +282,10 @@ public class PanelController
         {
             CheckBox cb = e.getKey();
             if (cb != null && cb.isSelected() && e.getValue() != null)
+            {
                 selectedOccupations.add(e.getValue());
+                System.out.println(e.getValue());
+            }
             //这里getValue一直为空，我在想为什么
             //不会又是线程延迟导致十四个checkBox还没初始化吧
             //加到timer里延迟一下试一试
@@ -286,7 +299,10 @@ public class PanelController
         {
             CheckBox cb = e.getKey();
             if (cb != null && cb.isSelected() && e.getValue() != null)
+            {
                 selectedStars.add(e.getValue());
+                System.out.println(e.getValue());
+            }
 //            if (e.getKey().isSelected())
 //                selectedStars.add(e.getValue());
         }
@@ -294,7 +310,15 @@ public class PanelController
         // 如果都未选中，则恢复为全部（使用副本以避免修改原始数据）
         if (selectedOccupations.isEmpty() && selectedStars.isEmpty())
         {
-            curCharacterSearchData = new HashMap<>(allCharacterSearchData);
+            /*curCharacterSearchData = new HashMap<>(allCharacterSearchData);
+            //characterListView.setItems(allListItems);
+            characterListView.setItems(
+                    FXCollections.observableArrayList(
+                            new ArrayList<>(allListItems)
+                    ));
+            System.out.println(allListItems.size()+"  allListItems.size()");*/
+            PopolateBack();
+            return;
         }
         else
         {
@@ -306,14 +330,15 @@ public class PanelController
 
                 boolean matchOccupation = data.occupationEnum != null && selectedOccupations.contains(data.occupationEnum);
                 boolean matchStar = selectedStars.contains(data.stars);
-
+                System.out.println(data.EnglishName+"  "+data.stars+" stars"+data.occupationEnum+" occupation");
+                //System.out.println();
                 if (matchOccupation || matchStar)
                     filtered.put(entry.getKey(), data);
             }
             curCharacterSearchData = filtered;
         }
 
-        PopulateCharacterInListView();
+        RefreshCharacterListView();
     }
     public void ResetSiftCheckBox()
     {
@@ -329,6 +354,13 @@ public class PanelController
         }
         //curCharacterSearchData = new HashMap<>(allCharacterSearchData);
         //PopulateCharacterInListView();
+        //characterListView.setItems(allListItems);
+        /*characterListView.setItems(
+                FXCollections.observableArrayList(
+                        new ArrayList<>(allListItems)
+                ));
+        System.out.println(allListItems.size()+"  allListItems.size()");*/
+        PopolateBack();
     }
     //这个是copilot自己补的，不过我觉得随时改变还是有点耗性能
     /*public void OnSearchFieldChanged()
@@ -381,7 +413,7 @@ public class PanelController
         }
         curCharacterSearchData = filtered;
 
-        PopulateCharacterInListView();
+        RefreshCharacterListView();
     }
     public void OnSearchFieldClearClick()
     {
@@ -390,11 +422,104 @@ public class PanelController
         if(curCharacterSearchData.equals(allCharacterSearchData))
             return;
         searchField.clear();
-        curCharacterSearchData = new HashMap<>(allCharacterSearchData);
-        PopulateCharacterInListView();
+
+        //curCharacterSearchData = new HashMap<>(allCharacterSearchData);
+        //RefreshCharacterListView();
+        //这两句替换为下面这句
+        /*curCharacterSearchData=new HashMap<>(allCharacterSearchData);
+        //characterListView.setItems(allListItems);
+        characterListView.setItems(
+                FXCollections.observableArrayList(
+                        new ArrayList<>(allListItems)
+                ));
+        System.out.println(allListItems.size()+"  allListItems.size()");*/
+        PopolateBack();
     }
 
-    public void PopulateCharacterInListView()
+
+    public void PopolateBack()//回归最初所有角色都在的样子
+    {
+        if(curCharacterSearchData.equals(allCharacterSearchData)
+            ||characterListView.getItems().size()==allListItems.size())
+            return;
+        curCharacterSearchData=new HashMap<>(allCharacterSearchData);
+        searchCountLabel.setText("筛选结果："+allListItems.size()+"个角色");
+        characterListView.setItems(
+                FXCollections.observableArrayList(
+                        new ArrayList<>(allListItems)
+                ));
+        System.out.println(allListItems.size()+"  allListItems.size()");
+    }
+    public void PopolateCharacterListView()
+    {
+        //allListItems=characterListView.getItems();
+        allListItems=FXCollections.observableArrayList(new ArrayList<>(characterListView.getItems()));
+        //very important
+
+        //遍历curCharacterSearchData
+        for (Map.Entry<String, CharacterSearchData> entry : allCharacterSearchData.entrySet())
+        {
+            CharacterSearchData data = entry.getValue();
+            String itemString = String.format("%s (%s)\n%s", data.EnglishName, data.ChineseName, data.description);
+            allListItems.add(itemString);
+        }
+        //为每一项订阅事件//好像也只能这么写
+        characterListView.getSelectionModel().selectedItemProperty().addListener(
+                (observable, oldValue, newValue) -> {
+                    if (newValue != null)
+                    {
+                        // 提取角色英文名（假设英文名在第一行）
+                        String selectedName = ((String)newValue).split(" ")[0];
+                        System.out.println("Selected character: " + selectedName);
+                        //这个性能不咋地
+                        SelectCharacterInListView(selectedName);
+                        //完蛋了，订阅多次呜呜呜//重新搞一版
+                    }
+                });
+        searchCountLabel.setText("筛选结果："+allListItems.size()+"个角色");
+        characterListView.setItems(FXCollections.observableArrayList(
+                        new ArrayList<>(allListItems)));
+        System.out.println(allListItems.size()+"  all and cur ListItems.size()");
+        System.out.println(allListItems.size()+"  allListItems.size()");
+
+    }
+    public void RefreshCharacterListView()
+    {
+        // 清空当前列表项
+        System.out.println(characterListView.getItems().size()+"  before characterListView.getItems().size()");
+        characterListView.getItems().clear();
+        ObservableList list=characterListView.getItems();
+
+        // 遍历 curCharacterSearchData，动态创建项
+        for (Map.Entry<String, CharacterSearchData> entry : curCharacterSearchData.entrySet())
+        {
+            CharacterSearchData data = entry.getValue();
+            String listItem = String.format("%s (%s)\n%s", data.EnglishName, data.ChineseName, data.description);
+
+            //characterListView.getItems().add(listItem);
+            list.add(listItem);
+        }
+        /*//为每一项订阅事件
+        //好像也只能这么写
+        characterListView.getSelectionModel().selectedItemProperty().addListener(
+                (observable, oldValue, newValue) -> {
+                    if (newValue != null)
+                    {
+                        // 提取角色英文名（假设英文名在第一行）
+                        //String temp=(String)newValue;
+                        String selectedName = ((String)newValue).split(" ")[0];
+
+                        System.out.println("Selected character: " + selectedName);
+                        //这个性能不咋地
+                        SelectCharacterInListView(selectedName);
+                        //完蛋了，订阅多次呜呜呜
+                        //重新搞一版
+                    }
+                });*/
+        searchCountLabel.setText("筛选结果："+curCharacterSearchData.size()+"个角色");
+        System.out.println(characterListView.getItems().size()+"  after characterListView.getItems().size()");
+    }
+    /*public void PopulateCharacterInListView()
     {
         // 清空当前列表项
         System.out.println(characterListView.getItems().size()+"  before characterListView.getItems().size()");
@@ -412,29 +537,30 @@ public class PanelController
         }
 
         //设置自定义单元格工厂以显示多行文本
-        /*characterListView.setCellFactory(new Callback<ListView<String>,
-                ListCell<String>>(){
-            @Override
-            public ListCell<String> call(ListView<String> param)
-            {
-                return new ListCell<String>()
-                {
-                    @Override
-                    protected void updateItem(String item, boolean empty)
-                    {
-                        super.updateItem(item, empty);
-                        if (empty || item == null) {
-                            setText(null);
-                        } else {
-                            setText(item);
-                        }
-                    }
-                };
-            }
-        });*/
+//        characterListView.setCellFactory(new Callback<ListView<String>,
+//                ListCell<String>>(){
+//            @Override
+//            public ListCell<String> call(ListView<String> param)
+//            {
+//                return new ListCell<String>()
+//                {
+//                    @Override
+//                    protected void updateItem(String item, boolean empty)
+//                    {
+//                        super.updateItem(item, empty);
+//                        if (empty || item == null) {
+//                            setText(null);
+//                        } else {
+//                            setText(item);
+//                        }
+//                    }
+//                };
+//            }
+//        });
         //为每一项订阅事件
         //好像也只能这么写
-        characterListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+        characterListView.getSelectionModel().selectedItemProperty().addListener(
+                (observable, oldValue, newValue) -> {
             if (newValue != null)
             {
                 // 提取角色英文名（假设英文名在第一行）
@@ -444,11 +570,13 @@ public class PanelController
                 System.out.println("Selected character: " + selectedName);
                 //这个性能不咋地
                 SelectCharacterInListView(selectedName);
+                //完蛋了，订阅多次呜呜呜
+                //重新搞一版
             }
         });
         searchCountLabel.setText("筛选结果："+curCharacterSearchData.size()+"个角色");
         System.out.println(characterListView.getItems().size()+"  after characterListView.getItems().size()");
-    }
+    }*/
 
     //region窗口拖动
 
@@ -527,6 +655,11 @@ public class PanelController
         System.out.println("Button clicked!");
     }
     //endregion
+
+
+    //<ToggleButton fx:id="fps20Button" mnemonicParsing="false" style="-fx-background-color: #e2e8f0; -fx-text-fill: #334155; -fx-background-radius: 4;" text="20 FPS" toggleGroup="$fpsToggleGroup" />
+    //<ToggleButton fx:id="fps24Button" mnemonicParsing="false" style="-fx-background-color: #e2e8f0; -fx-text-fill: #334155; -fx-background-radius: 4;" text="24 FPS" toggleGroup="$fpsToggleGroup" />
+    //<ToggleButton fx:id="fps30Button" mnemonicParsing="false" selected="true" style="-fx-background-color: #3b82f6; -fx-text-fill: white; -fx-background-radius: 4;" text="30 FPS" toggleGroup="$fpsToggleGroup" />
 }
 
 class CharacterSearchData

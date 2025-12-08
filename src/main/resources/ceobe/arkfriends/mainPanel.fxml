@@ -6,6 +6,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -14,6 +15,7 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
@@ -197,7 +199,7 @@
                               </ScrollPane>
                               <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
                                  <children>
-                                    <Button fx:id="resetButton" mnemonicParsing="false" onMouseClicked="#ButtonTest" prefHeight="40.0" prefWidth="60.0" style="-fx-background-color: #94a3b8; -fx-text-fill: white; -fx-background-radius: 6; -fx-font-weight: bold;" text="重置" HBox.hgrow="ALWAYS">
+                                    <Button fx:id="resetButton" mnemonicParsing="false" onMouseClicked="#ResetSiftCheckBox" prefHeight="40.0" prefWidth="60.0" style="-fx-background-color: #94a3b8; -fx-text-fill: white; -fx-background-radius: 6; -fx-font-weight: bold;" text="重置" HBox.hgrow="ALWAYS">
                                        <HBox.margin>
                                           <Insets />
                                        </HBox.margin>
@@ -283,7 +285,402 @@
                   <Insets />
                </StackPane.margin></AnchorPane>
 
-            <AnchorPane fx:id="settingsPanel" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #98F5F9;" visible="false" />
+            <AnchorPane fx:id="settingsPanel" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #98F5F9;" visible="false">
+               <children>
+                     <!-- 顶部按钮区域 -->
+                     <HBox prefHeight="40.0" prefWidth="580.0" spacing="15.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                         <children>
+                             <Button fx:id="restoreDefaultsButton" mnemonicParsing="false" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #94a3b8; -fx-text-fill: white; -fx-background-radius: 6; -fx-font-weight: bold;" text="恢复默认" />
+                             <Button fx:id="saveSettingsButton" mnemonicParsing="false" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #3b82f6; -fx-text-fill: white; -fx-background-radius: 6; -fx-font-weight: bold;" text="保存设置" />
+                             <Region HBox.hgrow="ALWAYS">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin></Region>
+                             <Label fx:id="settingsSavedLabel" style="-fx-text-fill: #10b981; -fx-font-size: 14; -fx-font-weight: bold;" text="" visible="false">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                           <padding>
+                              <Insets left="50.0" right="20.0" />
+                           </padding></Label>
+                         </children>
+                     </HBox>
+
+                     <!-- 主设置内容区域（可滚动） -->
+                     <ScrollPane fitToWidth="true" hbarPolicy="NEVER" prefHeight="380.0" prefWidth="580.0" style="-fx-background: transparent; -fx-background-color: transparent;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="60.0">
+                         <content>
+                             <VBox spacing="25.0" style="-fx-background-color: transparent;">
+                                 <padding>
+                                     <Insets right="10.0" />
+                                 </padding>
+
+                                 <!-- 第一部分：启动器设置 -->
+                                 <VBox spacing="15.0" style="-fx-background-color: #f8fafc; -fx-background-radius: 8; -fx-padding: 15;">
+                                     <children>
+                                         <Label style="-fx-text-fill: #1e293b; -fx-font-weight: bold;" text="启动器设置">
+                                             <font>
+                                                 <Font size="16.0" />
+                                             </font>
+                                         </Label>
+
+                                         <!-- 四选项复选框 -->
+                                         <GridPane hgap="20.0" vgap="10.0">
+                                             <columnConstraints>
+                                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="150.0" />
+                                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="150.0" />
+                                             </columnConstraints>
+                                             <rowConstraints>
+                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                             </rowConstraints>
+                                             <children>
+                                                 <CheckBox fx:id="allowBackgroundCheckBox" style="-fx-text-fill: #334155;" text="允许后台运行" />
+                                                 <CheckBox fx:id="closeLauncherCheckBox" style="-fx-text-fill: #334155;" text="启动后关闭启动器" GridPane.columnIndex="1" />
+                                                 <CheckBox fx:id="transparentModeCheckBox" style="-fx-text-fill: #334155;" text="以穿透模式启动" GridPane.rowIndex="1" />
+                                                 <CheckBox fx:id="outputLogCheckBox" style="-fx-text-fill: #334155;" text="输出日志信息" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                             </children>
+                                         </GridPane>
+
+                                         <!-- 初始位置设置 -->
+                                         <VBox spacing="8.0">
+                                             <children>
+                                                 <Label style="-fx-text-fill: #475569; -fx-font-weight: bold;" text="初始位置 (0-1)">
+                                                     <font>
+                                                         <Font size="14.0" />
+                                                     </font>
+                                                 </Label>
+                                                 <HBox spacing="10.0">
+                                                     <children>
+                                                         <VBox spacing="5.0" HBox.hgrow="ALWAYS">
+                                                             <children>
+                                                                 <Label style="-fx-text-fill: #64748b; -fx-font-size: 13;" text="X轴" />
+                                                                 <TextField fx:id="initialXField" promptText="0.0-1.0" style="-fx-background-radius: 4; -fx-border-radius: 4; -fx-border-color: #cbd5e1; -fx-padding: 5;" />
+                                                             </children>
+                                                         </VBox>
+                                                         <VBox spacing="5.0" HBox.hgrow="ALWAYS">
+                                                             <children>
+                                                                 <Label style="-fx-text-fill: #64748b; -fx-font-size: 13;" text="Y轴" />
+                                                                 <TextField fx:id="initialYField" promptText="0.0-1.0" style="-fx-background-radius: 4; -fx-border-radius: 4; -fx-border-color: #cbd5e1; -fx-padding: 5;" />
+                                                             </children>
+                                                         </VBox>
+                                                     </children>
+                                                 </HBox>
+                                             </children>
+                                         </VBox>
+
+                                         <!-- 默认下载地址 -->
+                                         <VBox spacing="8.0">
+                                             <children>
+                                                 <Label style="-fx-text-fill: #475569; -fx-font-weight: bold;" text="默认下载地址">
+                                                     <font>
+                                                         <Font size="14.0" />
+                                                     </font>
+                                                 </Label>
+                                                 <TextField fx:id="downloadPathField" promptText="请输入下载地址..." style="-fx-background-radius: 4; -fx-border-radius: 4; -fx-border-color: #cbd5e1; -fx-padding: 5;" />
+                                             </children>
+                                         </VBox>
+                                     </children>
+                                 </VBox>
+
+                                 <!-- 第二部分：声音设置 -->
+                                 <VBox spacing="15.0" style="-fx-background-color: #f8fafc; -fx-background-radius: 8; -fx-padding: 15;">
+                                     <children>
+                                         <Label style="-fx-text-fill: #1e293b; -fx-font-weight: bold;" text="声音设置">
+                                             <font>
+                                                 <Font size="16.0" />
+                                             </font>
+                                         </Label>
+
+                                         <!-- 声音复选框 -->
+                                         <GridPane hgap="20.0" vgap="10.0">
+                                             <columnConstraints>
+                                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="150.0" />
+                                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="150.0" />
+                                             </columnConstraints>
+                                             <rowConstraints>
+                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                             </rowConstraints>
+                                             <children>
+                                                 <CheckBox fx:id="voiceInteractionCheckBox" style="-fx-text-fill: #334155;" text="启动语音交互（默认语音）" />
+                                                 <CheckBox fx:id="aiDialogueCheckBox" style="-fx-text-fill: #334155;" text="启动AI对话（测试中）" GridPane.columnIndex="1" />
+                                             </children>
+                                         </GridPane>
+
+                                         <!-- 声音滑动条 -->
+                                         <VBox spacing="15.0">
+                                             <children>
+                                                 <VBox spacing="8.0">
+                                                     <children>
+                                                         <HBox spacing="10.0">
+                                                             <children>
+                                                                 <Label style="-fx-text-fill: #475569; -fx-font-weight: bold;" text="角色语音" />
+                                                                 <Region HBox.hgrow="ALWAYS" />
+                                                                 <Label fx:id="characterVoiceValue" style="-fx-text-fill: #64748b; -fx-font-size: 13;" text="50%" />
+                                                             </children>
+                                                         </HBox>
+                                                         <Slider fx:id="characterVoiceSlider" blockIncrement="5.0" max="100.0" min="0.0" showTickLabels="false" showTickMarks="true" style="-fx-control-inner-background: #3b82f6;" value="50.0" />
+                                                     </children>
+                                                 </VBox>
+
+                                                 <VBox spacing="8.0">
+                                                     <children>
+                                                         <HBox spacing="10.0">
+                                                             <children>
+                                                                 <Label style="-fx-text-fill: #475569; -fx-font-weight: bold;" text="音效音量" />
+                                                                 <Region HBox.hgrow="ALWAYS" />
+                                                                 <Label fx:id="soundVolumeValue" style="-fx-text-fill: #64748b; -fx-font-size: 13;" text="75%" />
+                                                             </children>
+                                                         </HBox>
+                                                         <Slider fx:id="soundVolumeSlider" blockIncrement="5.0" max="100.0" min="0.0" showTickLabels="false" showTickMarks="true" style="-fx-control-inner-background: #3b82f6;" value="75.0" />
+                                                     </children>
+                                                 </VBox>
+
+                                                 <VBox spacing="8.0">
+                                                     <children>
+                                                         <HBox spacing="10.0">
+                                                             <children>
+                                                                 <Label style="-fx-text-fill: #475569; -fx-font-weight: bold;" text="噪音过滤阈值" />
+                                                                 <Region HBox.hgrow="ALWAYS" />
+                                                                 <Label fx:id="noiseFilterValue" style="-fx-text-fill: #64748b; -fx-font-size: 13;" text="30%" />
+                                                             </children>
+                                                         </HBox>
+                                                         <Slider fx:id="noiseFilterSlider" blockIncrement="5.0" max="100.0" min="0.0" showTickLabels="false" showTickMarks="true" style="-fx-control-inner-background: #3b82f6;" value="30.0" />
+                                                     </children>
+                                                 </VBox>
+
+                                                 <VBox spacing="8.0">
+                                                     <children>
+                                                         <HBox spacing="10.0">
+                                                             <children>
+                                                                 <Label style="-fx-text-fill: #475569; -fx-font-weight: bold;" text="占位符" />
+                                                                 <Region HBox.hgrow="ALWAYS" />
+                                                                 <Label fx:id="soundPlaceholderValue" style="-fx-text-fill: #64748b; -fx-font-size: 13;" text="40%" />
+                                                             </children>
+                                                         </HBox>
+                                                         <Slider fx:id="soundPlaceholderSlider" blockIncrement="5.0" max="100.0" min="0.0" showTickLabels="false" showTickMarks="true" style="-fx-control-inner-background: #3b82f6;" value="40.0" />
+                                                     </children>
+                                                 </VBox>
+                                             </children>
+                                         </VBox>
+                                     </children>
+                                 </VBox>
+
+                                 <!-- 第三部分：动画设置 -->
+                                 <VBox spacing="15.0" style="-fx-background-color: #f8fafc; -fx-background-radius: 8; -fx-padding: 15;">
+                                     <children>
+                                         <Label style="-fx-text-fill: #1e293b; -fx-font-weight: bold;" text="动画设置">
+                                             <font>
+                                                 <Font size="16.0" />
+                                             </font>
+                                         </Label>
+
+                                         <!-- 帧率选择 -->
+                                         <VBox spacing="8.0">
+                                             <children>
+                                                 <Label style="-fx-text-fill: #475569; -fx-font-weight: bold;" text="帧率">
+                                                     <font>
+                                                         <Font size="14.0" />
+                                                     </font>
+                                                 </Label>
+                                       <HBox alignment="CENTER" prefHeight="50.0" spacing="30.0">
+                                          <children>
+                                             <Button maxHeight="30.0" maxWidth="60.0" minHeight="30.0" minWidth="60.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="60.0" style="-fx-background-color: #e2e8f0; -fx-text-fill: #334155; -fx-background-radius: 4;" text="20 FPS" />
+                                             <Button maxHeight="30.0" maxWidth="60.0" minHeight="30.0" minWidth="60.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="60.0" style="-fx-background-color: #e2e8f0; -fx-text-fill: #334155; -fx-background-radius: 4;" text="24 FPS" />
+                                             <Button maxHeight="30.0" maxWidth="60.0" minHeight="30.0" minWidth="60.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="60.0" style="-fx-background-color: #e2e8f0; -fx-text-fill: #334155; -fx-background-radius: 4;" text="30 FPS" />
+                                          </children>
+                                       </HBox>
+                                             </children>
+                                         </VBox>
+
+                                         <!-- 缩放滑动条 -->
+                                         <VBox spacing="8.0">
+                                             <children>
+                                                 <HBox spacing="10.0">
+                                                     <children>
+                                                         <Label style="-fx-text-fill: #475569; -fx-font-weight: bold;" text="缩放 (1-5)" />
+                                                         <Region HBox.hgrow="ALWAYS" />
+                                                         <Label fx:id="scaleValue" style="-fx-text-fill: #64748b; -fx-font-size: 13;" text="1.0x" />
+                                                     </children>
+                                                 </HBox>
+                                                 <Slider fx:id="scaleSlider" blockIncrement="0.1" majorTickUnit="1.0" max="5.0" min="1.0" showTickLabels="true" showTickMarks="true" value="1.0" />
+                                             </children>
+                                         </VBox>
+
+                                         <!-- 透明度滑动条 -->
+                                         <VBox spacing="8.0">
+                                             <children>
+                                                 <HBox spacing="10.0">
+                                                     <children>
+                                                         <Label style="-fx-text-fill: #475569; -fx-font-weight: bold;" text="透明度" />
+                                                         <Region HBox.hgrow="ALWAYS" />
+                                                         <Label fx:id="opacityValue" style="-fx-text-fill: #64748b; -fx-font-size: 13;" text="100%" />
+                                                     </children>
+                                                 </HBox>
+                                                 <Slider fx:id="opacitySlider" blockIncrement="5.0" max="100.0" min="0.0" showTickLabels="false" showTickMarks="true" value="100.0" />
+                                             </children>
+                                         </VBox>
+
+                                         <!-- 复选框选项 -->
+                                         <GridPane hgap="20.0" vgap="10.0">
+                                             <columnConstraints>
+                                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="150.0" />
+                                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="150.0" />
+                                             </columnConstraints>
+                                             <rowConstraints>
+                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                             </rowConstraints>
+                                             <children>
+                                                 <CheckBox fx:id="flipAxisCheckBox" style="-fx-text-fill: #334155;" text="坐标轴翻转" />
+                                                 <CheckBox fx:id="animationPlaceholderCheckBox" style="-fx-text-fill: #334155;" text="占位符" GridPane.columnIndex="1" />
+                                             </children>
+                                         </GridPane>
+
+                                         <!-- 动画类型选择 -->
+                                         <VBox spacing="8.0">
+                                             <children>
+                                                 <Label style="-fx-text-fill: #475569; -fx-font-weight: bold;" text="动画类型">
+                                                     <font>
+                                                         <Font size="14.0" />
+                                                     </font>
+                                                 </Label>
+                                       <HBox alignment="CENTER" prefHeight="50.0" spacing="30.0">
+                                          <children>
+                                             <Button maxHeight="30.0" maxWidth="60.0" minHeight="30.0" minWidth="60.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="60.0" style="-fx-background-color: #e2e8f0; -fx-text-fill: #334155; -fx-background-radius: 4;" text="帧动画" />
+                                             <Button maxHeight="30.0" maxWidth="60.0" minHeight="30.0" minWidth="60.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="60.0" style="-fx-background-color: #e2e8f0; -fx-text-fill: #334155; -fx-background-radius: 4;" text="骨骼动画" />
+                                          </children>
+                                       </HBox>
+                                             </children>
+                                         </VBox>
+                                     </children>
+                                 </VBox>
+
+                                 <!-- 第四部分：行为设置 -->
+                                 <VBox spacing="15.0" style="-fx-background-color: #f8fafc; -fx-background-radius: 8; -fx-padding: 15;">
+                                     <children>
+                                         <Label style="-fx-text-fill: #1e293b; -fx-font-weight: bold;" text="行为设置">
+                                             <font>
+                                                 <Font size="16.0" />
+                                             </font>
+                                         </Label>
+
+                                         <!-- 行为复选框网格 -->
+                                         <GridPane hgap="20.0" vgap="10.0">
+                                             <columnConstraints>
+                                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="150.0" />
+                                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="150.0" />
+                                             </columnConstraints>
+                                             <rowConstraints>
+                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                             </rowConstraints>
+                                             <children>
+                                                 <CheckBox fx:id="idleCheckBox" style="-fx-text-fill: #334155;" text="静止" />
+                                                 <CheckBox fx:id="ignoreGravityCheckBox" style="-fx-text-fill: #334155;" text="无视重力" GridPane.columnIndex="1" />
+                                                 <CheckBox fx:id="sleepCheckBox" style="-fx-text-fill: #334155;" text="睡觉" GridPane.rowIndex="1" />
+                                                 <CheckBox fx:id="sitCheckBox" style="-fx-text-fill: #334155;" text="坐下" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                 <CheckBox fx:id="climbCheckBox" style="-fx-text-fill: #334155;" text="攀爬" GridPane.rowIndex="2" />
+                                                 <CheckBox fx:id="hideAndSeekCheckBox" style="-fx-text-fill: #334155;" text="躲猫猫" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                 <CheckBox fx:id="interactableCheckBox" style="-fx-text-fill: #334155;" text="可以交互" GridPane.rowIndex="3" />
+                                                 <CheckBox fx:id="specialActionCheckBox" style="-fx-text-fill: #334155;" text="特殊动作" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                             </children>
+                                         </GridPane>
+
+                                         <!-- 行为滑动条 -->
+                                         <VBox spacing="15.0">
+                                             <children>
+                                                 <VBox spacing="8.0">
+                                                     <children>
+                                                         <HBox spacing="10.0">
+                                                             <children>
+                                                                 <Label style="-fx-text-fill: #475569; -fx-font-weight: bold;" text="移动速度" />
+                                                                 <Region HBox.hgrow="ALWAYS" />
+                                                                 <Label fx:id="movementSpeedValue" style="-fx-text-fill: #64748b; -fx-font-size: 13;" text="50%" />
+                                                             </children>
+                                                         </HBox>
+                                                         <Slider fx:id="movementSpeedSlider" blockIncrement="5.0" max="100.0" min="0.0" showTickLabels="false" showTickMarks="true" value="50.0" />
+                                                     </children>
+                                                 </VBox>
+
+                                                 <VBox spacing="8.0">
+                                                     <children>
+                                                         <HBox spacing="10.0">
+                                                             <children>
+                                                                 <Label style="-fx-text-fill: #475569; -fx-font-weight: bold;" text="动作频率" />
+                                                                 <Region HBox.hgrow="ALWAYS" />
+                                                                 <Label fx:id="actionFrequencyValue" style="-fx-text-fill: #64748b; -fx-font-size: 13;" text="30%" />
+                                                             </children>
+                                                         </HBox>
+                                                         <Slider fx:id="actionFrequencySlider" blockIncrement="5.0" max="100.0" min="0.0" showTickLabels="false" showTickMarks="true" value="30.0" />
+                                                     </children>
+                                                 </VBox>
+                                             </children>
+                                         </VBox>
+                                     </children>
+                                 </VBox>
+
+                                 <!-- 第五部分：AI逻辑设置 -->
+                                 <VBox spacing="15.0" style="-fx-background-color: #f8fafc; -fx-background-radius: 8; -fx-padding: 15;">
+                                     <children>
+                                         <Label style="-fx-text-fill: #1e293b; -fx-font-weight: bold;" text="AI逻辑设置">
+                                             <font>
+                                                 <Font size="16.0" />
+                                             </font>
+                                         </Label>
+
+                                         <!-- AI复选框 -->
+                                         <GridPane hgap="20.0" vgap="10.0">
+                                             <columnConstraints>
+                                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="150.0" />
+                                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="150.0" />
+                                             </columnConstraints>
+                                             <rowConstraints>
+                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                             </rowConstraints>
+                                             <children>
+                                                 <CheckBox fx:id="aiPlaceholderCheckBox1" style="-fx-text-fill: #334155;" text="占位符" />
+                                                 <CheckBox fx:id="aiPlaceholderCheckBox2" style="-fx-text-fill: #334155;" text="占位符" GridPane.columnIndex="1" />
+                                             </children>
+                                         </GridPane>
+
+                                         <!-- AI滑动条 -->
+                                         <VBox spacing="15.0">
+                                             <children>
+                                                 <VBox spacing="8.0">
+                                                     <children>
+                                                         <HBox spacing="10.0">
+                                                             <children>
+                                                                 <Label style="-fx-text-fill: #475569; -fx-font-weight: bold;" text="占位符" />
+                                                                 <Region HBox.hgrow="ALWAYS" />
+                                                                 <Label fx:id="aiParam1Value" style="-fx-text-fill: #64748b; -fx-font-size: 13;" text="60%" />
+                                                             </children>
+                                                         </HBox>
+                                                         <Slider fx:id="aiParam1Slider" blockIncrement="5.0" max="100.0" min="0.0" showTickLabels="false" showTickMarks="true" value="60.0" />
+                                                     </children>
+                                                 </VBox>
+
+                                                 <VBox spacing="8.0">
+                                                     <children>
+                                                         <HBox spacing="10.0">
+                                                             <children>
+                                                                 <Label style="-fx-text-fill: #475569; -fx-font-weight: bold;" text="占位符" />
+                                                                 <Region HBox.hgrow="ALWAYS" />
+                                                                 <Label fx:id="aiParam2Value" style="-fx-text-fill: #64748b; -fx-font-size: 13;" text="40%" />
+                                                             </children>
+                                                         </HBox>
+                                                         <Slider fx:id="aiParam2Slider" blockIncrement="5.0" max="100.0" min="0.0" showTickLabels="false" showTickMarks="true" value="40.0" />
+                                                     </children>
+                                                 </VBox>
+                                             </children>
+                                         </VBox>
+                                     </children>
+                                 </VBox>
+                             </VBox>
+                         </content>
+                     </ScrollPane>
+               </children></AnchorPane>
+
             <AnchorPane fx:id="morePanel" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #98F5F9;" visible="false" />
          </children>
       </StackPane>
