@@ -1,37 +1,63 @@
 {
-  "ceobe":
-  {
+  "ceobe": {
     "name": "ceobe",
     "defaultState": "idle",
-    "actions":
-    {
-      "idle":
-      {
+    "actions": {
+      "idle": {
         "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\ceobe\\idle",
         "fps": 24,
         "loop": true
       },
-      "walk":
-      {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\ceobe\\walk",
+      "move": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\ceobe\\move",
         "fps": 24,
         "loop": true
       }
     },
-    "voices":
-    {
-      "hello":
-      {
+    "voices": {
+      "hello": {
 
       }
     }
   },
-  "texas":
-  {
-
+  "texas": {
+    "name": "texas",
+    "defaultState": "idle",
+    "actions": {
+      "idle": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\texas\\idle",
+        "fps": 24,
+        "loop": true
+      },
+      "move": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\texas\\move",
+        "fps": 24,
+        "loop": true
+      }
+    },
+    "voices": {
+      "hello": {
+      }
+    }
   },
-  "lapland":
-  {
-
+  "lapland": {
+    "name": "lapland",
+    "defaultState": "idle",
+    "actions": {
+      "idle": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\lapland\\idle",
+        "fps": 24,
+        "loop": true
+      },
+      "move": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\lapland\\move",
+        "fps": 24,
+        "loop": true
+      }
+    },
+    "voices": {
+      "hello": {
+      }
+    }
   }
 }

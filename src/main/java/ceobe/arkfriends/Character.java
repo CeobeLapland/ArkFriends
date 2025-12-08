@@ -15,6 +15,8 @@ public class Character
     public Map<String, AnimationState> states;
     public AnimationState defaultState;
 
+    public AnimationState curState, nextState;
+
     public Character()
     {
         this("ceobe");
@@ -30,13 +32,15 @@ public class Character
             Map<String, Map<String, Object>> characters = objectMapper.readValue(jsonContent, new TypeReference<Map<String, Map<String, Object>>>() {});
 
             // 获取指定角色数据
-            if (characters.containsKey(name)) {
+            if (characters.containsKey(name))
+            {
                 Map<String, Object> characterData = characters.get(name);
                 String defaultStateName = (String) characterData.get("defaultState");
                 Map<String, Map<String, Object>> actions = (Map<String, Map<String, Object>>) characterData.get("actions");
 
                 // 初始化动画状态
-                for (Map.Entry<String, Map<String, Object>> entry : actions.entrySet()) {
+                for (Map.Entry<String, Map<String, Object>> entry : actions.entrySet())
+                {
                     String actionName = entry.getKey();
                     Map<String, Object> actionData = entry.getValue();
 
@@ -52,7 +56,8 @@ public class Character
                     states.put(actionName, state);
 
                     // 设置默认状态
-                    if (actionName.equals(defaultStateName)) {
+                    if (actionName.equals(defaultStateName))
+                    {
                         defaultState = state;
                     }
                 }
@@ -60,6 +65,9 @@ public class Character
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        curState=defaultState;
+        nextState=defaultState;
     }
 
     private List<Image> loadImagesFromPath(String path) throws IOException

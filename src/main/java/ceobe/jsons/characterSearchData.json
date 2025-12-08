@@ -1,0 +1,29 @@
+{
+  "ceobe":
+  {
+    "EnglishName": "ceobe",
+    "ChineseName": "刻俄柏",
+    "description": "罗德岛的小吃货",
+    "stars": 6,
+    "occupationEnum": "ALCHEMIST",
+    "defaultImagePath": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\ceobe\\idle\\idle_001.png"
+  },
+  "texas":
+  {
+    "EnglishName": "texas",
+    "ChineseName": "德克萨斯",
+    "description": "准时的送货员",
+    "stars": 5,
+    "occupationEnum": "VANGUARD",
+    "defaultImagePath": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\texas\\idle\\idle_001.png"
+  },
+  "lapland":
+  {
+    "EnglishName": "lapland",
+    "ChineseName": "拉普兰德",
+    "description": "喜欢我做的千层酥嘛",
+    "stars": 5,
+    "occupationEnum": "GUARD",
+    "defaultImagePath": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\lapland\\idle\\idle_001.png"
+  }
+}

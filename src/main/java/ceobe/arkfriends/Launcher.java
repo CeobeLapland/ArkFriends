@@ -57,5 +57,6 @@ public class Launcher extends Application
         petStage.setAlwaysOnTop(true);
         petStage.show();
         AnimationController.animationController.Initialize();
+        //放到DelayedInitialization里去了
     }
 }
