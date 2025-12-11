@@ -6,12 +6,14 @@
       "idle": {
         "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\ceobe\\idle",
         "fps": 24,
-        "loop": true
+        "loop": true,
+        "move": false
       },
       "move": {
         "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\ceobe\\move",
         "fps": 24,
-        "loop": true
+        "loop": true,
+        "move": true
       }
     },
     "voices": {
@@ -27,12 +29,14 @@
       "idle": {
         "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\texas\\idle",
         "fps": 24,
-        "loop": true
+        "loop": true,
+        "move": false
       },
       "move": {
         "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\texas\\move",
         "fps": 24,
-        "loop": true
+        "loop": true,
+        "move": true
       }
     },
     "voices": {
@@ -47,12 +51,14 @@
       "idle": {
         "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\lapland\\idle",
         "fps": 24,
-        "loop": true
+        "loop": true,
+        "move": false
       },
       "move": {
         "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\lapland\\move",
         "fps": 24,
-        "loop": true
+        "loop": true,
+        "move": true
       }
     },
     "voices": {

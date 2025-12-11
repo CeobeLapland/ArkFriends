@@ -12,6 +12,7 @@ import javafx.scene.control.*;
 import javafx.stage.StageStyle;
 
 import java.io.IOException;
+import java.util.Timer;
 
 public class Launcher extends Application
 {
@@ -42,9 +43,21 @@ public class Launcher extends Application
 
     public void StartRunning() throws IOException
     {
-        if(AnimationController.animationController==null)
-            AnimationController.animationController=new AnimationController();
+        //if(AnimationController.animationController==null)
+        //    AnimationController.animationController=new AnimationController();
+
+        //我想破脑袋都没想到是这里出的问题
+        //详细说明在AnimationController的构造函数里
+
+
         petFxml= new FXMLLoader(Launcher.class.getResource("petPanel.fxml"));
+
+        //加了一句比较重要的
+        //还是不太对，之后还需要提前实例化AnimationController然后手动分配
+        //把builder里的默认选项去掉
+        if(AnimationController.animationController!=null)
+            petFxml.setController(AnimationController.animationController);
+
         petScene=new Scene(petFxml.load());
         //launcherStage.setScene(petScene);
         //launcherStage.close();
@@ -56,7 +69,26 @@ public class Launcher extends Application
         petStage.initStyle(StageStyle.TRANSPARENT);
         petStage.setAlwaysOnTop(true);
         petStage.show();
-        AnimationController.animationController.Initialize();
+
+
+
+        /*if(AnimationController.animationController.rootPane==null)
+            System.out.println("rootPane is null 3");
+        if(AnimationController.animationController.content==null)
+            System.out.println("content is null 3");*/
+
+        //AnimationController.animationController.Initialize();
+        Timer timer=new Timer();
+        timer.schedule(new java.util.TimerTask()
+        {
+            @Override
+            public void run()
+            {
+                AnimationController.animationController.DelayedInitialization();
+                timer.cancel();
+            }
+        },200);//延迟一秒执行
+        //AnimationController.animationController.DelayedInitialization();
         //放到DelayedInitialization里去了
     }
 }

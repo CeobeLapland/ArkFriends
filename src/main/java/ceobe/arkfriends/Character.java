@@ -16,6 +16,7 @@ public class Character
     public AnimationState defaultState;
 
     public AnimationState curState, nextState;
+    //public Queue<AnimationState> stateQueue = new LinkedList<>();
 
     public Character()
     {
@@ -47,12 +48,13 @@ public class Character
                     String path = (String) actionData.get("path");
                     int fps = (int) actionData.get("fps");
                     boolean loop = (boolean) actionData.get("loop");
+                    boolean isMove = (boolean) actionData.get("move");
 
                     // 加载路径下的所有 PNG 文件
                     List<Image> images = loadImagesFromPath(path);
 
                     // 创建 AnimationState 并添加到 states
-                    AnimationState state = new AnimationState(path, images, loop, fps);
+                    AnimationState state = new AnimationState(path, images, loop, fps, isMove);
                     states.put(actionName, state);
 
                     // 设置默认状态
@@ -98,15 +100,17 @@ public class Character
 class AnimationState
 {
     String assertsPath;
-    public List<Image> animations;//路径里的所有png
+    public List<Image> imageList;//路径里的所有png
     boolean isLoop;
     int fps;
+    boolean isMove;
 
-    public AnimationState(String assertsPath, List<Image> animations, boolean isLoop, int fps)
+    public AnimationState(String assertsPath, List<Image> imageList, boolean isLoop, int fps, boolean isMove)
     {
         this.assertsPath = assertsPath;
-        this.animations = animations;
+        this.imageList = imageList;
         this.isLoop = isLoop;
         this.fps = fps;
+        this.isMove = isMove;
     }
 }

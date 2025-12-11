@@ -1,5 +1,6 @@
 package ceobe.arkfriends;
 
+//region imports
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -20,9 +21,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 //import System.out;
-
+//endregion
 public class PanelController
 {
+    //region 引用模块
     public static PanelController panelController;
 
     public boolean isLaunched=false;
@@ -78,6 +80,8 @@ public class PanelController
 
     //public ObservableList allListItems,curListItems;
     public ObservableList allListItems;
+
+    //endregion
 
     public PanelController()
     {
@@ -246,10 +250,13 @@ public class PanelController
         //Launcher.launcher.
         Launcher.launcher.StartRunning();
 
-        AnimationController.animationController.ChangeCharacter(curCharacterName);
-        AnimationController.animationController.PlayAnimation();
+        //AnimationController.animationController.ChangeCharacter(curCharacterName);
+        //AnimationController.animationController.StartAnimation();
+        AnimationController.animationController.curCharName=curCharacterName;
     }
 
+
+    //region 角色搜索与列表刷新相关
     public void SelectCharacterInListView(String name)
     {
         curCharacterName=name;
@@ -578,7 +585,9 @@ public class PanelController
         System.out.println(characterListView.getItems().size()+"  after characterListView.getItems().size()");
     }*/
 
-    //region窗口拖动
+    //endregion
+
+    //region窗口拖动相关
 
     private double xOffset = 0;
     private double yOffset = 0;
@@ -600,7 +609,8 @@ public class PanelController
         });
 
         titleBar.setOnMouseDragged((MouseEvent event) -> {
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            //Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Stage stage = Launcher.launcher.launcherStage;
             stage.setX(event.getScreenX() - xOffset);
             stage.setY(event.getScreenY() - yOffset);
         });
@@ -625,8 +635,10 @@ public class PanelController
     //@FXML
     public void CloseWindow(MouseEvent event)
     {
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.close();
+        //Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        //stage.close();
+
+        Launcher.launcher.launcherStage.close();
     }
 
     @FXML
