@@ -15,7 +15,7 @@ public class Character
     public Map<String, AnimationState> states;
     public AnimationState defaultState;
 
-    public AnimationState curState, nextState;
+    //public AnimationState curState, nextState;
     //public Queue<AnimationState> stateQueue = new LinkedList<>();
 
     public Character()
@@ -68,8 +68,8 @@ public class Character
             e.printStackTrace();
         }
 
-        curState=defaultState;
-        nextState=defaultState;
+        //curState=defaultState;
+        //nextState=defaultState;
     }
 
     private List<Image> loadImagesFromPath(String path) throws IOException
@@ -94,23 +94,5 @@ public class Character
                         p -> images.add(new Image(p.toUri().toString()))
                 );
         return images;
-    }
-}
-
-class AnimationState
-{
-    String assertsPath;
-    public List<Image> imageList;//路径里的所有png
-    boolean isLoop;
-    int fps;
-    boolean isMove;
-
-    public AnimationState(String assertsPath, List<Image> imageList, boolean isLoop, int fps, boolean isMove)
-    {
-        this.assertsPath = assertsPath;
-        this.imageList = imageList;
-        this.isLoop = isLoop;
-        this.fps = fps;
-        this.isMove = isMove;
     }
 }

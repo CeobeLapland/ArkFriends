@@ -242,6 +242,7 @@ public class PanelController
     }
 
     //endregion
+
     public void LaunchRunning() throws IOException
     {
         launchButton.setDisable(true);

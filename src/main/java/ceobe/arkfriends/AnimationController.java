@@ -4,15 +4,11 @@ package ceobe.arkfriends;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.util.Duration;
 import javafx.scene.Scene;
 
-import java.util.List;
 import java.util.Map;
-import java.util.Queue;
 import java.util.Random;
 
 
@@ -29,6 +25,7 @@ import javafx.scene.input.MouseButton;
 import javafx.stage.Modality;
 import javafx.geometry.Rectangle2D;
 import javafx.stage.Screen;
+import javafx.util.Duration;
 
 //endregion
 public class AnimationController
@@ -36,6 +33,8 @@ public class AnimationController
     public static AnimationController animationController;
 
     //region 引用变量
+    public Map<String,Character> allChars=new java.util.HashMap<>();
+
     public Character curChar;
     public String curCharName;
 
@@ -44,7 +43,8 @@ public class AnimationController
     @FXML
     public Pane rootPane;
     private Stage stage;
-    private Scene scene;
+    //private Scene scene;
+    /*
     //private List<List<Image>> curCharAni;
 
     //这几个都可以当引用用
@@ -68,11 +68,9 @@ public class AnimationController
     public Timeline animator;
     public Timeline switcher;
 
-    private int switcherCounter=10;
+    private int switcherCounter=10;*/
 
-    public Map<String,Character> allChars=new java.util.HashMap<>();
 
-    private Random ran= new Random();
     //endregion
 
     public AnimationController()
@@ -109,6 +107,8 @@ public class AnimationController
         //DelayedInitialization();
     }
 
+    boolean isDragged=false;
+
     private double xOffset = 0;
     private double yOffset = 0;
     public void DelayedInitialization()
@@ -126,7 +126,7 @@ public class AnimationController
         });
         //stage=(Stage)root.getScene().getWindow();
         stage=Launcher.launcher.petStage;
-        scene=Launcher.launcher.petScene;
+        //scene=Launcher.launcher.petScene;
 
         rootPane.setOnMouseDragged(event -> {
             stage.setX(event.getScreenX() - xOffset);
@@ -159,12 +159,12 @@ public class AnimationController
         });
         System.out.println("setted");
         //这个只能绑定一个事件
-        // 主窗口点击事件（用于关闭弹出窗口）
+        //主窗口点击事件（用于关闭弹出窗口）
         //content.setOnMouseClicked(event -> {
         content.addEventHandler(MouseEvent.MOUSE_CLICKED,event->{
             if (event.getButton() == MouseButton.PRIMARY && popupStage != null && popupStage.isShowing())
             {
-                // 检查点击是否在弹出窗口内
+                //检查点击是否在弹出窗口内
                 if (!isClickInPopup(event.getScreenX(), event.getScreenY()))
                 {
                     //popupStage.close();
@@ -175,35 +175,84 @@ public class AnimationController
         });
 
 
+        content.addEventHandler(MouseEvent.MOUSE_CLICKED,event -> {
+            if(event.getButton()==MouseButton.PRIMARY && (popupStage==null||!popupStage.isShowing()))
+            {
+                nextState=curChar.states.get("interact");
+            }
+        });
+
+        content.addEventHandler(MouseEvent.MOUSE_DRAGGED,event -> {
+            if(!isDragged)
+            {
+                isDragged=true;
+                nextState=curChar.states.get("drag");
+            }
+        });
+        content.addEventHandler(MouseEvent.MOUSE_RELEASED,event -> {
+            isDragged=false;
+        });
+
         ChangeCharacter(curCharName);
         StartAnimation();
     }
+
+
+
+    private Random ran= new Random();
+
+    Timeline animator;
+    float deltaTime=0.05f;
+    long timeCount=0;
+    int nextNullTime=0;
+
+//    AnimationState manualRequest = null;
+//    AnimationState interactRequest = null;
+//    AnimationState randomRequest = null;
+    public boolean isManual=false;
+
+    AnimationState curState = null;
+    AnimationState nextState=null;
+
+    int frameCount, totalFrame;
+    public Point point;
+    private double dx,dy;
+    public int speed=100;
+
     public void StartAnimation()
     {
+        animator=new Timeline(
+                new KeyFrame(Duration.seconds(deltaTime),actionEvent -> {
+                    StateUpdate();
+                    MovementUpdate();
+                    //ImageUpdate();
+                }));
+        animator.setCycleCount(Timeline.INDEFINITE);
+        animator.play();
         //..\..\characters\ceobe\idle\idle_001.png
-        animator=new Timeline(new KeyFrame(Duration.seconds(deltaTime)
+        /*animator=new Timeline(new KeyFrame(Duration.seconds(deltaTime)
                 ,event ->
         {
             AnimatorUpdate();
-            /*//content.setImage();
-            if(curAniCount>=maxAniCount)
-            {
-                //if(curChar.curState.isLoop==false)
-                if(curLoop==false)
-                {
-                    System.out.println("Animation ended, switching to default state");
-                    ChangeAnimationImmediately(curChar.defaultState);
-                }
-                curAniCount=0;
-            }
-            content.setImage(curAni.get(curAniCount++));
-            //System.out.println(curAniCount);
-
-            //if(curChar.curState.isMove)
-            if(curIsMove)
-            {
-
-            }*/
+//            //content.setImage();
+//            if(curAniCount>=maxAniCount)
+//            {
+//                //if(curChar.curState.isLoop==false)
+//                if(curLoop==false)
+//                {
+//                    System.out.println("Animation ended, switching to default state");
+//                    ChangeAnimationImmediately(curChar.defaultState);
+//                }
+//                curAniCount=0;
+//            }
+//            content.setImage(curAni.get(curAniCount++));
+//            //System.out.println(curAniCount);
+//
+//            //if(curChar.curState.isMove)
+//            if(curIsMove)
+//            {
+//
+//            }
         }));
         animator.setCycleCount(Timeline.INDEFINITE);
         animator.play();
@@ -221,23 +270,190 @@ public class AnimationController
         movePath.add(new Point(ran.nextInt(200,1200),ran.nextInt(200,800)));
         movePath.add(new Point(ran.nextInt(200,1200),ran.nextInt(200,800)));
         movePath.add(new Point(ran.nextInt(200,1200),ran.nextInt(200,800)));
+        */
     }
     public void PauseAnimation()
     {
         animator.pause();
-        switcher.pause();
+//        animator.pause();
+//        switcher.pause();
     }
     public void ResumeAnimation()
     {
         animator.play();
-        switcher.play();
+//        animator.play();
+//        switcher.play();
     }
     public void StopAnimation()
     {
         animator.stop();
-        switcher.stop();
+//        animator.stop();
+//        switcher.stop();
     }
 
+
+
+    private void StateUpdate()
+    {
+        timeCount++;
+        //这个版本的逻辑是nextState有最高优先级
+        //只要nextStat不为空就直接更换
+        if(nextState!=null)
+        {
+            ChangeState(nextState);
+            nextNullTime=0;
+            nextState=null;
+        } else {
+            if(!isDragged) {
+                nextNullTime++;
+
+                CheckNextState();
+            }
+            //这俩玩意联动的属实有点远
+        }
+        if(frameCount>=totalFrame)
+        {
+            if(curState.isLoop) {
+                frameCount=0;
+            } else {
+                ChangeState(curChar.defaultState);
+            }
+        }
+        content.setImage(curState.imageList.get(frameCount++));
+        /*if (manualRequest != null)
+        {
+            ChangeState(manualRequest);
+            manualRequest = null;
+            return;
+        }
+        if (interactRequest != null)
+        {
+            ChangeState(interactRequest);
+            interactRequest = null;
+            return;
+        }
+        if (randomRequest != null)
+        {
+            ChangeState(randomRequest);
+            randomRequest = null;
+            return;
+        }*/
+    }
+    private void MovementUpdate()
+    {
+        if(curState.isMove==false)
+            return;
+        MoveToPoint();
+        /*if (!curState.isMove) return;
+        if (input.hasInput()) {
+            // WASD 方向移动
+            double speed = 130;
+
+            if (input.w) position.y -= speed * dt;
+            if (input.s) position.y += speed * dt;
+            if (input.a) position.x -= speed * dt;
+            if (input.d) position.x += speed * dt;
+
+            return;
+        }
+
+        if (randomMoveTarget == null) return;
+
+        double dx = randomMoveTarget.x - position.x;
+        double dy = randomMoveTarget.y - position.y;
+
+        double dist = Math.sqrt(dx*dx + dy*dy);
+        if (dist < 2) {
+            randomMoveTarget = null;
+            return;
+        }
+
+        double speed = currentState.name.equals("run") ? 200 : 120;
+
+        position.x += dx/dist * speed * dt;
+        position.y += dy/dist * speed * dt;*/
+    }
+//    private void ImageUpdate()
+//    {
+//        content.setImage(curState.imageList.get(frameCount++));
+//    }
+
+//    public void SwitchState(AnimationState newState, AnimationSource source)
+//    {
+//        /*if (currentState == newState) return;
+//
+//        currentState = newState;
+//        frameIndex = 0;
+//        frameTimer = 0;
+//
+//        if (newState.isMove) {
+//            startMovementIfNeeded();
+//        }*/
+//    }
+    public void ChangeState(AnimationState newState)
+    {
+        if (newState==null)
+            return;
+        curState=newState;
+        frameCount=0;
+        totalFrame =curState.imageList.size();
+        System.out.println("Change to state"+curState.assertsPath);
+    }
+    public AnimationState RandomState()
+    {
+        int r=ran.nextInt(0,100);
+        if(r<10) {
+            return curChar.defaultState;
+        } else if (r<100) {
+            point=new Point(ran.nextInt(200,1200),ran.nextInt(200,800));
+            System.out.println(point.x+"  "+point.y);
+            double distance=Math.sqrt(Math.pow(stage.getX()-point.x,2)+Math.pow(stage.getY()-point.y,2));
+            dx=(point.x-stage.getX())/distance;
+            dy=(point.y-stage.getY())/distance;
+            ChangeDirection();
+            return curChar.states.get("move");
+        } else {
+            return curChar.defaultState;
+        }
+    }
+    public void CheckNextState()//如果检查长时间为空就随机一个
+    {
+        if(nextNullTime>240)//10s
+        {
+            nextState=RandomState();
+        }
+    }
+    public void ChangeDirection()
+    {
+        if(dx > 0) {//向右
+            content.setScaleX(1);
+        } else {//向左
+            content.setScaleX(-1);
+        }
+    }
+    private void MoveToPoint()
+    {
+        if (point == null) {
+            System.out.println("next point is null");
+            return;
+        }
+        double moveX=speed*deltaTime*dx,moveY=speed*deltaTime*dy;
+        if(Math.abs(stage.getX()-point.x)<Math.abs(moveX*2))
+        {
+            //如果距离小于一步的移动距离，直接移动到目标点
+            stage.setX(point.x);
+            stage.setY(point.y);
+            point = null; //移动完成后清空目标点
+            ChangeState(curChar.defaultState);
+        }
+        else
+        {
+            stage.setX(stage.getX()+moveX);
+            stage.setY(stage.getY()+moveY);
+        }
+    }
+
+    /*
     private void AnimatorUpdate()
     {
         if(curAniCount>=maxAniCount)
@@ -310,28 +526,30 @@ public class AnimationController
             return;
         }
         switcherCounter--;
-        /*if(curIsMove)
-        {
-            switcherCounter--;
-            if(switcherCounter<=0)
-            {
-                //switcherCounter=10;
-                //每十秒换一个点
-                //先随便定一个点吧
-                //nextPoint=new Point((int)(Math.random()*800),(int)(Math.random()*600),0);
-                //改成在角色周围随机一个点
-                int range=100;
-                int centerX=(int)stage.getX();
-                int centerY=(int)stage.getY();
-                int targetX=centerX+(int)(Math.random()*(range*2))-range;
-                int targetY=centerY+(int)(Math.random()*(range*2))-range;
-                nextPoint=new Point(targetX,targetY,0);
-                System.out.println("New target point: ("+targetX+","+targetY+")");
-                switcherCounter=10;
-            }
-        }*/
+//        if(curIsMove)
+//        {
+//            switcherCounter--;
+//            if(switcherCounter<=0)
+//            {
+//                //switcherCounter=10;
+//                //每十秒换一个点
+//                //先随便定一个点吧
+//                //nextPoint=new Point((int)(Math.random()*800),(int)(Math.random()*600),0);
+//                //改成在角色周围随机一个点
+//                int range=100;
+//                int centerX=(int)stage.getX();
+//                int centerY=(int)stage.getY();
+//                int targetX=centerX+(int)(Math.random()*(range*2))-range;
+//                int targetY=centerY+(int)(Math.random()*(range*2))-range;
+//                nextPoint=new Point(targetX,targetY,0);
+//                System.out.println("New target point: ("+targetX+","+targetY+")");
+//                switcherCounter=10;
+//            }
+//        }
     }
+    */
 
+    /*
     public void ChangeDirection()
     {
         if(stage.getX()<nextPoint.x)
@@ -381,7 +599,8 @@ public class AnimationController
             stage.setX(currentX+speed*deltaTime*(deltaX/distance));
             stage.setY(currentY+speed*deltaTime*(deltaY/distance));
         }
-    }
+    }*/
+    /*
     //还是加两个不一样的改变函数吧
     //我想着搞一个animationState的队列，然后按照顺序调用
     public void ChangeAnimationImmediately(AnimationState aniState)//改变当前角色的动画
@@ -400,6 +619,7 @@ public class AnimationController
         maxAniCount=curAni.size();
         curAniCount=0;
     }
+    */
     //主要是改变nextState的（队列）
     //怎么感觉用处不大
     /*public  void ChangeAnimation(AnimationState aniState)
@@ -430,7 +650,8 @@ public class AnimationController
             allChars.put(name,curChar);
         }
         System.out.println("Changed character to "+name);
-        ChangeAnimationImmediately(curChar.defaultState);
+        //ChangeAnimationImmediately(curChar.defaultState);
+        ChangeState(curChar.defaultState);
     }
 
     // linear-gradient(to right, #87CEFA, #1E90FF) linear-gradient(to right, #2c3e50, #34495e)
@@ -646,14 +867,15 @@ public class AnimationController
     }*/
 
 }
+
 class Point
 {
-    public int x,y;
+    public int x, y;
     //public float waitTime;
-    public Point(int x,int y)//,float waitTime)
+    public Point(int x, int y)//,float waitTime)
     {
-        this.x=x;
-        this.y=y;
+        this.x = x;
+        this.y = y;
         //this.waitTime=waitTime;
     }
 }
