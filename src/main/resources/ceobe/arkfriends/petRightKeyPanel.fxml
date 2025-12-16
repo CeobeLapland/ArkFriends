@@ -29,14 +29,14 @@
       <Line endX="200.0" endY="30.0" startY="30.0" strokeWidth="2.0" />
       <HBox maxHeight="70.0" minHeight="70.0" prefHeight="70.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
          <children>
-            <TextField prefHeight="50.0" prefWidth="150.0" promptText="开始聊天喵">
+            <TextField fx:id="inputField" prefHeight="50.0" prefWidth="150.0" promptText="开始聊天喵">
                <HBox.margin>
                   <Insets top="10.0" />
                </HBox.margin>
             </TextField>
             <VBox alignment="CENTER" prefHeight="70.0" prefWidth="50.0">
                <children>
-                  <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="✔" />
+                  <Button fx:id="sendButton" mnemonicParsing="false" onMouseClicked="#SendMessage" prefHeight="30.0" prefWidth="30.0" text="✔" />
                </children>
             </VBox>
          </children>

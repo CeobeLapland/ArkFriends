@@ -1,7 +1,154 @@
 package ceobe.arkfriends;
 
-
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
+import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
+
+public class AIChatManager
+{
+    public static AIChatManager ACM;
+    //也是缩写刚好是这个嘿嘿
+
+    private static final String OLLAMA_API_URL = "http://localhost:11434/api/chat";
+    private static final String MODEL_NAME = "qwen2.5:3b";
+
+    private final HttpClient httpClient;
+    private final ObjectMapper objectMapper;
+
+    /** 对话上下文 */
+    private final List<ChatMessage> conversation = new ArrayList<>();
+
+    public AIChatManager()
+    {
+        if(ACM==null)
+            ACM=this;
+        this.httpClient = HttpClient.newBuilder()
+                .connectTimeout(Duration.ofSeconds(10))
+                .build();
+        this.objectMapper = new ObjectMapper();
+
+        // 可选：给桌宠一个“人格设定”
+        conversation.add(new ChatMessage(
+                "system",
+                "你是一个可爱的小猫娘，说话简短、有亲和力，可以偶尔卖萌。"
+        ));
+    }
+
+    //发送消息（同步）
+    public String sendMessage(String userMessage) throws Exception {
+        conversation.add(new ChatMessage("user", userMessage));
+
+        String requestBody = buildRequestBody(false);
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(OLLAMA_API_URL))
+                .header("Content-Type", "application/json")
+                .POST(HttpRequest.BodyPublishers.ofString(requestBody, StandardCharsets.UTF_8))
+                .build();
+
+        HttpResponse<String> response =
+                httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
+        String reply = parseReply(response.body());
+        conversation.add(new ChatMessage("assistant", reply));
+
+        return reply;
+    }
+
+    //发送消息（异步，强烈推荐 JavaFX 使用）
+    public CompletableFuture<String> sendMessageAsync(String userMessage) {
+        conversation.add(new ChatMessage("user", userMessage));
+
+        String requestBody;
+        try {
+            requestBody = buildRequestBody(false);
+        } catch (Exception e) {
+            CompletableFuture<String> future = new CompletableFuture<>();
+            future.completeExceptionally(e);
+            return future;
+        }
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(OLLAMA_API_URL))
+                .header("Content-Type", "application/json")
+                .POST(HttpRequest.BodyPublishers.ofString(requestBody, StandardCharsets.UTF_8))
+                .build();
+
+        return httpClient.sendAsync(request, HttpResponse.BodyHandlers.ofString())
+                .thenApply(HttpResponse::body)
+                .thenApply(body -> {
+                    try {
+                        String reply = parseReply(body);
+                        conversation.add(new ChatMessage("assistant", reply));
+                        return reply;
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+    }
+
+    //构建请求 JSON
+    private String buildRequestBody(boolean stream) throws Exception {
+        var root = objectMapper.createObjectNode();
+        root.put("model", MODEL_NAME);
+        root.put("stream", stream);
+
+        var messagesNode = objectMapper.createArrayNode();
+        for (ChatMessage msg : conversation) {
+            var msgNode = objectMapper.createObjectNode();
+            msgNode.put("role", msg.getRole());
+            msgNode.put("content", msg.getContent());
+            messagesNode.add(msgNode);
+        }
+        root.set("messages", messagesNode);
+
+        return objectMapper.writeValueAsString(root);
+    }
+
+    //解析模型回复
+    private String parseReply(String responseBody) throws Exception {
+        JsonNode root = objectMapper.readTree(responseBody);
+        return root.path("message").path("content").asText();
+    }
+
+    //清空上下文（比如桌宠“失忆”）
+    public void clearMemory() {
+        conversation.clear();
+    }
+}
+class ChatMessage
+{
+    private String role;    // user / assistant / system
+    private String content;
+
+    public ChatMessage(String role, String content)
+    {
+        this.role = role;
+        this.content = content;
+    }
+    public String getRole()
+    {
+        return role;
+    }
+    public String getContent()
+    {
+        return content;
+    }
+}
+
+
+
+
+/*import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -26,7 +173,8 @@ public class AIChatManager
     private Consumer<String> onError;
     private Consumer<String> onStreamToken;
 
-    public AIChatManager() {
+    public AIChatManager()
+    {
         this.httpClient = HttpClient.newBuilder()
                 .connectTimeout(Duration.ofSeconds(30))
                 .executor(Executors.newVirtualThreadPerTaskExecutor())
@@ -35,17 +183,15 @@ public class AIChatManager
         this.executorService = Executors.newCachedThreadPool();
     }
 
-    /**
-     * 设置模型名称
-     */
-    public void setModel(String modelName) {
+    //设置模型名称
+    public void setModel(String modelName)
+    {
         this.currentModel = modelName;
     }
 
-    /**
-     * 获取可用的模型列表
-     */
-    public CompletableFuture<String[]> getAvailableModels() {
+    //获取可用的模型列表
+    public CompletableFuture<String[]> getAvailableModels()
+    {
         return CompletableFuture.supplyAsync(() -> {
             try {
                 HttpRequest request = HttpRequest.newBuilder()
@@ -67,10 +213,9 @@ public class AIChatManager
         }, executorService);
     }
 
-    /**
-     * 发送消息并获取完整响应（非流式）
-     */
-    public CompletableFuture<String> sendMessage(String message) {
+    //发送消息并获取完整响应（非流式）
+    public CompletableFuture<String> sendMessage(String message)
+    {
         return CompletableFuture.supplyAsync(() -> {
             try {
                 // 构建请求体
@@ -114,10 +259,9 @@ public class AIChatManager
         }, executorService);
     }
 
-    /**
-     * 发送消息并获取流式响应（适用于实时显示）
-     */
-    public void sendMessageStreaming(String message) {
+    //发送消息并获取流式响应（适用于实时显示）
+    public void sendMessageStreaming(String message)
+    {
         executorService.submit(() -> {
             try {
                 // 构建请求体
@@ -171,10 +315,9 @@ public class AIChatManager
         });
     }
 
-    /**
-     * 检查Ollama服务是否可用
-     */
-    public CompletableFuture<Boolean> checkServiceStatus() {
+    //检查Ollama服务是否可用
+    public CompletableFuture<Boolean> checkServiceStatus()
+    {
         return CompletableFuture.supplyAsync(() -> {
             try {
                 HttpRequest request = HttpRequest.newBuilder()
@@ -193,38 +336,35 @@ public class AIChatManager
         }, executorService);
     }
 
-    /**
-     * 设置消息接收回调
-     */
-    public void setOnMessageReceived(Consumer<String> callback) {
+    //设置消息接收回调
+    public void setOnMessageReceived(Consumer<String> callback)
+    {
         this.onMessageReceived = callback;
     }
 
-    /**
-     * 设置流式token接收回调
-     */
-    public void setOnStreamToken(Consumer<String> callback) {
+    //设置流式token接收回调
+    public void setOnStreamToken(Consumer<String> callback)
+    {
         this.onStreamToken = callback;
     }
 
-    /**
-     * 设置错误回调
-     */
-    public void setOnError(Consumer<String> callback) {
+    //设置错误回调
+    public void setOnError(Consumer<String> callback)
+    {
         this.onError = callback;
     }
 
-    private void handleError(String errorMessage) {
+    private void handleError(String errorMessage)
+    {
         System.err.println("Ollama错误: " + errorMessage);
         if (onError != null) {
             onError.accept(errorMessage);
         }
     }
 
-    /**
-     * 清理资源
-     */
-    public void shutdown() {
+    //清理资源
+    public void shutdown()
+    {
         executorService.shutdown();
     }
-}
+}*/

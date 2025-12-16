@@ -3,13 +3,16 @@ package ceobe.arkfriends;
 //region imports
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.Scene;
 
+import java.io.IOException;
 import java.util.Map;
 import java.util.Random;
+import java.util.function.Supplier;
 
 
 import javafx.scene.layout.*;
@@ -42,7 +45,9 @@ public class AnimationController
     public ImageView content;
     @FXML
     public Pane rootPane;
-    private Stage stage;
+    public Stage stage;
+    public Stage popupStage;
+    public Stage dialogStage;
     //private Scene scene;
     /*
     //private List<List<Image>> curCharAni;
@@ -69,6 +74,8 @@ public class AnimationController
     public Timeline switcher;
 
     private int switcherCounter=10;*/
+
+    private RightKeyPanelController rightKeyPanelController;
 
 
     //endregion
@@ -105,6 +112,8 @@ public class AnimationController
             System.out.println("content is null 1");*/
 
         //DelayedInitialization();
+
+        SetPhysicsMode(false);
     }
 
     boolean isDragged=false;
@@ -140,6 +149,43 @@ public class AnimationController
         // 设置主窗口右键事件
         //把scene换成ImageView
         //content.setOnMouseClicked(event -> {
+        if(rightKeyPanelController==null) {
+            rightKeyPanelController = new RightKeyPanelController();
+
+            //我真草了
+            //他必须要放到UI线程里去更新，早一毫秒都不行
+            //我讨厌多线程
+            Platform.runLater(() -> {
+                rightKeyPanelController.CreateSecondaryStage(stage, stage.getX(), stage.getY());
+                //互相交换电话号码
+                rightKeyPanelController.petStage = stage;
+                popupStage = rightKeyPanelController.popupStage;
+
+
+//                try{
+//                    rightKeyPanelController.InitializeDialogPrinter();
+//                }catch (IOException e){
+//
+//                }
+                rightKeyPanelController.HidePopupStage();
+                rightKeyPanelController.InitializeDialogPrinter();
+                //我感觉这句可能会空报错
+                dialogStage=rightKeyPanelController.dialogStage;
+                //我最讨厌调顺序了
+
+
+                dialogStage.setX(stage.getX()+100);
+                dialogStage.setY(stage.getY()+50);
+                stage.xProperty().addListener(((observableValue, oldX, newX) -> {
+                    dialogStage.setX(newX.doubleValue()+100);
+                }));
+                stage.yProperty().addListener(((observableValue, oldY, newY) -> {
+                    dialogStage.setY(newY.doubleValue()+50);
+                }));
+            });
+        }
+
+
         content.addEventHandler(MouseEvent.MOUSE_CLICKED,event->{
             System.out.println("Mouse clicked");
             if (event.getButton() == MouseButton.SECONDARY)
@@ -153,7 +199,7 @@ public class AnimationController
                 }
 
                 // 创建新窗口
-                CreateSecondaryStage(stage, event.getScreenX(), event.getScreenY());
+                rightKeyPanelController.CreateSecondaryStage(stage, event.getScreenX(), event.getScreenY());
                 event.consume(); // 防止事件继续传播
             }
         });
@@ -162,10 +208,11 @@ public class AnimationController
         //主窗口点击事件（用于关闭弹出窗口）
         //content.setOnMouseClicked(event -> {
         content.addEventHandler(MouseEvent.MOUSE_CLICKED,event->{
-            if (event.getButton() == MouseButton.PRIMARY && popupStage != null && popupStage.isShowing())
+            if (event.getButton() == MouseButton.PRIMARY &&
+                    popupStage != null && popupStage.isShowing())
             {
                 //检查点击是否在弹出窗口内
-                if (!isClickInPopup(event.getScreenX(), event.getScreenY()))
+                if (!rightKeyPanelController.isClickInPopup(event.getScreenX(), event.getScreenY()))
                 {
                     //popupStage.close();
                     popupStage.hide();
@@ -176,7 +223,8 @@ public class AnimationController
 
 
         content.addEventHandler(MouseEvent.MOUSE_CLICKED,event -> {
-            if(event.getButton()==MouseButton.PRIMARY && (popupStage==null||!popupStage.isShowing()))
+            if(event.getButton()==MouseButton.PRIMARY &&
+                    (popupStage==null||!popupStage.isShowing()))
             {
                 nextState=curChar.states.get("interact");
             }
@@ -185,6 +233,9 @@ public class AnimationController
         content.addEventHandler(MouseEvent.MOUSE_DRAGGED,event -> {
             if(!isDragged)
             {
+                //加了一句这个
+                if(event.getButton()!=MouseButton.PRIMARY)
+                    return;
                 isDragged=true;
                 nextState=curChar.states.get("drag");
             }
@@ -225,6 +276,8 @@ public class AnimationController
                 new KeyFrame(Duration.seconds(deltaTime),actionEvent -> {
                     StateUpdate();
                     MovementUpdate();
+                    //有一点担心会内存泄漏，结果发现是我想多了
+                    //System.out.println(animator.getKeyFrames().size());
                     //ImageUpdate();
                 }));
         animator.setCycleCount(Timeline.INDEFINITE);
@@ -309,7 +362,8 @@ public class AnimationController
 
                 CheckNextState();
             }
-            //这俩玩意联动的属实有点远
+            //这俩玩意联动的属实有点远，也算是动态平衡了
+            //指的是nextNullTime
         }
         if(frameCount>=totalFrame)
         {
@@ -401,7 +455,8 @@ public class AnimationController
     }
     public AnimationState RandomState()
     {
-        int r=ran.nextInt(0,100);
+        return physicsMode.get();
+        /*int r=ran.nextInt(0,100);
         if(r<10) {
             return curChar.defaultState;
         } else if (r<100) {
@@ -414,7 +469,7 @@ public class AnimationController
             return curChar.states.get("move");
         } else {
             return curChar.defaultState;
-        }
+        }*/
     }
     public void CheckNextState()//如果检查长时间为空就随机一个
     {
@@ -450,6 +505,45 @@ public class AnimationController
         {
             stage.setX(stage.getX()+moveX);
             stage.setY(stage.getY()+moveY);
+        }
+    }
+
+
+    //Supplier<Void> physicsMode;
+    //Runnable physicsMode;
+    Supplier<AnimationState> physicsMode;
+
+    //public void SetPhysicsMode(Supplier<Boolean> mode)
+    public void SetPhysicsMode(boolean mode)
+    {
+        //physicsMode=mode;mode
+        if(mode) {
+            physicsMode = this::RandomStateWithPhysics;
+            //physicsMode=()->RandomStateWithPhysics();
+        }
+        else {
+            physicsMode = this::RandomStateWithoutPhysics;
+        }
+    }
+    private AnimationState RandomStateWithPhysics()
+    {
+        return null;
+    }
+    private AnimationState RandomStateWithoutPhysics()
+    {
+        int r=ran.nextInt(0,100);
+        if(r<10) {
+            return curChar.defaultState;
+        } else if (r<100) {
+            point=new Point(ran.nextInt(200,1200),ran.nextInt(200,800));
+            System.out.println(point.x+"  "+point.y);
+            double distance=Math.sqrt(Math.pow(stage.getX()-point.x,2)+Math.pow(stage.getY()-point.y,2));
+            dx=(point.x-stage.getX())/distance;
+            dy=(point.y-stage.getY())/distance;
+            ChangeDirection();
+            return curChar.states.get("move");
+        } else {
+            return curChar.defaultState;
         }
     }
 
@@ -661,6 +755,7 @@ public class AnimationController
     //按理来说下面这些不该出现在动画控制器里，但懒了，就这样叭
     //region 右键角色窗口相关
 
+    /*
     private Stage popupStage = null;
     private double popupWidth = 200; //根据panel.fxml调整
     private double popupHeight = 100; //根据panel.fxml调整
@@ -790,15 +885,15 @@ public class AnimationController
             return false;
         }
 
-        /*double windowX = popupStage.getX();
-        double windowY = popupStage.getY();
-        double windowWidth = popupStage.getWidth();
-        double windowHeight = popupStage.getHeight();
-
-        return clickX >= windowX &&
-                clickX <= windowX + windowWidth &&
-                clickY >= windowY &&
-                clickY <= windowY + windowHeight;*/
+//        double windowX = popupStage.getX();
+//        double windowY = popupStage.getY();
+//        double windowWidth = popupStage.getWidth();
+//        double windowHeight = popupStage.getHeight();
+//
+//        return clickX >= windowX &&
+//                clickX <= windowX + windowWidth &&
+//                clickY >= windowY &&
+//                clickY <= windowY + windowHeight;
         return clickX >= popupX && clickX <= popupX + popupWidth &&
                 clickY >= popupY && clickY <= popupY + popupHeight;
     }
@@ -830,7 +925,7 @@ public class AnimationController
     public void HidePopupStage()
     {
         popupStage.hide();
-    }
+    }*/
 
     //endregion
     /*public void start(Stage primaryStage) {

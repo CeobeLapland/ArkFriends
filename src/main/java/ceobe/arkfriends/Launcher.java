@@ -90,5 +90,7 @@ public class Launcher extends Application
         },200);//延迟一秒执行
         //AnimationController.animationController.DelayedInitialization();
         //放到DelayedInitialization里去了
+
+        //new AIChatManager();
     }
 }

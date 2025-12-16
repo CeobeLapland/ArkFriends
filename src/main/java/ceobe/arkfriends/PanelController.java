@@ -2,6 +2,7 @@ package ceobe.arkfriends;
 
 //region imports
 import com.fasterxml.jackson.databind.ObjectMapper;
+import javafx.animation.FadeTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.*;
@@ -19,6 +20,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 //import System.out;
 //endregion
@@ -218,11 +220,11 @@ public class PanelController
             System.out.println("curPanel is null when changing region");
         if (regionClose != null)
         {
-            //FadeTransition fadeOut = new FadeTransition(Duration.millis(300), regionClose);
-            //fadeOut.setFromValue(1.0);
-            //fadeOut.setToValue(0.0);
-            //fadeOut.setOnFinished(e -> regionClose.setVisible(false));
-            //fadeOut.play();
+            FadeTransition fadeOut = new FadeTransition(Duration.millis(1000), regionClose);
+            fadeOut.setFromValue(1.0);
+            fadeOut.setToValue(0.0);
+            fadeOut.setOnFinished(e -> regionClose.setVisible(false));
+            fadeOut.play();
             regionClose.setVisible(false);
             System.out.println("Region Close");
         }
@@ -230,12 +232,12 @@ public class PanelController
         {
             curPanel=regionOpen;
 
-            //regionOpen.setOpacity(0.0);
+            regionOpen.setOpacity(0.0);
             regionOpen.setVisible(true);
-            //FadeTransition fadeIn = new FadeTransition(Duration.millis(300), regionOpen);
-            //fadeIn.setFromValue(0.0);
-            //fadeIn.setToValue(1.0);
-            //fadeIn.play();
+            FadeTransition fadeIn = new FadeTransition(Duration.millis(1000), regionOpen);
+            fadeIn.setFromValue(0.0);
+            fadeIn.setToValue(1.0);
+            fadeIn.play();
             regionOpen.toFront();
             System.out.println("Region Open");
         }
