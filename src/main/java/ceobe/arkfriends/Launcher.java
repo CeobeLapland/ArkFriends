@@ -85,6 +85,10 @@ public class Launcher extends Application
             public void run()
             {
                 AnimationController.animationController.DelayedInitialization();
+
+                new AIChatManager();
+                //这个也必须放在这里面
+                //我也不知道为什么，明明ACM里面不涉及到UI更新，但他还是会导致timeline线程爆炸
                 timer.cancel();
             }
         },200);//延迟一秒执行

@@ -694,9 +694,9 @@ public class AnimationController
             stage.setY(currentY+speed*deltaTime*(deltaY/distance));
         }
     }*/
-    /*
     //还是加两个不一样的改变函数吧
     //我想着搞一个animationState的队列，然后按照顺序调用
+    /*
     public void ChangeAnimationImmediately(AnimationState aniState)//改变当前角色的动画
     {
         //未播放完的要么放在这里，要么放在调用该函数的那个地方

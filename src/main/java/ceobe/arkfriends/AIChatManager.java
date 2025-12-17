@@ -24,7 +24,8 @@ public class AIChatManager
     private final HttpClient httpClient;
     private final ObjectMapper objectMapper;
 
-    /** 对话上下文 */
+    //对话缓存区？
+    //应该可以这么叫，上下文
     private final List<ChatMessage> conversation = new ArrayList<>();
 
     public AIChatManager()
@@ -36,18 +37,19 @@ public class AIChatManager
                 .build();
         this.objectMapper = new ObjectMapper();
 
-        // 可选：给桌宠一个“人格设定”
+        //预设人设
         conversation.add(new ChatMessage(
                 "system",
-                "你是一个可爱的小猫娘，说话简短、有亲和力，可以偶尔卖萌。"
+                "你是一个可爱的小猫娘，说话可爱有亲和力，可以撒娇卖萌，回答不超过50字，多用口语，不要解释过程。"
         ));
     }
 
     //发送消息（同步）
-    public String sendMessage(String userMessage) throws Exception {
+    public String SendMessageImmediately(String userMessage) throws Exception
+    {
         conversation.add(new ChatMessage("user", userMessage));
 
-        String requestBody = buildRequestBody(false);
+        String requestBody = BuildRequestBody(false);
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(OLLAMA_API_URL))
@@ -58,19 +60,21 @@ public class AIChatManager
         HttpResponse<String> response =
                 httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
-        String reply = parseReply(response.body());
+        String reply = ParseReply(response.body());
         conversation.add(new ChatMessage("assistant", reply));
 
         return reply;
     }
 
     //发送消息（异步，强烈推荐 JavaFX 使用）
-    public CompletableFuture<String> sendMessageAsync(String userMessage) {
+    //synchronous and asynchronous
+    public CompletableFuture<String> SendMessageAsync(String userMessage)
+    {
         conversation.add(new ChatMessage("user", userMessage));
 
         String requestBody;
         try {
-            requestBody = buildRequestBody(false);
+            requestBody = BuildRequestBody(false);
         } catch (Exception e) {
             CompletableFuture<String> future = new CompletableFuture<>();
             future.completeExceptionally(e);
@@ -87,7 +91,7 @@ public class AIChatManager
                 .thenApply(HttpResponse::body)
                 .thenApply(body -> {
                     try {
-                        String reply = parseReply(body);
+                        String reply = ParseReply(body);
                         conversation.add(new ChatMessage("assistant", reply));
                         return reply;
                     } catch (Exception e) {
@@ -97,7 +101,8 @@ public class AIChatManager
     }
 
     //构建请求 JSON
-    private String buildRequestBody(boolean stream) throws Exception {
+    private String BuildRequestBody(boolean stream) throws Exception
+    {
         var root = objectMapper.createObjectNode();
         root.put("model", MODEL_NAME);
         root.put("stream", stream);
@@ -108,6 +113,7 @@ public class AIChatManager
             msgNode.put("role", msg.getRole());
             msgNode.put("content", msg.getContent());
             messagesNode.add(msgNode);
+            System.out.println(msg.getRole()+"  "+msg.getContent());
         }
         root.set("messages", messagesNode);
 
@@ -115,13 +121,16 @@ public class AIChatManager
     }
 
     //解析模型回复
-    private String parseReply(String responseBody) throws Exception {
+    private String ParseReply(String responseBody) throws Exception
+    {
         JsonNode root = objectMapper.readTree(responseBody);
         return root.path("message").path("content").asText();
     }
 
-    //清空上下文（比如桌宠“失忆”）
-    public void clearMemory() {
+    //清空上下文
+    //失忆lost memories
+    public void ClearMemory()
+    {
         conversation.clear();
     }
 }

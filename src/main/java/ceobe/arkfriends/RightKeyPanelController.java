@@ -16,20 +16,11 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import javafx.animation.*;
-import javafx.geometry.Insets;
-import javafx.scene.control.Label;
-import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Font;
 import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Time;
 import java.util.Objects;
-import java.util.Timer;
-import java.util.TimerTask;
 
 
 public class RightKeyPanelController
@@ -223,14 +214,22 @@ public class RightKeyPanelController
         String userText = inputField.getText();
         if(Objects.equals(userText, ""))
             return;
+        System.out.println(userText);
         inputField.clear();
 
+        //我在想这么长的一系列lambda嵌套如果写成一行会有多长
+        //让我试试
+        //Platform.runLater(()->{AIChatManager.ACM.sendMessageAsync(userText).thenAccept(reply -> {Platform.runLater(() -> {System.out.println("开始打字");OpenDialog();PrinterFlow(reply + "\n");});}).exceptionally(ex -> {ex.printStackTrace();return null;});});
+        //好像也没多长
         Platform.runLater(()->{
-            AIChatManager.ACM.sendMessageAsync(userText)
+            AIChatManager.ACM.SendMessageAsync(userText)
                     .thenAccept(reply -> {
                         Platform.runLater(() -> {
                             //chatArea.appendText("桌宠：" + reply + "\n");
-                            PrinterFlow("桌宠：" + reply + "\n");
+                            System.out.println("开始打字");
+
+                            OpenDialog();
+                            PrinterFlow(reply + "\n");
                         });
                     })
                     .exceptionally(ex -> {
