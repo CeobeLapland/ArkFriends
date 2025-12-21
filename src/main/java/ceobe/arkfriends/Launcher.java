@@ -39,6 +39,11 @@ public class Launcher extends Application
         PanelController.panelController.AddWindowsEffect();//当时这个顺序放错位置了
         //一直报错
         //草了，反而这里对了，线程顺序怎么搞的
+
+        new VoiceService();
+        VoiceService.voice.StartService();
+        VoiceService.voice.Speak("博士、もう遅いです。もう休みましょう\n");
+        //程序启动成功，博士，已经很晚了，该休息啦
     }
 
     public void StartRunning() throws IOException
@@ -89,9 +94,11 @@ public class Launcher extends Application
                 new AIChatManager();
                 //这个也必须放在这里面
                 //我也不知道为什么，明明ACM里面不涉及到UI更新，但他还是会导致timeline线程爆炸
+                new WindowsScanner();
+
                 timer.cancel();
             }
-        },200);//延迟一秒执行
+        },300);//延迟一秒执行
         //AnimationController.animationController.DelayedInitialization();
         //放到DelayedInitialization里去了
 

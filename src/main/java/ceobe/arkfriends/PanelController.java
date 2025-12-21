@@ -3,6 +3,7 @@ package ceobe.arkfriends;
 //region imports
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.animation.FadeTransition;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.*;
@@ -103,11 +104,15 @@ public class PanelController
                 //curCharacterSearchData=allCharacterSearchData;
                 curCharacterSearchData=new HashMap<>(allCharacterSearchData);
                 PopulateCharacterInListView();*/
-                DelayedInitialization();
+                Platform.runLater(() ->{
+                    DelayedInitialization();
+                });
+                //Ok了这样就可以了，必须要在javafx的UI线程里执行
+                //DelayedInitialization();
 
                 timer.cancel();
             }
-        },2000);//100毫秒还不行，还需要更久，不知道线程执行的怎么样
+        },1000);//100毫秒还不行，还需要更久，不知道线程执行的怎么样
 
         LoadCharacterSearchData();
 
@@ -140,8 +145,7 @@ public class PanelController
             put(reshipperCheckBox,CharacterOccupation.RESHIPPER);
             put(specialistCheckBox,CharacterOccupation.SPECIALIST);
         }};
-        starCheckBoxs=new HashMap<CheckBox,Integer>(){
-            {
+        starCheckBoxs=new HashMap<CheckBox,Integer>(){{
                 put(sixStarCheckBox, 6);
                 put(fiveStarCheckBox, 5);
                 put(fourStarCheckBox, 4);
@@ -154,6 +158,25 @@ public class PanelController
         //curCharacterSearchData=allCharacterSearchData;
         curCharacterSearchData=new HashMap<>(allCharacterSearchData);
         PopolateCharacterListView();
+
+
+        //临时测试用
+        /*titleBar.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            if (event.getClickCount() == 2) {
+                // 双击事件处理逻辑
+                System.out.println("Title bar double-clicked!");
+                //这里可以实现最大化和还原窗口的功能
+                Stage stage = Launcher.launcher.launcherStage;
+                if (stage.isMaximized()) {
+                    stage.setMaximized(false);
+                } else {
+                    stage.setMaximized(true);
+                }
+            }
+        });*/
+//        titleBar.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+//            System.out.println(Launcher.launcher.launcherStage.getX()+" , "+Launcher.launcher.launcherStage.getY());
+//        });
     }
 
     public void LoadCharacterSearchData()

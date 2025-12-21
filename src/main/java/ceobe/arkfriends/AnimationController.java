@@ -7,27 +7,19 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.Scene;
 
-import java.io.IOException;
 import java.util.Map;
 import java.util.Random;
+import java.util.Timer;
 import java.util.function.Supplier;
 
 
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-
 
 
 //import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.input.MouseButton;
-import javafx.stage.Modality;
-import javafx.geometry.Rectangle2D;
-import javafx.stage.Screen;
 import javafx.util.Duration;
 
 //endregion
@@ -174,7 +166,8 @@ public class AnimationController
                 //我最讨厌调顺序了
 
 
-                dialogStage.setX(stage.getX()+100);
+                //绑定dialog窗口移动情况
+                dialogStage.setX(stage.getX()+120);
                 dialogStage.setY(stage.getY()+50);
                 stage.xProperty().addListener(((observableValue, oldX, newX) -> {
                     dialogStage.setX(newX.doubleValue()+100);
@@ -203,7 +196,7 @@ public class AnimationController
                 event.consume(); // 防止事件继续传播
             }
         });
-        System.out.println("setted");
+        System.out.println("have set");
         //这个只能绑定一个事件
         //主窗口点击事件（用于关闭弹出窗口）
         //content.setOnMouseClicked(event -> {
@@ -212,7 +205,7 @@ public class AnimationController
                     popupStage != null && popupStage.isShowing())
             {
                 //检查点击是否在弹出窗口内
-                if (!rightKeyPanelController.isClickInPopup(event.getScreenX(), event.getScreenY()))
+                if (!rightKeyPanelController.IsClickInPopup(event.getScreenX(), event.getScreenY()))
                 {
                     //popupStage.close();
                     popupStage.hide();
@@ -222,6 +215,7 @@ public class AnimationController
         });
 
 
+        //鼠标左键单击interact
         content.addEventHandler(MouseEvent.MOUSE_CLICKED,event -> {
             if(event.getButton()==MouseButton.PRIMARY &&
                     (popupStage==null||!popupStage.isShowing()))
@@ -240,8 +234,14 @@ public class AnimationController
                 nextState=curChar.states.get("drag");
             }
         });
+
+        //这个还挺重要的
         content.addEventHandler(MouseEvent.MOUSE_RELEASED,event -> {
             isDragged=false;
+            if (movingToSitTimer !=null) {
+                movingToSitTimer.cancel();
+                movingToSitTimer =null;
+            }
         });
 
         ChangeCharacter(curCharName);
@@ -256,6 +256,7 @@ public class AnimationController
     float deltaTime=0.05f;
     long timeCount=0;
     int nextNullTime=0;
+    public int lastingTime=240;//12s
 
 //    AnimationState manualRequest = null;
 //    AnimationState interactRequest = null;
@@ -444,6 +445,49 @@ public class AnimationController
 //            startMovementIfNeeded();
 //        }*/
 //    }
+
+    public void ChangeEmotion(Emotion emotion)
+    {
+        /*switch (emotion)
+        {
+            //case QUIET -> {} 还能这么写哈哈哈
+            case QUIET: {
+                ChangeState(curChar.states.get("idle"));
+                break;
+            }
+            case HAPPY: {
+                ChangeState(curChar.states.get("happy"));
+                break;
+            }
+            case SAD: {
+                ChangeState(curChar.states.get("sad"));
+                break;
+            }
+            case ANGRY: {
+                ChangeState(curChar.states.get("angry"));
+                break;
+            }
+            case SURPRISED:{
+                ChangeState(curChar.states.get("surprised"));
+                break;
+            }
+            case SCARED: {
+                ChangeState(curChar.states.get("scared"));
+                break;
+            }
+            case DISGUSTED: {
+                ChangeState(curChar.states.get("disgusted"));
+                break;
+            }
+            case EXCITED: {
+                ChangeState(curChar.states.get("excited"));
+                break;
+            }
+        }*/
+    }
+
+
+
     public void ChangeState(AnimationState newState)
     {
         if (newState==null)
@@ -471,9 +515,11 @@ public class AnimationController
             return curChar.defaultState;
         }*/
     }
+    //先这样用动态平衡的写法
+    //之后再换成独立线程
     public void CheckNextState()//如果检查长时间为空就随机一个
     {
-        if(nextNullTime>240)//10s
+        if(nextNullTime>lastingTime)//10s
         {
             nextState=RandomState();
         }
@@ -513,6 +559,13 @@ public class AnimationController
     //Runnable physicsMode;
     Supplier<AnimationState> physicsMode;
 
+
+    Timer movingToSitTimer;
+    //WindowsScanner.DesktopWindow
+    private Point a=new Point(0,0),b=new Point(1600,0);
+
+    private int xExcursion=-100,yExcursion=-220;
+
     //public void SetPhysicsMode(Supplier<Boolean> mode)
     public void SetPhysicsMode(boolean mode)
     {
@@ -532,15 +585,63 @@ public class AnimationController
     private AnimationState RandomStateWithoutPhysics()
     {
         int r=ran.nextInt(0,100);
-        if(r<10) {
+        if(r<10)
+        {//默认idle
+            lastingTime=240;
             return curChar.defaultState;
-        } else if (r<100) {
-            point=new Point(ran.nextInt(200,1200),ran.nextInt(200,800));
+        }
+        else if (r<50)
+        {//move
+            point=new Point(ran.nextInt(100+xExcursion,1500+xExcursion),ran.nextInt(yExcursion,600+yExcursion));
+            //在原来基础上减去了20
             System.out.println(point.x+"  "+point.y);
             double distance=Math.sqrt(Math.pow(stage.getX()-point.x,2)+Math.pow(stage.getY()-point.y,2));
             dx=(point.x-stage.getX())/distance;
             dy=(point.y-stage.getY())/distance;
             ChangeDirection();
+
+            lastingTime=(int)(distance/speed*20)+200;
+            return curChar.states.get("move");
+        }
+        else if(r<100)
+        {//sit
+            WindowsScanner.windowsScanner.GiveHorizontalLine(a,b);
+            //从窗口中找到合适的位置
+            //WindowsScanner.windowsScanner.FindTargetWindow(200,200);
+            //这个回来要乘上角色的放大倍数
+            if(a.x==b.x){
+                //没有找到合适的窗口
+                return curChar.defaultState;
+            }
+            System.out.println("Found window line: ("+a.x+","+a.y+") to ("+b.x+","+b.y+")");
+            //在ab中间随机一个点
+            point=new Point(ran.nextInt(a.x,b.x)+yExcursion,a.y+yExcursion);
+            System.out.println("Target point for sitting: ("+point.x+","+point.y+")");
+
+            double distance=Math.sqrt(Math.pow(stage.getX()-point.x,2)+Math.pow(stage.getY()-point.y,2));
+            dx=(point.x-stage.getX())/distance;
+            dy=(point.y-stage.getY())/distance;
+            ChangeDirection();
+
+            if(movingToSitTimer !=null)
+            {
+                movingToSitTimer.cancel();
+            }
+            movingToSitTimer =new Timer();
+            movingToSitTimer.schedule(new java.util.TimerTask(){
+                @Override
+                public void run()
+                {
+                    Platform.runLater(()->{
+                        nextState=curChar.states.get("sit");
+                        movingToSitTimer.cancel();
+                    });
+                }
+            },(long)(distance/speed*1000)+2000);//走到坐的位置然后切换sit
+
+
+            lastingTime=(int)(distance/speed*20)+400;
+
             return curChar.states.get("move");
         } else {
             return curChar.defaultState;
@@ -753,6 +854,7 @@ public class AnimationController
 
 
     //按理来说下面这些不该出现在动画控制器里，但懒了，就这样叭
+    //已经挪走了
     //region 右键角色窗口相关
 
     /*

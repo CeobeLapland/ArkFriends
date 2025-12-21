@@ -26,6 +26,12 @@
         "fps": 24,
         "loop": true,
         "move": false
+      },
+      "sit": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\ceobe\\sit",
+        "fps": 24,
+        "loop": true,
+        "move": false
       }
     },
     "voices": {
@@ -61,7 +67,13 @@
         "fps": 24,
         "loop": true,
         "move": false
-      }
+      },
+        "sit": {
+            "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\texas\\sit",
+            "fps": 24,
+            "loop": true,
+            "move": false
+        }
     },
     "voices": {
       "hello": {
@@ -95,7 +107,13 @@
         "fps": 24,
         "loop": true,
         "move": false
-      }
+      },
+        "sit": {
+            "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\lapland\\sit",
+            "fps": 24,
+            "loop": true,
+            "move": false
+        }
     },
     "voices": {
       "hello": {

@@ -21,6 +21,7 @@ import javafx.util.Duration;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
+import java.util.Timer;
 
 
 public class RightKeyPanelController
@@ -118,6 +119,7 @@ public class RightKeyPanelController
         }
     }
 
+    //这个函数改一改也能通用
     private double[] SelectBestPosition(double mouseX, double mouseY)
     {
         // 获取屏幕边界
@@ -157,7 +159,7 @@ public class RightKeyPanelController
         return new double[]{x, y};
     }
 
-    public boolean isClickInPopup(double clickX, double clickY)
+    public boolean IsClickInPopup(double clickX, double clickY)
     {
         if (popupStage == null || !popupStage.isShowing()) {
             return false;
@@ -254,6 +256,10 @@ public class RightKeyPanelController
     private int textSize;
     private int curTextIndex;
 
+
+    public int dialogRemainTime=10;//对话框保持时间
+    private Timer dialogTimer;
+
     public void InitializeDialogPrinter()// throws IOException
     {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("dialogPrinter.fxml"));
@@ -277,7 +283,7 @@ public class RightKeyPanelController
         }
 
         //System.out.println("Scene"+dialogScene==null);
-        //dialogStage.initStyle(StageStyle.TRANSPARENT);
+        dialogStage.initStyle(StageStyle.TRANSPARENT);
         dialogStage.setScene(dialogScene);
 
         //dialogStage.show();
@@ -359,6 +365,19 @@ public class RightKeyPanelController
     private double w1 = 0,w2 = 0;
     public void PrinterFlow(String text)
     {
+        //先终止已有计时器
+        if(dialogTimer!=null)
+        {
+            dialogTimer.cancel();
+            dialogTimer=null;
+        }
+        //按理来说也得加上这个终止已有打字机动画
+        if(printerLine!=null)
+        {
+            printerLine.stop();
+            printerLine=null;
+        }
+
         curText=text;
         textSize=text.length();
         curTextIndex=0;
@@ -371,6 +390,19 @@ public class RightKeyPanelController
                     if(curTextIndex>=textSize)
                     {
                         printerLine.stop();
+
+                        //启动计时器dialogRemainTime后隐藏对话框
+                        dialogTimer=new Timer();
+                        dialogTimer.schedule(new java.util.TimerTask() {
+                            @Override
+                            public void run() {
+                                Platform.runLater(() -> {
+                                    HideDialog();
+                                });//这里也得用Platform.runLater
+                                dialogTimer.cancel();
+                            }
+                        },dialogRemainTime* 1000L);
+
                         return;
                     }
                     dialog.setText(text.substring(0,curTextIndex++));
@@ -380,9 +412,11 @@ public class RightKeyPanelController
                     w1=dialog.getLayoutBounds().getHeight();
                     //System.out.println(w);
                     if(w1!=w2) {
+                        dialogStage.setY(dialogStage.getY()+w1-w2);
                         w2=w1;
                         dialogStage.setHeight(w2 + 35);
-                        System.out.println(w1);
+
+                        System.out.println("now dialog window height"+w1);
                     }
                     //if(w>=200)
                     //{
