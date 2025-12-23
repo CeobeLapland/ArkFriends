@@ -24,9 +24,6 @@ public class AIChatManager
     //private String API_KEY = ""; //如果需要的话
     private String MODEL_NAME = "qwen2.5:3b";
 
-    //private static final String DEEPSEEK_API_URL = "https://api.deepseek.com/v1/model"; // DeepSeek API URL
-    //private String deepSeekApiKey = "your_deepseek_api_key"; // Replace with your actual API key
-
     private final HttpClient httpClient;
     private final ObjectMapper objectMapper;
 
@@ -204,6 +201,13 @@ public class AIChatManager
 
 
 
+    //private static final String DEEPSEEK_API_URL = "https://api.deepseek.com/v1/model"; // DeepSeek API URL
+    //private String deepSeekApiKey = "your_deepseek_api_key"; // Replace with your actual API key
+    //public static final String GENERIC_API_URL = "https://api.openai.com/v1/chat/completions";
+    public static String COMMON_API_URL="https://api.deepseek.com/v1/model";
+    public static String COMMON_API_KEY="sk-65acb8841edc47d88cb6505540a57cdb";
+    //我也不知道这几个URL行不行，一看到模型收费我就不想弄了
+    //本地部署是最好的
 
     /**
      * 通用函数：调用符合 OpenAI 接口的在线模型

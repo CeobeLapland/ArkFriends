@@ -40,9 +40,9 @@ public class Launcher extends Application
         //一直报错
         //草了，反而这里对了，线程顺序怎么搞的
 
-        new VoiceService();
-        VoiceService.voice.StartService();
-        VoiceService.voice.Speak("博士、もう遅いです。もう休みましょう\n");
+        //new VoiceServiceWP();
+        //VoiceServiceWP.voice.StartService();
+        //VoiceServiceWP.voice.Speak("博士、もう遅いです。もう休みましょう\n");
         //程序启动成功，博士，已经很晚了，该休息啦
     }
 
@@ -67,11 +67,13 @@ public class Launcher extends Application
         //launcherStage.setScene(petScene);
         //launcherStage.close();
         //launcherStage.hide();
-        petStage=new Stage();
-        petStage.setScene(petScene);//这个有问题
+
         petScene.setFill(Color.TRANSPARENT);
 
+        petStage=new Stage();
+        petStage.setScene(petScene);//这个有问题
         petStage.initStyle(StageStyle.TRANSPARENT);
+
         petStage.setAlwaysOnTop(true);
         petStage.show();
 

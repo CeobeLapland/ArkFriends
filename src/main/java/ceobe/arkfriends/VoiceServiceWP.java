@@ -13,9 +13,9 @@ import java.io.OutputStreamWriter;
 
 import javafx.scene.media.AudioClip;
 
-public class VoiceService
+public class VoiceServiceWP
 {
-    public static VoiceService voice;
+    public static VoiceServiceWP voice;
 
     private final AudioRecorder recorder = new AudioRecorder();
     private final WhisperRecognizer asr = new WhisperRecognizer();
@@ -27,7 +27,7 @@ public class VoiceService
     private File inputWav = new File(VoiceConfig.INPUT_WAV);
 
 
-    public VoiceService()
+    public VoiceServiceWP()
     {
         if(voice==null)
             voice = this;

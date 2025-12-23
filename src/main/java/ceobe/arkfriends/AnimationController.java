@@ -11,6 +11,8 @@ import javafx.scene.input.MouseEvent;
 import java.util.Map;
 import java.util.Random;
 import java.util.Timer;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
 import java.util.function.Supplier;
 
 
@@ -21,6 +23,8 @@ import javafx.stage.Stage;
 //import javafx.application.Application;
 import javafx.scene.input.MouseButton;
 import javafx.util.Duration;
+
+import javax.swing.plaf.synth.SynthDesktopIconUI;
 
 //endregion
 public class AnimationController
@@ -70,6 +74,7 @@ public class AnimationController
     private RightKeyPanelController rightKeyPanelController;
 
 
+    public PhysicsDragController dragController;
     //endregion
 
     public AnimationController()
@@ -105,34 +110,70 @@ public class AnimationController
 
         //DelayedInitialization();
 
+        SetPhysicsUpdateMode(false);
         SetPhysicsMode(false);
     }
 
     boolean isDragged=false;
 
-    private double xOffset = 0;
-    private double yOffset = 0;
+    //private double xOffset = 0;
+    //private double yOffset = 0;
     public void DelayedInitialization()
     {
-
-        if(rootPane==null)
-            System.out.println("rootPane is null 2");
-        if(content==null)
-            System.out.println("content is null 2");
+//        if(rootPane==null)
+//            System.out.println("rootPane is null 2");
+//        if(content==null)
+//            System.out.println("content is null 2");
 
         rootPane.setStyle("-fx-background-color: transparent;");
-        rootPane.setOnMousePressed(event -> {
+        rootPane.setMouseTransparent(false);
+        /*rootPane.setOnMousePressed(event -> {
             xOffset = event.getSceneX();
             yOffset = event.getSceneY();
-        });
+        });*/
         //stage=(Stage)root.getScene().getWindow();
         stage=Launcher.launcher.petStage;
         //scene=Launcher.launcher.petScene;
 
-        rootPane.setOnMouseDragged(event -> {
-            stage.setX(event.getScreenX() - xOffset);
-            stage.setY(event.getScreenY() - yOffset);
+        /*rootPane.setOnMouseDragged(event -> {
+            //stage.setX(event.getScreenX() - xOffset);
+            //stage.setY(event.getScreenY() - yOffset);
+        });*/
+
+        //Filter和Handler的区别在于Filter会先于Handler执行
+
+        /*Launcher.launcher.petScene.addEventFilter(MouseEvent.MOUSE_RELEASED,event -> {
+            //isDragged=false;
+            //dragController.isDragging=false;
+            System.out.println("Mouse released in petScene");
+
+            if (movingToSitTimer !=null) {
+                movingToSitTimer.cancel();
+                movingToSitTimer =null;
+            }
+            dragController.OnMouseReleased();
+        });*/
+
+        /*
+        rootPane.addEventHandler(MouseEvent.MOUSE_RELEASED,event -> {
+            isDragged=false;
+            dragController.isDragging=false;
+            System.out.println("Mouse released in rootPane");
+
+            //isDragged=false;
+            //后续加上的
+            if (movingToSitTimer !=null) {
+                movingToSitTimer.cancel();
+                movingToSitTimer =null;
+            }
+
+            //又加入了这个
+            dragController.OnMouseReleased();
         });
+        Launcher.launcher.petScene.addEventHandler(MouseEvent.MOUSE_CLICKED,event -> {
+            System.out.println("Mouse clicked in petScene");
+        });
+         */
 
 
         //content.setOnMouseClicked(mouseEvent -> {
@@ -179,6 +220,12 @@ public class AnimationController
         }
 
 
+
+        if(dragController==null)
+            //dragController=new PhysicsDragController(new DoublePoint(stage.getX()+100,stage.getY()+100));
+            dragController=new PhysicsDragController(new DoublePoint(stage.getX(),stage.getY()));
+
+
         content.addEventHandler(MouseEvent.MOUSE_CLICKED,event->{
             System.out.println("Mouse clicked");
             if (event.getButton() == MouseButton.SECONDARY)
@@ -214,16 +261,22 @@ public class AnimationController
             }
         });
 
+        //这几个mouse click其实可以放一起
 
         //鼠标左键单击interact
         content.addEventHandler(MouseEvent.MOUSE_CLICKED,event -> {
+            System.out.println("Mouse clicked for interact");
+            if(isDragged)
+                return;
             if(event.getButton()==MouseButton.PRIMARY &&
                     (popupStage==null||!popupStage.isShowing()))
             {
+                System.out.println("interact");
                 nextState=curChar.states.get("interact");
             }
         });
 
+        //鼠标拖拽drag
         content.addEventHandler(MouseEvent.MOUSE_DRAGGED,event -> {
             if(!isDragged)
             {
@@ -233,16 +286,66 @@ public class AnimationController
                 isDragged=true;
                 nextState=curChar.states.get("drag");
             }
+
+            dragController.OnMouseDragged(event.getScreenX(),event.getScreenY());
         });
 
         //这个还挺重要的
-        content.addEventHandler(MouseEvent.MOUSE_RELEASED,event -> {
-            isDragged=false;
-            if (movingToSitTimer !=null) {
-                movingToSitTimer.cancel();
-                movingToSitTimer =null;
-            }
+        //content.addEventFilter(MouseEvent.MOUSE_RELEASED,event -> {
+        Launcher.launcher.petScene.addEventFilter(MouseEvent.MOUSE_RELEASED,event -> {
+
+            System.out.println("filter Mouse released");
+
+            dragController.isDragging=false;
+            //我草了这么重要的我居然忘记加上去了
+
+            ScheduledExecutorService scheduler= java.util.concurrent.Executors.newSingleThreadScheduledExecutor();
+            scheduler.scheduleAtFixedRate(()->{
+                if(Math.abs(dragController.velocity.x)>10 || Math.abs(dragController.velocity.y)>10)
+                {
+                    //System.out.println(dragController.velocity.x+"x"+dragController.velocity.y+"y  "+"return in scheduled release");
+                    //System.out.println(dragController.velocity.x+"x"+dragController.velocity.y+"y  "+"isDragged="+isDragged+"  isdragging="+dragController.isDragging);
+
+                    return;
+                }else
+                {
+                    isDragged = false;
+                    //后续加上的
+                    if (movingToSitTimer != null) {
+                        movingToSitTimer.cancel();
+                        movingToSitTimer = null;
+                    }
+                    if(followWindowExecutor!=null)
+                    {
+                        followWindowExecutor.shutdownNow();
+                        followWindowExecutor=null;
+                    }
+
+                    //又加入了这个
+                    dragController.OnMouseReleased();
+                    System.out.println("鼠标释放");
+                    nextState = curChar.states.get("interact");
+
+                    scheduler.shutdown();
+                }
+            },0,50,java.util.concurrent.TimeUnit.MILLISECONDS);
         });
+
+
+        content.addEventHandler(MouseEvent.MOUSE_PRESSED,event -> {
+            System.out.println("Mouse pressed");
+            //加了这个
+            if(event.getButton()!=MouseButton.PRIMARY)
+                return;
+            dragController.OnMousePressed(event.getScreenX(),event.getScreenY());
+            //dragController.OnMousePressed(event.getScreenX() + 100,event.getScreenY() + 100);
+            //加个100试试
+        });
+
+        //下面这些是订阅拖拽物理效果的
+        //content.addEventHandler();
+        //好像放上面整一起也不是不行
+
 
         ChangeCharacter(curCharName);
         StartAnimation();
@@ -347,8 +450,31 @@ public class AnimationController
 
 
 
+    //我觉得应该从根本上就区分物理模式和非物理模式
+    //然后把委托直接改成StateUpdate里调用不同的函数
+    private Runnable physicsUpdateMode;
+    public void SetPhysicsUpdateMode(boolean mode)
+    {
+        if(mode){
+            physicsUpdateMode=this::StateUpdateWithPhysics;
+        }
+        else{
+            physicsUpdateMode=this::StateUpdateWithoutPhysics;
+        }
+    }
+
     private void StateUpdate()
     {
+        //把原始内容全部塞到Without里去了
+        physicsUpdateMode.run();
+    }
+    private void StateUpdateWithPhysics()
+    {
+        //physicsUpdateMode.run();
+    }
+    private void StateUpdateWithoutPhysics()
+    {
+        //原本打算放在这里面的
         timeCount++;
         //这个版本的逻辑是nextState有最高优先级
         //只要nextStat不为空就直接更换
@@ -365,6 +491,10 @@ public class AnimationController
             }
             //这俩玩意联动的属实有点远，也算是动态平衡了
             //指的是nextNullTime
+            else {
+                dragController.Update(deltaTime);
+                dragController.Apply(stage,content);
+            }
         }
         if(frameCount>=totalFrame)
         {
@@ -559,12 +689,11 @@ public class AnimationController
     //Runnable physicsMode;
     Supplier<AnimationState> physicsMode;
 
-
     Timer movingToSitTimer;
     //WindowsScanner.DesktopWindow
     private Point a=new Point(0,0),b=new Point(1600,0);
 
-    private int xExcursion=-100,yExcursion=-220;
+    private int xExcursion=-100,yExcursion=-155;
 
     //public void SetPhysicsMode(Supplier<Boolean> mode)
     public void SetPhysicsMode(boolean mode)
@@ -585,14 +714,18 @@ public class AnimationController
     private AnimationState RandomStateWithoutPhysics()
     {
         int r=ran.nextInt(0,100);
+
+        if(followWindowExecutor!=null)
+            followWindowExecutor.shutdown();
+
         if(r<10)
         {//默认idle
             lastingTime=240;
             return curChar.defaultState;
         }
-        else if (r<50)
+        else if (r<40)
         {//move
-            point=new Point(ran.nextInt(100+xExcursion,1500+xExcursion),ran.nextInt(yExcursion,600+yExcursion));
+            point=new Point(ran.nextInt(150+xExcursion,1500+xExcursion),ran.nextInt(50+yExcursion,700+yExcursion));
             //在原来基础上减去了20
             System.out.println(point.x+"  "+point.y);
             double distance=Math.sqrt(Math.pow(stage.getX()-point.x,2)+Math.pow(stage.getY()-point.y,2));
@@ -603,7 +736,7 @@ public class AnimationController
             lastingTime=(int)(distance/speed*20)+200;
             return curChar.states.get("move");
         }
-        else if(r<100)
+        else if(r<80)
         {//sit
             WindowsScanner.windowsScanner.GiveHorizontalLine(a,b);
             //从窗口中找到合适的位置
@@ -635,6 +768,26 @@ public class AnimationController
                     Platform.runLater(()->{
                         nextState=curChar.states.get("sit");
                         movingToSitTimer.cancel();
+
+                        curWindow=WindowsScanner.windowsScanner.curWindow;
+                        //curWindowX=curWindow.x;
+                        //curWindowY=curWindow.y;
+                        curWindowPosition=WindowsScanner.windowsScanner.GetWindowPosition(curWindow.hWnd);
+                        curWindowX=curWindowPosition.x;
+                        curWindowY=curWindowPosition.y;
+
+                        //开始跟随窗口
+                        if(followWindowExecutor==null)
+                            followWindowExecutor= java.util.concurrent.Executors.newSingleThreadScheduledExecutor();
+                        followWindowExecutor.scheduleAtFixedRate(()->{
+                            if(curWindow==null)
+                                return;
+                            Platform.runLater(()->{
+                                AdjustStagePosition();
+                            });
+                        },0,100,java.util.concurrent.TimeUnit.MILLISECONDS);
+
+
                     });
                 }
             },(long)(distance/speed*1000)+2000);//走到坐的位置然后切换sit
@@ -643,9 +796,36 @@ public class AnimationController
             lastingTime=(int)(distance/speed*20)+400;
 
             return curChar.states.get("move");
-        } else {
+        }
+        else {
             return curChar.defaultState;
         }
+    }
+    private ScheduledExecutorService followWindowExecutor;
+    public WindowsScanner.DesktopWindow curWindow;
+    private int curWindowX,curWindowY;
+    Point curWindowPosition;
+    private void AdjustStagePosition()
+    {
+        //if(curWindow==null)
+        //    return;
+        //int deltaX=curWindow.x-curWindowX;
+        //int deltaY=curWindow.y-curWindowY;
+        curWindowPosition=WindowsScanner.windowsScanner.GetWindowPosition(curWindow.hWnd);
+        int deltaX=curWindowPosition.x-curWindowX;
+        int deltaY=curWindowPosition.y-curWindowY;
+        if(deltaX==0 && deltaY==0)
+            return;
+
+        //System.out.println();
+        System.out.println("Adjusting stage position "+deltaX+","+deltaY);
+        stage.setX(stage.getX()+deltaX);
+        stage.setY(stage.getY()+deltaY);
+        //curWindowX=curWindow.x;
+        //curWindowY=curWindow.y;
+        curWindowX=curWindowPosition.x;
+        curWindowY=curWindowPosition.y;
+        //我又草了又忘记更新这个了
     }
 
     /*
@@ -1063,16 +1243,4 @@ public class AnimationController
         primaryStage.show();
     }*/
 
-}
-
-class Point
-{
-    public int x, y;
-    //public float waitTime;
-    public Point(int x, int y)//,float waitTime)
-    {
-        this.x = x;
-        this.y = y;
-        //this.waitTime=waitTime;
-    }
 }

@@ -4,10 +4,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<AnchorPane maxWidth="200.0" prefHeight="100.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxWidth="200.0" prefHeight="100.0" prefWidth="200.0" style="-fx-background-radius: 20px; -fx-background-color: linear-gradient(to bottom right, #87CEEB, #1E90FF);" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Text fx:id="dialog" lineSpacing="1.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <Text fx:id="dialog" lineSpacing="1.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text测试" wrappingWidth="180.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="0.0">
          <font>
             <Font size="14.0" />
          </font>
