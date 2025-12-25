@@ -3,7 +3,7 @@ package ceobe.arkfriends;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
-public class PhysicsDragController
+public class PhysicsDragWithoutGravity implements IPhysicsDragController
 {
 
     // 位置 & 速度
@@ -30,11 +30,19 @@ public class PhysicsDragController
     private double angularDamping = 1;
     private double maxAngle = 50;      // 最大晃动角度
 
-    public PhysicsDragController(DoublePoint startPos)
+    public PhysicsDragWithoutGravity(DoublePoint startPos)
     {
         this.position = startPos;
     }
 
+    public void SetIsDragging(boolean dragging)
+    {
+        this.isDragging = dragging;
+    }
+    public DoublePoint GetVelocity()
+    {
+        return this.velocity;
+    }
     /* 鼠标按下 */
     public void OnMousePressed(double mx, double my)
     {
@@ -138,6 +146,7 @@ public class PhysicsDragController
     {
         //view.setLayoutX(position.x);
         //view.setLayoutY(position.y);
+        //100还得改成可变变量
         stage.setX(position.x-100);
         stage.setY(position.y-100);
         view.setRotate(rotation);

@@ -249,12 +249,12 @@ public class WindowsScanner
         User32.INSTANCE.GetWindowRect(hWnd, rect);
         int x=(int)(rect.left*0.667);
         int y=(int)(rect.top*0.667);
-        System.out.println("窗口位置："+x+","+y);
+        //System.out.println("窗口位置："+x+","+y);
         return new Point(x,y);
     }
     private static final String TARGET_WINDOW_TITLE = "记事本";
-    private static HWND targetHwnd; // 目标窗口引用（句柄）
-    private static WinUser.HHOOK hHook; // 钩子句柄
+    private static HWND targetHwnd; //目标窗口引用（句柄）
+    private static WinUser.HHOOK hHook; //钩子句柄
     private static Stage primaryStage;
 
     //钩子回调函数：拦截窗口消息

@@ -311,6 +311,7 @@ public class AIChatManager
                     }
                 });
     }
+    //感觉应该还需要写成通用形式
     //设置模型名称
     public void SetModel(String modelName)
     {
