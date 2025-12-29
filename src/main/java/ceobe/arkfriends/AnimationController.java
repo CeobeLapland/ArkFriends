@@ -137,6 +137,8 @@ public class AnimationController
     boolean isDragged=false;
 
     DoublePoint velocity;
+
+    ScheduledExecutorService leaveDragExecutor;
     //private double xOffset = 0;
     //private double yOffset = 0;
     public void DelayedInitialization()
@@ -255,6 +257,8 @@ public class AnimationController
                 physicsDragController = new PhysicsDragWithoutGravity(
                         new DoublePoint(stage.getX(), stage.getY()));
             }
+            //physicsDragController = new PhysicsDragWithGravity(new DoublePoint(stage.getX(), stage.getY()),200,200);
+                    //content.getImage().getWidth(),content.getImage().getHeight());
         }
 
 
@@ -337,14 +341,15 @@ public class AnimationController
             physicsDragController.SetIsDragging(false);
             //我草了这么重要的我居然忘记加上去了
 
-            ScheduledExecutorService scheduler= java.util.concurrent.Executors.newSingleThreadScheduledExecutor();
-            scheduler.scheduleAtFixedRate(()->{
-
+            //ScheduledExecutorService scheduler= java.util.concurrent.Executors.newSingleThreadScheduledExecutor();
+            leaveDragExecutor= java.util.concurrent.Executors.newSingleThreadScheduledExecutor();
+            //scheduler.scheduleAtFixedRate(()->{
+            leaveDragExecutor.scheduleAtFixedRate(()->{
                 //if(Math.abs(dragController.velocity.x)>10 || Math.abs(dragController.velocity.y)>10)
                 if(Math.abs(velocity.x)>10 || Math.abs(velocity.y)>10)
                 {
                     //System.out.println(dragController.velocity.x+"x"+dragController.velocity.y+"y  "+"return in scheduled release");
-                    //System.out.println(dragController.velocity.x+"x"+dragController.velocity.y+"y  "+"isDragged="+isDragged+"  isdragging="+dragController.isDragging);
+                    //System.out.println(dragController.velocity.x+"x"+dragController.velocity.y+"y  "+"isDragged="+isDragged+"  isDragging="+dragController.isDragging);
 
                     return;
                 }else
@@ -367,7 +372,7 @@ public class AnimationController
                     System.out.println("鼠标释放");
                     nextState = curChar.states.get("interact");
 
-                    scheduler.shutdown();
+                    leaveDragExecutor.shutdown();
                 }
             },0,50,java.util.concurrent.TimeUnit.MILLISECONDS);
         });
@@ -378,6 +383,26 @@ public class AnimationController
             //加了这个
             if(event.getButton()!=MouseButton.PRIMARY)
                 return;
+
+            System.out.println("左键按下");
+            if(followWindowExecutor!=null)
+            {
+                System.out.println("Shut down followWindowExecutor");
+                followWindowExecutor.shutdown();
+                followWindowExecutor=null;
+            }
+            if(movingToSitTimer!=null)
+            {
+                System.out.println("Cancel movingToSitTimer");
+                movingToSitTimer.cancel();
+                movingToSitTimer=null;
+            }
+            if(leaveDragExecutor!=null)
+            {
+                System.out.println("Shut down leaveDragExecutor");
+                leaveDragExecutor.shutdownNow();
+                leaveDragExecutor=null;
+            }
             //dragController.OnMousePressed(event.getScreenX(),event.getScreenY());
             physicsDragController.OnMousePressed(event.getScreenX(),event.getScreenY());
             //dragController.OnMousePressed(event.getScreenX() + 100,event.getScreenY() + 100);
@@ -394,7 +419,7 @@ public class AnimationController
     }
 
 
-
+    //region 动画器启动相关
     private Random ran= new Random();
 
     Timeline animator;
@@ -490,7 +515,7 @@ public class AnimationController
 //        animator.stop();
 //        switcher.stop();
     }
-
+    //endregion
 
 
     //我觉得应该从根本上就区分物理模式和非物理模式

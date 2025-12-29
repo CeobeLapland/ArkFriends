@@ -6,13 +6,15 @@ import javafx.fxml.*;
 import javafx.scene.paint.Color;
 import javafx.stage.*;
 import javafx.scene.*;
-import javafx.scene.paint.Paint;
-import javafx.scene.control.*;
 
 import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.util.Timer;
+
+import javafx.fxml.FXML;
+
+import javafx.stage.FileChooser;
 
 public class Launcher extends Application
 {
@@ -30,6 +32,7 @@ public class Launcher extends Application
         //是不是这两个不一个，那边stage创建时自动创建了一个controller
 
         launcherFxml = new FXMLLoader(Launcher.class.getResource("mainPanel.fxml"));
+        System.out.println("加载FXML");
         launcherScene=new Scene(launcherFxml.load());
         stage.setScene(launcherScene);
 
@@ -44,6 +47,20 @@ public class Launcher extends Application
         //VoiceServiceWP.voice.StartService();
         //VoiceServiceWP.voice.Speak("博士、もう遅いです。もう休みましょう\n");
         //程序启动成功，博士，已经很晚了，该休息啦
+
+        /*new TrayManager();
+        TrayManager.trayManager.init(stage);
+        stage.setOnCloseRequest(event->{
+            event.consume();
+            //阻止事件传播
+            stage.hide();
+        });*/
+
+
+        //System.out.println("初始化前");
+        //initializeTTS();
+        //generateSpeech();
+        //System.out.println("初始化后");
     }
 
     public void StartRunning() throws IOException
@@ -106,4 +123,131 @@ public class Launcher extends Application
 
         //new AIChatManager();
     }
+
+
+    /*@FXML private TextArea inputText;
+    @FXML private TextField voiceFileField;
+    @FXML private TextField promptText;
+    @FXML private Slider speedSlider;
+    @FXML private Label statusLabel;
+    @FXML private Button playButton;
+    @FXML private Button stopButton;*/
+
+    /*private CosyVoiceManager ttsManager;
+    private String currentAudioPath;
+
+    public void initializeTTS()
+    {
+        ttsManager = new CosyVoiceManager();
+
+        // 检查服务状态
+        if (ttsManager.isServiceAvailable()) {
+            //statusLabel.setText("服务已连接");
+            //statusLabel.setStyle("-fx-text-fill: green;");
+            System.out.println("CosyVoice TTS服务已连接");
+        } else {
+            //statusLabel.setText("服务未连接");
+            //statusLabel.setStyle("-fx-text-fill: red;");
+            System.out.println("无法连接到CosyVoice TTS服务，请确保服务正在运行");
+        }
+
+        // 设置默认值
+        //speedSlider.setValue(1.0);
+    }
+
+    @FXML
+    private void selectVoiceFile()
+    {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("选择音色文件");
+        fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("音频文件", "*.wav", "*.mp3")
+        );
+
+        java.io.File selectedFile = fileChooser.showOpenDialog(null);
+        //if (selectedFile != null) {
+        //    voiceFileField.setText(selectedFile.getAbsolutePath());
+        //}
+    }
+
+    @FXML
+    private void generateSpeech() {
+        //String text = inputText.getText();
+        //String voiceFile = voiceFileField.getText();
+
+        if (text.isEmpty()) {
+            showAlert("错误", "请输入要合成的文本");
+            return;
+        }
+
+        if (voiceFile.isEmpty()) {
+            showAlert("错误", "请选择音色文件");
+            return;
+        }
+
+        statusLabel.setText("正在生成语音...");
+
+        ttsManager.generateSpeechAsync(
+                text,
+                voiceFile,
+                promptText.getText(),
+                (float) speedSlider.getValue()
+        ).thenAccept(audioPath -> {
+            currentAudioPath = audioPath;
+            javafx.application.Platform.runLater(() -> {
+                statusLabel.setText("语音生成完成");
+                playButton.setDisable(false);
+            });
+        }).exceptionally(e -> {
+            javafx.application.Platform.runLater(() -> {
+                statusLabel.setText("生成失败: " + e.getCause().getMessage());
+            });
+            return null;
+        });
+        ttsManager.generateSpeechAsync(
+                //text,
+                //voiceFile,
+                //promptText.getText(),
+                //(float) speedSlider.getValue()
+                "这是一条测试文本",
+                "D:\\ArkFriends\\ArkFriends\\temp\\output.wav",
+                "",
+                1.0f
+        ).thenAccept(audioPath -> {
+            currentAudioPath = audioPath;
+            //javafx.application.Platform.runLater(() -> {
+            //    statusLabel.setText("语音生成完成");
+            //    playButton.setDisable(false);
+            //});
+        }).exceptionally(e -> {
+            javafx.application.Platform.runLater(() -> {
+                //statusLabel.setText("生成失败: " + e.getCause().getMessage());
+            });
+            return null;
+        });
+    }*/
+
+    /*@FXML
+    private void playAudio() {
+        if (currentAudioPath != null) {
+            ttsManager.playAudio(currentAudioPath);
+            playButton.setDisable(true);
+            stopButton.setDisable(false);
+        }
+    }
+
+    @FXML
+    private void stopAudio() {
+        ttsManager.stopCurrentAudio();
+        playButton.setDisable(false);
+        stopButton.setDisable(true);
+    }
+
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }*/
 }

@@ -16,14 +16,15 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
-
+//import System.out;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-//import System.out;
 //endregion
 public class PanelController
 {
@@ -77,12 +78,33 @@ public class PanelController
 
     public String curCharacterName="ceobe";
 
+    //再维护一个名字列表吧
+    public List<String> allCharacterNames=new ArrayList<>();
     //public Map<String,CharacterSearchData> allCharacterSearchData=new HashMap<String,CharacterSearchData>();
     public Map<String,CharacterSearchData> allCharacterSearchData=new HashMap<>();//String是name
     public Map<String,CharacterSearchData> curCharacterSearchData;//=new HashMap<>();
 
     //public ObservableList allListItems,curListItems;
     public ObservableList allListItems;
+
+    public VBox leftColumn;
+    public StackPane centerPanel;
+    public ImageView picturePosition1,picturePosition2,picturePosition3,picturePosition4,
+            picturePosition5,picturePosition6,picturePosition7,picturePosition8;
+    public List<ImageView> picturePositions;
+    /*public List<ImageView> picturePositions=new ArrayList<>(){
+        {
+            add(picturePosition1);
+            add(picturePosition2);
+            add(picturePosition3);
+            add(picturePosition4);
+            add(picturePosition5);
+            add(picturePosition6);
+            add(picturePosition7);
+            add(picturePosition8);
+        }
+    };*/
+    //又是这个初始化为null
 
     //endregion
 
@@ -115,6 +137,10 @@ public class PanelController
         },1000);//100毫秒还不行，还需要更久，不知道线程执行的怎么样
 
         LoadCharacterSearchData();
+        //Platform.runLater(() ->{
+        //    LoadPicturePositions();
+        //});
+        //LoadPicturePositions();
 
 
         //curPanel=starterPanel;//应该还是线程的问题，这两句执行时间比较靠后
@@ -154,12 +180,25 @@ public class PanelController
                 put(oneStarCheckBox, 1);
             }};
 
+        picturePositions=new ArrayList<>(){
+            {
+                add(picturePosition1);
+                add(picturePosition2);
+                add(picturePosition3);
+                add(picturePosition4);
+                add(picturePosition5);
+                add(picturePosition6);
+                add(picturePosition7);
+                add(picturePosition8);
+            }
+        };
+
         System.out.println(allCharacterSearchData.size()+"  allCharacterSearchData.size()");
         //curCharacterSearchData=allCharacterSearchData;
         curCharacterSearchData=new HashMap<>(allCharacterSearchData);
         PopolateCharacterListView();
 
-
+        LoadPicturePositions();
         //临时测试用
         /*titleBar.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
             if (event.getClickCount() == 2) {
@@ -203,12 +242,51 @@ public class PanelController
             //System.out.println(4);
             // 将数据存入 allCharacterSearchData
             //allCharacterSearchData.putAll(data);
+            allCharacterNames=new ArrayList<>(data.keySet());
+
             allCharacterSearchData=data;
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Failed to load character search data.");
         }
         //curCharacterSearchData=allCharacterSearchData;
+    }
+
+    private void LoadPicturePositions()
+    {
+        //非常重要的
+        //禁用自动调节
+        centerPanel.setManaged(false);
+        //从八个位置里随便挑三到五个
+        for(ImageView iv : picturePositions)
+        {
+            if(Math.random()<0.6)
+            {
+                //加载图片
+                //iv.setImage(new Image(
+                //    new File("D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\images\\launcher\\picturePositionSample.png").toURI().toString()
+                //));
+                //从allCharacterNames里随机挑一个角色
+                String randomCharName=allCharacterNames.get(
+                        (int)(Math.random()*allCharacterNames.size())
+                );
+                iv.setImage(new Image(
+                        new File(allCharacterSearchData.get(randomCharName).defaultImagePath).toURI().toString()
+                ));
+                //随机旋转+-15度
+                iv.setRotate((Math.random()-0.5)*30+iv.getRotate());
+                //随机偏移上下左右+-20像素
+                iv.setLayoutX(iv.getLayoutX()+(Math.random()-0.5)*40);
+                iv.setLayoutY(iv.getLayoutY()+(Math.random()-0.5)*40);
+            }
+            else
+                iv.setImage(null);
+        }
+        leftColumn.toFront();
+        titleBar.toFront();
+        //System.out.println(starterPanel.getLayoutX()+" , "+starterPanel.getLayoutY()+"LayoutX and Y" );
+        //System.out.println(starterPanel.getTranslateX()+" , "+starterPanel.getTranslateY()+"TranslateX and Y" );
+        //System.out.println(starterPanel+" , "+starterPanel.getLayoutY()+"LayoutX and Y" );
     }
 
 
@@ -694,7 +772,258 @@ public class PanelController
     }
     //endregion
 
+    //region 设置相关
+    /*@FXML private Button restoreDefaultsButton;
+    @FXML private Button saveSettingsButton;
+    @FXML private Label settingsSavedLabel;
 
+    // 启动器设置
+    @FXML private CheckBox allowBackgroundCheckBox;
+    @FXML private CheckBox closeLauncherCheckBox;
+    @FXML private CheckBox transparentModeCheckBox;
+    @FXML private CheckBox outputLogCheckBox;
+    @FXML private TextField initialXField;
+    @FXML private TextField initialYField;
+    @FXML private TextField downloadPathField;
+
+    // 声音设置
+    @FXML private CheckBox voiceInteractionCheckBox;
+    @FXML private CheckBox aiDialogueCheckBox;
+    @FXML private Slider characterVoiceSlider;
+    @FXML private Label characterVoiceValue;
+    @FXML private Slider soundVolumeSlider;
+    @FXML private Label soundVolumeValue;
+
+    // 动画设置
+    @FXML private ToggleButton fps20Button;
+    @FXML private ToggleButton fps24Button;
+    @FXML private ToggleButton fps30Button;
+    @FXML private Slider scaleSlider;
+    @FXML private Label scaleValue;
+    @FXML private Slider opacitySlider;
+    @FXML private Label opacityValue;
+    @FXML private CheckBox flipAxisCheckBox;
+    @FXML private ToggleButton frameAnimationButton;
+    @FXML private ToggleButton skeletalAnimationButton;
+
+    // 行为设置
+    @FXML private CheckBox idleCheckBox;
+    @FXML private CheckBox ignoreGravityCheckBox;
+    @FXML private CheckBox sleepCheckBox;
+    @FXML private CheckBox sitCheckBox;
+    @FXML private Slider movementSpeedSlider;
+    @FXML private Label movementSpeedValue;
+
+    // AI设置
+    @FXML private CheckBox aiPlaceholderCheckBox1;
+    @FXML private Slider aiParam1Slider;
+    @FXML private Label aiParam1Value;
+
+    @FXML
+    public void initialize() {
+        // 绑定滑动条和标签
+        bindSliderToLabel(characterVoiceSlider, characterVoiceValue, "%");
+        bindSliderToLabel(soundVolumeSlider, soundVolumeValue, "%");
+        bindSliderToLabel(scaleSlider, scaleValue, "x", 1.0);
+        bindSliderToLabel(opacitySlider, opacityValue, "%");
+        bindSliderToLabel(movementSpeedSlider, movementSpeedValue, "%");
+        bindSliderToLabel(aiParam1Slider, aiParam1Value, "%");
+
+        // 设置默认值
+        fps30Button.setSelected(true);
+        frameAnimationButton.setSelected(true);
+
+        // 按钮事件
+        saveSettingsButton.setOnAction(e -> saveSettings());
+        restoreDefaultsButton.setOnAction(e -> restoreDefaults());
+    }
+
+    private void bindSliderToLabel(Slider slider, Label label, String suffix) {
+        slider.valueProperty().addListener((obs, oldVal, newVal) -> {
+            label.setText(String.format("%.0f%s", newVal.doubleValue(), suffix));
+        });
+    }
+
+    private void bindSliderToLabel(Slider slider, Label label, String suffix, double multiplier) {
+        slider.valueProperty().addListener((obs, oldVal, newVal) -> {
+            label.setText(String.format("%.1f%s", newVal.doubleValue() * multiplier, suffix));
+        });
+    }
+
+    private void saveSettings() {
+        // 保存设置逻辑
+        settingsSavedLabel.setText("设置已保存！");
+        settingsSavedLabel.setVisible(true);
+
+        // 3秒后隐藏提示
+        new Thread(() -> {
+            try {
+                Thread.sleep(3000);
+                javafx.application.Platform.runLater(() ->
+                        settingsSavedLabel.setVisible(false));
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }).start();
+    }
+
+    private void restoreDefaults() {
+        // 恢复默认值逻辑
+        allowBackgroundCheckBox.setSelected(true);
+        closeLauncherCheckBox.setSelected(false);
+        transparentModeCheckBox.setSelected(false);
+        outputLogCheckBox.setSelected(true);
+
+        initialXField.setText("0.5");
+        initialYField.setText("0.5");
+
+        characterVoiceSlider.setValue(50);
+        soundVolumeSlider.setValue(75);
+
+        fps30Button.setSelected(true);
+        scaleSlider.setValue(1.0);
+        opacitySlider.setValue(100);
+
+        // 显示恢复成功的提示
+        settingsSavedLabel.setText("已恢复默认设置！");
+        settingsSavedLabel.setVisible(true);
+    }*/
+    //endregion
+
+    //region 更多面板相关
+    /*
+    @FXML private Hyperlink quickStartLink;
+    @FXML private Hyperlink faqLink;
+    @FXML private Hyperlink tutorialLink;
+    @FXML private Hyperlink troubleshootingLink;
+    @FXML private Hyperlink advancedUsageLink;
+
+    @FXML private Hyperlink githubLink;
+    @FXML private Hyperlink bilibiliLink;
+    @FXML private Hyperlink catTalkLink;
+    @FXML private Hyperlink safetyStatementLink;
+
+    @FXML private Hyperlink moreLink1;
+    @FXML private Hyperlink moreLink2;
+    @FXML private Hyperlink moreLink3;
+    @FXML private Hyperlink moreLink4;
+    @FXML private Hyperlink moreLink5;
+    @FXML private Hyperlink moreLink6;
+    @FXML private Hyperlink moreLink7;
+    @FXML private Hyperlink moreLink8;
+
+    @FXML private Hyperlink emailLink;
+    @FXML private Hyperlink forumLink;
+    @FXML private Hyperlink documentationLink;
+
+    @FXML
+    public void initialize() {
+        // 绑定超链接事件
+        setupHyperlinkActions();
+    }
+
+    private void setupHyperlinkActions() {
+        // GitHub链接
+        githubLink.setOnAction(e -> openURL("https://github.com/yourusername/your-repo"));
+
+        // B站链接
+        bilibiliLink.setOnAction(e -> openURL("https://space.bilibili.com/your-id"));
+
+        // 邮箱链接
+        emailLink.setOnAction(e -> openURL("mailto:support@example.com"));
+
+        // 论坛链接
+        forumLink.setOnAction(e -> openURL("https://forum.example.com"));
+
+        // 文档链接
+        documentationLink.setOnAction(e -> openURL("https://docs.example.com"));
+
+        // 宇宙安全声明（示例：显示对话框）
+        safetyStatementLink.setOnAction(e -> showSafetyStatement());
+
+        // 喵言喵语（示例：显示趣味对话框）
+        catTalkLink.setOnAction(e -> showCatTalk());
+
+        // 更多链接（占位符）
+        moreLink1.setOnAction(e -> showPlaceholderAlert("更多链接 1"));
+        moreLink2.setOnAction(e -> showPlaceholderAlert("更多链接 2"));
+        moreLink3.setOnAction(e -> showPlaceholderAlert("更多链接 3"));
+        moreLink4.setOnAction(e -> showPlaceholderAlert("更多链接 4"));
+        moreLink5.setOnAction(e -> showPlaceholderAlert("更多链接 5"));
+        moreLink6.setOnAction(e -> showPlaceholderAlert("更多链接 6"));
+        moreLink7.setOnAction(e -> showPlaceholderAlert("更多链接 7"));
+        moreLink8.setOnAction(e -> showPlaceholderAlert("更多链接 8"));
+
+        // 帮助链接
+        quickStartLink.setOnAction(e -> openURL("https://docs.example.com/quick-start"));
+        faqLink.setOnAction(e -> openURL("https://docs.example.com/faq"));
+        tutorialLink.setOnAction(e -> openURL("https://docs.example.com/tutorials"));
+        troubleshootingLink.setOnAction(e -> openURL("https://docs.example.com/troubleshooting"));
+        advancedUsageLink.setOnAction(e -> openURL("https://docs.example.com/advanced"));
+    }
+
+    private void openURL(String url) {
+        try {
+            if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
+                Desktop.getDesktop().browse(new URI(url));
+            } else {
+                showAlert("无法打开链接", "请手动访问: " + url, AlertType.INFORMATION);
+            }
+        } catch (Exception ex) {
+            showAlert("错误", "无法打开链接: " + ex.getMessage(), AlertType.ERROR);
+        }
+    }
+
+    private void showSafetyStatement() {
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("宇宙安全声明");
+        alert.setHeaderText("宇宙安全声明");
+        alert.setContentText("本软件在设计和实现过程中严格遵守宇宙安全法则。\n\n" +
+                           "1. 不会产生任何形式的宇宙射线\n" +
+                           "2. 不会导致时空扭曲\n" +
+                           "3. 不会影响平行宇宙的稳定性\n" +
+                           "4. 已通过银河系安全委员会认证");
+        alert.showAndWait();
+    }
+
+    private void showCatTalk() {
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("喵言喵语");
+        alert.setHeaderText("来自开发者的喵喵消息");
+        alert.setContentText("喵~ 感谢使用我们的软件！\n\n" +
+                           "开发者正在努力学习猫语中...\n" +
+                           "目前只会说：喵喵喵，喵！\n\n" +
+                           "翻译：祝你使用愉快！");
+        alert.showAndWait();
+    }
+
+    private void showPlaceholderAlert(String linkName) {
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("占位符链接");
+        alert.setHeaderText(linkName);
+        alert.setContentText("这是一个占位符链接。\n\n" +
+                           "你可以在控制器中将其替换为实际的功能。");
+        alert.showAndWait();
+    }
+
+    private void showAlert(String title, String message, AlertType type) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    // 获取版本信息（示例）
+    public String getVersionInfo() {
+        return "v2.1.0";
+    }
+
+    public String getBuildDate() {
+        return "2024-01-15";
+    }
+    */
+    //endregion
     //<ToggleButton fx:id="fps20Button" mnemonicParsing="false" style="-fx-background-color: #e2e8f0; -fx-text-fill: #334155; -fx-background-radius: 4;" text="20 FPS" toggleGroup="$fpsToggleGroup" />
     //<ToggleButton fx:id="fps24Button" mnemonicParsing="false" style="-fx-background-color: #e2e8f0; -fx-text-fill: #334155; -fx-background-radius: 4;" text="24 FPS" toggleGroup="$fpsToggleGroup" />
     //<ToggleButton fx:id="fps30Button" mnemonicParsing="false" selected="true" style="-fx-background-color: #3b82f6; -fx-text-fill: white; -fx-background-radius: 4;" text="30 FPS" toggleGroup="$fpsToggleGroup" />

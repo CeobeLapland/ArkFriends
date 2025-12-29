@@ -33,11 +33,6 @@
         "loop": true,
         "move": false
       }
-    },
-    "voices": {
-      "hello": {
-
-      }
     }
   },
   "texas": {
@@ -68,15 +63,11 @@
         "loop": true,
         "move": false
       },
-        "sit": {
-            "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\texas\\sit",
-            "fps": 24,
-            "loop": true,
-            "move": false
-        }
-    },
-    "voices": {
-      "hello": {
+      "sit": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\texas\\sit",
+        "fps": 24,
+        "loop": true,
+        "move": false
       }
     }
   },
@@ -108,15 +99,11 @@
         "loop": true,
         "move": false
       },
-        "sit": {
-            "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\lapland\\sit",
-            "fps": 24,
-            "loop": true,
-            "move": false
-        }
-    },
-    "voices": {
-      "hello": {
+      "sit": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\lapland\\sit",
+        "fps": 24,
+        "loop": true,
+        "move": false
       }
     }
   }

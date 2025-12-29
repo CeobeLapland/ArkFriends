@@ -277,6 +277,23 @@ public class AIChatManager
         return root.path("choices").get(0).path("message").path("content").asText();
     }
 
+    /*public void SendExample() {
+
+        String apiUrl = "https://api.deepseek.com/v1/model";
+        String apiKey = "your_deepseek_api_key"; // 替换为实际的 API Key
+        String modelName = "default"; // 替换为实际的模型名称
+        String userMessage = "请帮我生成一段关于人工智能的介绍。";
+
+        try {
+            String reply = SendMessageToGenericAPI(apiUrl, apiKey, modelName, userMessage);
+            System.out.println("模型回复: " + reply);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("调用 DeepSeek 模型失败！");
+        }
+    }*/
+
+
 
 
     //清空上下文，失忆lost memories
