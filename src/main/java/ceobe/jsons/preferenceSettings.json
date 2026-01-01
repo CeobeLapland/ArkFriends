@@ -1,0 +1,38 @@
+{
+  "allowBackground": true,
+  "isCloseLauncher": false,
+  "transparentMode": false,
+  "outputLog": true,
+  "initialX": "0.5",
+  "initialY": "0.5",
+  "downloadPath": "C:/Downloads",
+
+  "voiceInteraction": true,
+  "aiDialogue": true,
+  "voiceAPI": "default",
+  "characterVoiceVolume": 100.0,
+  "soundVolume": 100.0,
+  "noiseFilter": 10.0,
+  "soundPlaceholder": 5.0,
+
+  "scale": 1.0,
+  "opacity": 100.0,
+  "flipAxis": false,
+  "boom": false,
+
+  "idle": true,
+  "ignoreGravity": false,
+  "sleep": true,
+  "sit": true,
+  "climb": true,
+  "hideAndSeek": true,
+  "interactable": true,
+  "specialAction": true,
+  "actionFrequency": 50.0,
+  "movementSpeed": 50.0,
+
+  "activeReply": true,
+  "outputEmotion": true,
+  "activeReplyFrequency": 50.0,
+  "coralationDegree": 80.0
+}

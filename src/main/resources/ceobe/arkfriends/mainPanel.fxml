@@ -33,7 +33,7 @@
             <Label layoutY="10.0" style="-fx-text-fill: #ecf0f1; -fx-font-size: 16px; -fx-font-weight: bold;" text="ArkFriends" AnchorPane.leftAnchor="20" />
 
                         <!-- 底部边框线 -->
-            <Line endX="800.0" endY="50.0" startX="0" startY="50.0" stroke="#1a252f" strokeWidth="2" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" />
+            <Line endX="800.0" endY="50.0" startX="0" startY="50.0" stroke="#fe9900" strokeWidth="3.0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" />
              <Button fx:id="starterButton" layoutX="200.0" layoutY="10.0" onMouseClicked="#OnChangeStarterPanelClick" onMouseEntered="#WhenButtonHover" onMouseExited="#WhenButtonExit" prefHeight="32" prefWidth="80" style="-fx-background-color: #00BFFF; -fx-text-fill: #ecf0f1; -fx-font-size: 14px; -fx-border-color: #4a6572; -fx-border-width: 1;" text="🚀启动" />
              <Button fx:id="agentButton" layoutX="300.0" layoutY="10.0" onMouseClicked="#OnChangeAgentPanelClick" onMouseEntered="#WhenButtonHover" onMouseExited="#WhenButtonExit" prefHeight="32" prefWidth="80" style="-fx-background-color: #00BFFF; -fx-text-fill: #ecf0f1; -fx-font-size: 14px; -fx-border-color: #4a6572; -fx-border-width: 1;" text="🏠干员" />
              <Button fx:id="settingsButton" layoutX="400.0" layoutY="10.0" onMouseClicked="#OnChangeSettingsPanelClick" onMouseEntered="#WhenButtonHover" onMouseExited="#WhenButtonExit" prefHeight="32" prefWidth="80" style="-fx-background-color: #00BFFF; -fx-text-fill: #ecf0f1; -fx-font-size: 14px; -fx-border-color: #4a6572; -fx-border-width: 1;" text="⚙设置">
@@ -48,20 +48,29 @@
                     </AnchorPane>
     </top>
    <left>
-      <VBox fx:id="leftColumn" prefHeight="450.0" prefWidth="200.0" style="-fx-background-color: #87CEFA;" BorderPane.alignment="CENTER">
+      <VBox fx:id="leftColumn" alignment="TOP_CENTER" maxHeight="450.0" maxWidth="200.0" minHeight="450.0" minWidth="200.0" prefHeight="450.0" prefWidth="200.0" style="-fx-background-color: #87CEFA;" BorderPane.alignment="TOP_CENTER">
          <children>
-            <ImageView fx:id="previewImage" fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" translateY="20.0">
+            <ImageView fx:id="previewImage" fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../characters/ceobe/idle/idle_001.png" />
                </image></ImageView>
-            <Button fx:id="launchButton" onMouseClicked="#LaunchRunning" onMouseEntered="#WhenButtonHover" onMouseExited="#WhenButtonExit" prefHeight="32" prefWidth="80" scaleX="1.2" scaleY="1.2" style="-fx-background-color: #00BFFF; -fx-text-fill: #ecf0f1; -fx-font-size: 14px; -fx-border-color: #4a6572; -fx-border-width: 1;" text="加载" translateX="60.0" translateY="200.0" />
+            <Label fx:id="nameLabel" alignment="TOP_CENTER" contentDisplay="CENTER" ellipsisString="" maxHeight="50.0" maxWidth="200.0" prefHeight="50.0" prefWidth="200.0" style="-fx-text-fill: #CC6CE7;" text="default:刻俄柏（ceobe)" textAlignment="CENTER">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Button fx:id="launchButton" maxHeight="32.0" maxWidth="80.0" minHeight="32.0" minWidth="80.0" onMouseClicked="#LaunchRunning" onMouseEntered="#WhenButtonHover" onMouseExited="#WhenButtonExit" prefHeight="32.0" prefWidth="80" scaleX="1.2" scaleY="1.2" style="-fx-background-color: #00BFFF; -fx-text-fill: #ecf0f1; -fx-font-size: 14px; -fx-border-color: #4a6572; -fx-border-width: 1;" text="加载" translateY="50.0" />
+            <Label prefHeight="50.0" prefWidth="150.0" text="produced by little ceobe version:1.0" translateX="-25.0" translateY="120.0" wrapText="true" />
          </children>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
       </VBox>
    </left>
    <center>
       <StackPane fx:id="centerPanel" maxHeight="450.0" maxWidth="600.0" minHeight="450.0" minWidth="600.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="450.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
-            <Line endX="225.0" rotate="90.0" startX="-225.0" strokeWidth="2.0" translateX="-300.0" />
+            <Line endX="225.0" rotate="90.0" startX="-225.0" stroke="#fe9900" strokeWidth="4.0" translateX="-300.0" />
             <AnchorPane fx:id="starterPanel" maxHeight="450.0" maxWidth="600.0" minHeight="450.0" minWidth="600.0" prefHeight="450.0" prefWidth="600.0" style="-fx-background-color: #98F5F9;">
                <children>
                   <ImageView fx:id="picturePosition1" fitHeight="200.0" fitWidth="200.0" layoutX="-70.0" pickOnBounds="true" preserveRatio="true" rotate="50.0" AnchorPane.bottomAnchor="250.0" AnchorPane.leftAnchor="-70.0" AnchorPane.rightAnchor="470.0" AnchorPane.topAnchor="0.0">
@@ -104,6 +113,11 @@
                         <Image url="@../../characters/lapland/idle/idle_001.png" />
                      </image>
                   </ImageView>
+                  <Label alignment="CENTER" ellipsisString="" text="≥▽≤" textAlignment="CENTER" AnchorPane.bottomAnchor="200.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="100.0">
+                     <font>
+                        <Font size="72.0" />
+                     </font>
+                  </Label>
                </children>
                <StackPane.margin>
                   <Insets />
@@ -337,26 +351,22 @@
             <AnchorPane fx:id="settingsPanel" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #98F5F9;" visible="false">
                <children>
                      <!-- 顶部按钮区域 -->
-                     <HBox prefHeight="40.0" prefWidth="580.0" spacing="15.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                     <HBox maxHeight="40.0" maxWidth="580.0" prefHeight="40.0" prefWidth="580.0" spacing="15.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
                          <children>
-                             <Button fx:id="restoreDefaultsButton" mnemonicParsing="false" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #94a3b8; -fx-text-fill: white; -fx-background-radius: 6; -fx-font-weight: bold;" text="恢复默认" />
-                             <Button fx:id="saveSettingsButton" mnemonicParsing="false" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #3b82f6; -fx-text-fill: white; -fx-background-radius: 6; -fx-font-weight: bold;" text="保存设置" />
-                             <Region HBox.hgrow="ALWAYS">
-                           <HBox.margin>
-                              <Insets />
-                           </HBox.margin></Region>
-                             <Label fx:id="settingsSavedLabel" style="-fx-text-fill: #10b981; -fx-font-size: 14; -fx-font-weight: bold;" text="" visible="false">
+                             <Button fx:id="restoreDefaultsButton" mnemonicParsing="false" onMouseClicked="#RestoreDefaults" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #94a3b8; -fx-text-fill: white; -fx-background-radius: 6; -fx-font-weight: bold;" text="恢复默认" />
+                             <Button fx:id="saveSettingsButton" mnemonicParsing="false" onMouseClicked="#SaveSettings" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #3b82f6; -fx-text-fill: white; -fx-background-radius: 6; -fx-font-weight: bold;" text="保存设置" />
+                             <Label fx:id="settingsSavedLabel" prefHeight="40.0" prefWidth="100.0" style="-fx-text-fill: #10b981; -fx-font-size: 14; -fx-font-weight: bold;" text="" translateX="100.0" visible="false">
                            <HBox.margin>
                               <Insets />
                            </HBox.margin>
-                           <padding>
-                              <Insets left="50.0" right="20.0" />
-                           </padding></Label>
+                           <font>
+                              <Font size="18.0" />
+                           </font></Label>
                          </children>
                      </HBox>
 
                      <!-- 主设置内容区域（可滚动） -->
-                     <ScrollPane fitToWidth="true" hbarPolicy="NEVER" prefHeight="380.0" prefWidth="580.0" style="-fx-background: transparent; -fx-background-color: transparent;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="60.0">
+                     <ScrollPane fitToWidth="true" hbarPolicy="NEVER" maxHeight="380.0" maxWidth="580.0" prefHeight="380.0" prefWidth="580.0" style="-fx-background: transparent; -fx-background-color: transparent;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="60.0">
                          <content>
                              <VBox spacing="25.0" style="-fx-background-color: transparent;">
                                  <padding>
@@ -383,9 +393,9 @@
                                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                              </rowConstraints>
                                              <children>
-                                                 <CheckBox fx:id="allowBackgroundCheckBox" style="-fx-text-fill: #334155;" text="允许后台运行" />
-                                                 <CheckBox fx:id="closeLauncherCheckBox" style="-fx-text-fill: #334155;" text="启动后关闭启动器" GridPane.columnIndex="1" />
-                                                 <CheckBox fx:id="transparentModeCheckBox" style="-fx-text-fill: #334155;" text="以穿透模式启动" GridPane.rowIndex="1" />
+                                                 <CheckBox fx:id="allowBackgroundCheckBox" style="-fx-text-fill: #334155;" text="允许后台运行（系统托盘）" />
+                                                 <CheckBox fx:id="isCloseLauncherCheckBox" style="-fx-text-fill: #334155;" text="启动后关闭启动器" GridPane.columnIndex="1" />
+                                                 <CheckBox fx:id="transparentModeCheckBox" style="-fx-text-fill: #334155;" text="以透明模式启动" GridPane.rowIndex="1" />
                                                  <CheckBox fx:id="outputLogCheckBox" style="-fx-text-fill: #334155;" text="输出日志信息" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                              </children>
                                          </GridPane>
@@ -454,6 +464,16 @@
                                                  <CheckBox fx:id="aiDialogueCheckBox" style="-fx-text-fill: #334155;" text="启动AI对话（测试中）" GridPane.columnIndex="1" />
                                              </children>
                                          </GridPane>
+                                 <VBox spacing="8.0">
+                                    <children>
+                                       <Label style="-fx-text-fill: #475569; -fx-font-weight: bold;" text="指定音频生成API地址">
+                                          <font>
+                                             <Font size="14.0" />
+                                          </font>
+                                       </Label>
+                                       <TextField fx:id="voiceAPITextField" promptText="注意不要双引号哦" style="-fx-background-radius: 4; -fx-border-radius: 4; -fx-border-color: #cbd5e1; -fx-padding: 5;" />
+                                    </children>
+                                 </VBox>
 
                                          <!-- 声音滑动条 -->
                                          <VBox spacing="15.0">
@@ -477,10 +497,10 @@
                                                              <children>
                                                                  <Label style="-fx-text-fill: #475569; -fx-font-weight: bold;" text="音效音量" />
                                                                  <Region HBox.hgrow="ALWAYS" />
-                                                                 <Label fx:id="soundVolumeValue" style="-fx-text-fill: #64748b; -fx-font-size: 13;" text="75%" />
+                                                                 <Label fx:id="soundVolumeValue" style="-fx-text-fill: #64748b; -fx-font-size: 13;" text="50%" />
                                                              </children>
                                                          </HBox>
-                                                         <Slider fx:id="soundVolumeSlider" blockIncrement="5.0" max="100.0" min="0.0" showTickLabels="false" showTickMarks="true" style="-fx-control-inner-background: #3b82f6;" value="75.0" />
+                                                         <Slider fx:id="soundVolumeSlider" blockIncrement="5.0" max="100.0" min="0.0" showTickLabels="false" showTickMarks="true" style="-fx-control-inner-background: #3b82f6;" value="50.0" />
                                                      </children>
                                                  </VBox>
 
@@ -501,12 +521,12 @@
                                                      <children>
                                                          <HBox spacing="10.0">
                                                              <children>
-                                                                 <Label style="-fx-text-fill: #475569; -fx-font-weight: bold;" text="占位符" />
+                                                                 <Label style="-fx-text-fill: #475569; -fx-font-weight: bold;" text="猜猜这是什么喵" />
                                                                  <Region HBox.hgrow="ALWAYS" />
-                                                                 <Label fx:id="soundPlaceholderValue" style="-fx-text-fill: #64748b; -fx-font-size: 13;" text="40%" />
+                                                                 <Label fx:id="soundPlaceholderValue" style="-fx-text-fill: #64748b; -fx-font-size: 13;" text="100%" />
                                                              </children>
                                                          </HBox>
-                                                         <Slider fx:id="soundPlaceholderSlider" blockIncrement="5.0" max="100.0" min="0.0" showTickLabels="false" showTickMarks="true" style="-fx-control-inner-background: #3b82f6;" value="40.0" />
+                                                         <Slider fx:id="soundPlaceholderSlider" blockIncrement="5.0" max="100.0" min="0.0" showTickLabels="false" showTickMarks="true" style="-fx-control-inner-background: #3b82f6;" value="100.0" />
                                                      </children>
                                                  </VBox>
                                              </children>
@@ -523,6 +543,23 @@
                                              </font>
                                          </Label>
 
+                                         <!-- 动画类型选择 -->
+                                         <VBox spacing="8.0">
+                                             <children>
+                                                 <Label style="-fx-text-fill: #475569; -fx-font-weight: bold;" text="动画类型（骨骼动画在测试中）">
+                                                     <font>
+                                                         <Font size="14.0" />
+                                                     </font>
+                                                 </Label>
+                                       <HBox alignment="CENTER" prefHeight="50.0" spacing="30.0">
+                                          <children>
+                                             <Button fx:id="frameAnimationButton" maxHeight="30.0" maxWidth="100.0" minHeight="30.0" minWidth="100.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #00BFFF; -fx-text-fill: #ecf0f1; -fx-font-size: 14px; -fx-border-color: #4a6572; -fx-border-width: 1;" text="帧动画" />
+                                             <Button fx:id="spineAnimationButton" maxHeight="30.0" maxWidth="100.0" minHeight="30.0" minWidth="100.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #00BFFF; -fx-text-fill: #ecf0f1; -fx-font-size: 14px; -fx-border-color: #4a6572; -fx-border-width: 1;" text="骨骼动画" />
+                                          </children>
+                                       </HBox>
+                                             </children>
+                                         </VBox>
+
                                          <!-- 帧率选择 -->
                                          <VBox spacing="8.0">
                                              <children>
@@ -533,9 +570,9 @@
                                                  </Label>
                                        <HBox alignment="CENTER" prefHeight="50.0" spacing="30.0">
                                           <children>
-                                             <Button maxHeight="30.0" maxWidth="60.0" minHeight="30.0" minWidth="60.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="60.0" style="-fx-background-color: #e2e8f0; -fx-text-fill: #334155; -fx-background-radius: 4;" text="20 FPS" />
-                                             <Button maxHeight="30.0" maxWidth="60.0" minHeight="30.0" minWidth="60.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="60.0" style="-fx-background-color: #e2e8f0; -fx-text-fill: #334155; -fx-background-radius: 4;" text="24 FPS" />
-                                             <Button maxHeight="30.0" maxWidth="60.0" minHeight="30.0" minWidth="60.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="60.0" style="-fx-background-color: #e2e8f0; -fx-text-fill: #334155; -fx-background-radius: 4;" text="30 FPS" />
+                                             <Button fx:id="fps20Button" maxHeight="30.0" maxWidth="60.0" minHeight="30.0" minWidth="60.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="60.0" style="-fx-background-color: #00BFFF; -fx-text-fill: #ecf0f1; -fx-font-size: 14px; -fx-border-color: #4a6572; -fx-border-width: 1;" text="20 FPS" />
+                                             <Button fx:id="fps24Button" maxHeight="30.0" maxWidth="60.0" minHeight="30.0" minWidth="60.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="60.0" style="-fx-background-color: #00BFFF; -fx-text-fill: #ecf0f1; -fx-font-size: 14px; -fx-border-color: #4a6572; -fx-border-width: 1;" />
+                                             <Button fx:id="fps30Button" maxHeight="30.0" maxWidth="60.0" minHeight="30.0" minWidth="60.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="60.0" style="-fx-background-color: #00BFFF; -fx-text-fill: #ecf0f1; -fx-font-size: 14px; -fx-border-color: #4a6572; -fx-border-width: 1;" text="30 FPS" />
                                           </children>
                                        </HBox>
                                              </children>
@@ -546,12 +583,12 @@
                                              <children>
                                                  <HBox spacing="10.0">
                                                      <children>
-                                                         <Label style="-fx-text-fill: #475569; -fx-font-weight: bold;" text="缩放 (1-5)" />
+                                                         <Label style="-fx-text-fill: #475569; -fx-font-weight: bold;" text="缩放 (0.5-3)" />
                                                          <Region HBox.hgrow="ALWAYS" />
                                                          <Label fx:id="scaleValue" style="-fx-text-fill: #64748b; -fx-font-size: 13;" text="1.0x" />
                                                      </children>
                                                  </HBox>
-                                                 <Slider fx:id="scaleSlider" blockIncrement="0.1" majorTickUnit="1.0" max="5.0" min="1.0" showTickLabels="true" showTickMarks="true" value="1.0" />
+                                                 <Slider fx:id="scaleSlider" blockIncrement="0.1" majorTickUnit="1.0" max="3.0" min="0.5" showTickLabels="true" showTickMarks="true" value="1.0" />
                                              </children>
                                          </VBox>
 
@@ -580,26 +617,9 @@
                                              </rowConstraints>
                                              <children>
                                                  <CheckBox fx:id="flipAxisCheckBox" style="-fx-text-fill: #334155;" text="坐标轴翻转" />
-                                                 <CheckBox fx:id="animationPlaceholderCheckBox" style="-fx-text-fill: #334155;" text="占位符" GridPane.columnIndex="1" />
+                                                 <CheckBox fx:id="boomCheckBox" style="-fx-text-fill: #334155;" text="爆炸" GridPane.columnIndex="1" />
                                              </children>
                                          </GridPane>
-
-                                         <!-- 动画类型选择 -->
-                                         <VBox spacing="8.0">
-                                             <children>
-                                                 <Label style="-fx-text-fill: #475569; -fx-font-weight: bold;" text="动画类型">
-                                                     <font>
-                                                         <Font size="14.0" />
-                                                     </font>
-                                                 </Label>
-                                       <HBox alignment="CENTER" prefHeight="50.0" spacing="30.0">
-                                          <children>
-                                             <Button maxHeight="30.0" maxWidth="60.0" minHeight="30.0" minWidth="60.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="60.0" style="-fx-background-color: #e2e8f0; -fx-text-fill: #334155; -fx-background-radius: 4;" text="帧动画" />
-                                             <Button maxHeight="30.0" maxWidth="60.0" minHeight="30.0" minWidth="60.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="60.0" style="-fx-background-color: #e2e8f0; -fx-text-fill: #334155; -fx-background-radius: 4;" text="骨骼动画" />
-                                          </children>
-                                       </HBox>
-                                             </children>
-                                         </VBox>
                                      </children>
                                  </VBox>
 
@@ -658,10 +678,10 @@
                                                              <children>
                                                                  <Label style="-fx-text-fill: #475569; -fx-font-weight: bold;" text="动作频率" />
                                                                  <Region HBox.hgrow="ALWAYS" />
-                                                                 <Label fx:id="actionFrequencyValue" style="-fx-text-fill: #64748b; -fx-font-size: 13;" text="30%" />
+                                                                 <Label fx:id="actionFrequencyValue" style="-fx-text-fill: #64748b; -fx-font-size: 13;" text="50%" />
                                                              </children>
                                                          </HBox>
-                                                         <Slider fx:id="actionFrequencySlider" blockIncrement="5.0" max="100.0" min="0.0" showTickLabels="false" showTickMarks="true" value="30.0" />
+                                                         <Slider fx:id="actionFrequencySlider" blockIncrement="5.0" max="100.0" min="0.0" showTickLabels="false" showTickMarks="true" value="50.0" />
                                                      </children>
                                                  </VBox>
                                              </children>
@@ -688,8 +708,8 @@
                                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                              </rowConstraints>
                                              <children>
-                                                 <CheckBox fx:id="aiPlaceholderCheckBox1" style="-fx-text-fill: #334155;" text="占位符" />
-                                                 <CheckBox fx:id="aiPlaceholderCheckBox2" style="-fx-text-fill: #334155;" text="占位符" GridPane.columnIndex="1" />
+                                                 <CheckBox fx:id="activeReplyCheckBox" style="-fx-text-fill: #334155;" text="允许主动回复" />
+                                                 <CheckBox fx:id="outputEmotionCheckBox" style="-fx-text-fill: #334155;" text="输出当前心情" GridPane.columnIndex="1" />
                                              </children>
                                          </GridPane>
 
@@ -700,12 +720,12 @@
                                                      <children>
                                                          <HBox spacing="10.0">
                                                              <children>
-                                                                 <Label style="-fx-text-fill: #475569; -fx-font-weight: bold;" text="占位符" />
+                                                                 <Label style="-fx-text-fill: #475569; -fx-font-weight: bold;" text="主动回复频率" />
                                                                  <Region HBox.hgrow="ALWAYS" />
-                                                                 <Label fx:id="aiParam1Value" style="-fx-text-fill: #64748b; -fx-font-size: 13;" text="60%" />
+                                                                 <Label fx:id="activeReplyFrequencyValue" style="-fx-text-fill: #64748b; -fx-font-size: 13;" text="60%" />
                                                              </children>
                                                          </HBox>
-                                                         <Slider fx:id="aiParam1Slider" blockIncrement="5.0" max="100.0" min="0.0" showTickLabels="false" showTickMarks="true" value="60.0" />
+                                                         <Slider fx:id="activeReplyFrequencySlider" blockIncrement="5.0" max="100.0" min="0.0" showTickLabels="false" showTickMarks="true" value="60.0" />
                                                      </children>
                                                  </VBox>
 
@@ -713,12 +733,12 @@
                                                      <children>
                                                          <HBox spacing="10.0">
                                                              <children>
-                                                                 <Label style="-fx-text-fill: #475569; -fx-font-weight: bold;" text="占位符" />
+                                                                 <Label style="-fx-text-fill: #475569; -fx-font-weight: bold;" text="人物与世界观相关程度（严格参数）" />
                                                                  <Region HBox.hgrow="ALWAYS" />
-                                                                 <Label fx:id="aiParam2Value" style="-fx-text-fill: #64748b; -fx-font-size: 13;" text="40%" />
+                                                                 <Label fx:id="coralationDegreeValue" style="-fx-text-fill: #64748b; -fx-font-size: 13;" text="80%" />
                                                              </children>
                                                          </HBox>
-                                                         <Slider fx:id="aiParam2Slider" blockIncrement="5.0" max="100.0" min="0.0" showTickLabels="false" showTickMarks="true" value="40.0" />
+                                                         <Slider fx:id="coralationDegreeSlider" blockIncrement="5.0" max="100.0" min="0.0" showTickLabels="false" showTickMarks="true" value="80.0" />
                                                      </children>
                                                  </VBox>
                                              </children>
@@ -741,49 +761,28 @@
                                  </padding>
 
                                  <!-- 标题 -->
-                                 <Label style="-fx-text-fill: #1e293b; -fx-font-weight: bold;" text="关于和更多">
+                                 <Label style="-fx-text-fill: #1e293b; -fx-font-weight: bold;" text="MORE">
                                      <font>
-                                         <Font size="24.0" />
+                                         <Font size="18.0" />
                                      </font>
                                      <padding>
                                          <Insets bottom="10.0" />
                                      </padding>
                                  </Label>
 
-                                 <!-- 应用简介 -->
-                                 <VBox spacing="10.0" style="-fx-background-color: #f8fafc; -fx-background-radius: 8; -fx-padding: 15;">
-                                     <children>
-                                         <Label style="-fx-text-fill: #1e293b; -fx-font-weight: bold;" text="应用简介">
-                                             <font>
-                                                 <Font size="16.0" />
-                                             </font>
-                                         </Label>
-                                         <Label style="-fx-text-fill: #475569; -fx-font-size: 14; -fx-line-spacing: 5px;" text="这是一个功能强大的角色管理工具，提供角色筛选、设置管理等功能。我们致力于提供最佳的用户体验。" wrapText="true" />
-                                         <HBox spacing="10.0">
-                                             <children>
-                                                 <Label style="-fx-text-fill: #64748b; -fx-font-weight: bold;" text="版本：" />
-                                                 <Label style="-fx-text-fill: #3b82f6; -fx-font-weight: bold;" text="v2.1.0" />
-                                                 <Region HBox.hgrow="ALWAYS" />
-                                                 <Label style="-fx-text-fill: #64748b; -fx-font-weight: bold;" text="构建日期：" />
-                                                 <Label style="-fx-text-fill: #475569;" text="2024-01-15" />
-                                             </children>
-                                         </HBox>
-                                     </children>
-                                 </VBox>
-
                                  <!-- 帮助和指南（可折叠） -->
-                                 <TitledPane animated="true" expanded="true" style="-fx-background-color: transparent; -fx-border-color: transparent;" text="帮助和指南">
+                                 <TitledPane animated="true" expanded="false" style="-fx-background-color: transparent; -fx-border-color: transparent;" text="帮助和指南">
                                      <content>
-                                         <VBox spacing="12.0" style="-fx-background-color: #f8fafc; -fx-background-radius: 0 0 8 8; -fx-border-color: #e2e8f0; -fx-border-width: 0 1 1 1; -fx-border-radius: 0 0 8 8;">
+                                         <VBox spacing="8.0" style="-fx-background-color: #f8fafc; -fx-background-radius: 0 0 8 8; -fx-border-color: #e2e8f0; -fx-border-width: 0 1 1 1; -fx-border-radius: 0 0 8 8;">
                                              <padding>
                                                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                                              </padding>
                                              <children>
-                                                 <Hyperlink fx:id="quickStartLink" style="-fx-text-fill: #3b82f6; -fx-font-size: 14; -fx-border-color: transparent; -fx-padding: 0 0 5 0;" text="快速入门指南" />
-                                                 <Hyperlink fx:id="faqLink" style="-fx-text-fill: #3b82f6; -fx-font-size: 14; -fx-border-color: transparent; -fx-padding: 5 0 5 0;" text="常见问题解答 (FAQ)" />
-                                                 <Hyperlink fx:id="tutorialLink" style="-fx-text-fill: #3b82f6; -fx-font-size: 14; -fx-border-color: transparent; -fx-padding: 5 0 5 0;" text="视频教程" />
-                                                 <Hyperlink fx:id="troubleshootingLink" style="-fx-text-fill: #3b82f6; -fx-font-size: 14; -fx-border-color: transparent; -fx-padding: 5 0 5 0;" text="故障排除" />
-                                                 <Hyperlink fx:id="advancedUsageLink" style="-fx-text-fill: #3b82f6; -fx-font-size: 14; -fx-border-color: transparent; -fx-padding: 5 0 0 0;" text="高级用法" />
+                                                 <Hyperlink fx:id="quickStartLink" style="-fx-text-fill: #3b82f6; -fx-font-size: 14; -fx-border-color: transparent; -fx-padding: 0 0 5 0;" text="快速入门指南（网站制作中）" />
+                                                 <Hyperlink fx:id="faqLink" style="-fx-text-fill: #3b82f6; -fx-font-size: 14; -fx-border-color: transparent; -fx-padding: 5 0 5 0;" text="常见问题解答（网站制作中）" />
+                                                 <Hyperlink fx:id="tutorialLink" style="-fx-text-fill: #3b82f6; -fx-font-size: 14; -fx-border-color: transparent; -fx-padding: 5 0 5 0;" text="视频教程（网站制作中）" />
+                                                 <Hyperlink fx:id="troubleshootingLink" style="-fx-text-fill: #3b82f6; -fx-font-size: 14; -fx-border-color: transparent; -fx-padding: 5 0 5 0;" text="故障排除（网站制作中）" />
+                                                 <Hyperlink fx:id="advancedUsageLink" style="-fx-text-fill: #3b82f6; -fx-font-size: 14; -fx-border-color: transparent; -fx-padding: 5 0 0 0;" text="高级用法（网站制作中）" />
                                              </children>
                                          </VBox>
                                      </content>
@@ -799,12 +798,15 @@
                                          -fx-border-radius: 8 8 0 0;
                                          -fx-padding: 10 15;
                                      </style>
+                              <VBox.margin>
+                                 <Insets />
+                              </VBox.margin>
                                  </TitledPane>
 
                                  <!-- 关于软件（可折叠） -->
-                                 <TitledPane animated="true" collapsible="true" expanded="true" style="-fx-background-color: transparent; -fx-border-color: transparent;" text="关于软件">
+                                 <TitledPane animated="true" collapsible="true" expanded="false" style="-fx-background-color: transparent; -fx-border-color: transparent;" text="关于软件">
                                      <content>
-                                         <VBox spacing="12.0" style="-fx-background-color: #f8fafc; -fx-background-radius: 0 0 8 8; -fx-border-color: #e2e8f0; -fx-border-width: 0 1 1 1; -fx-border-radius: 0 0 8 8;">
+                                         <VBox spacing="8.0" style="-fx-background-color: #f8fafc; -fx-background-radius: 0 0 8 8; -fx-border-color: #e2e8f0; -fx-border-width: 0 1 1 1; -fx-border-radius: 0 0 8 8;">
                                              <padding>
                                                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                                              </padding>
@@ -821,7 +823,7 @@
                                                      <children>
                                                          <Hyperlink fx:id="githubLink" style="-fx-text-fill: #3b82f6; -fx-font-size: 14; -fx-border-color: transparent;" text="访问GitHub仓库" />
                                                          <Hyperlink fx:id="bilibiliLink" style="-fx-text-fill: #3b82f6; -fx-font-size: 14; -fx-border-color: transparent;" text="作者的bilibili" GridPane.columnIndex="1" />
-                                                         <Hyperlink fx:id="catTalkLink" style="-fx-text-fill: #3b82f6; -fx-font-size: 14; -fx-border-color: transparent;" text="一些喵言喵语" GridPane.rowIndex="1" />
+                                                         <Hyperlink fx:id="catTalkLink" style="-fx-text-fill: #3b82f6; -fx-font-size: 14; -fx-border-color: transparent;" text="作者自己的一些喵言喵语" GridPane.rowIndex="1" />
                                                          <Hyperlink fx:id="safetyStatementLink" style="-fx-text-fill: #3b82f6; -fx-font-size: 14; -fx-border-color: transparent;" text="宇宙安全声明" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                                      </children>
                                                  </GridPane>
@@ -832,12 +834,8 @@
                                                  <!-- 开源许可证信息 -->
                                                  <VBox spacing="8.0">
                                                      <children>
-                                                         <Label style="-fx-text-fill: #475569; -fx-font-weight: bold;" text="开源许可证">
-                                                             <font>
-                                                                 <Font size="14.0" />
-                                                             </font>
-                                                         </Label>
-                                                         <Label style="-fx-text-fill: #64748b; -fx-font-size: 13; -fx-line-spacing: 3px;" text="本软件基于 MIT 许可证开源。你可以自由地使用、修改和分发本软件，但需保留原许可证声明。" wrapText="true" />
+                                                         <Label style="-fx-text-fill: #475569; -fx-font-weight: bold;" text="开源许可证" />
+                                                         <Label style="-fx-text-fill: #64748b; -fx-font-size: 13; -fx-line-spacing: 3px;" text="我也不知道喵" wrapText="true" />
                                                      </children>
                                                  </VBox>
                                              </children>
@@ -860,12 +858,12 @@
                                  <!-- 更多（可折叠） -->
                                  <TitledPane animated="true" collapsible="true" expanded="false" style="-fx-background-color: transparent; -fx-border-color: transparent;" text="更多">
                                      <content>
-                                         <VBox spacing="12.0" style="-fx-background-color: #f8fafc; -fx-background-radius: 0 0 8 8; -fx-border-color: #e2e8f0; -fx-border-width: 0 1 1 1; -fx-border-radius: 0 0 8 8;">
+                                         <VBox spacing="8.0" style="-fx-background-color: #f8fafc; -fx-background-radius: 0 0 8 8; -fx-border-color: #e2e8f0; -fx-border-width: 0 1 1 1; -fx-border-radius: 0 0 8 8;">
                                              <padding>
                                                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                                              </padding>
                                              <children>
-                                                 <GridPane hgap="15.0" vgap="12.0">
+                                                 <GridPane hgap="40.0" vgap="10.0">
                                                      <columnConstraints>
                                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="150.0" />
                                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="150.0" />
@@ -877,14 +875,14 @@
                                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                      </rowConstraints>
                                                      <children>
-                                                         <Hyperlink fx:id="moreLink1" style="-fx-text-fill: #3b82f6; -fx-font-size: 14; -fx-border-color: transparent;" text="更多链接 1" />
-                                                         <Hyperlink fx:id="moreLink2" style="-fx-text-fill: #3b82f6; -fx-font-size: 14; -fx-border-color: transparent;" text="更多链接 2" GridPane.columnIndex="1" />
-                                                         <Hyperlink fx:id="moreLink3" style="-fx-text-fill: #3b82f6; -fx-font-size: 14; -fx-border-color: transparent;" text="更多链接 3" GridPane.rowIndex="1" />
-                                                         <Hyperlink fx:id="moreLink4" style="-fx-text-fill: #3b82f6; -fx-font-size: 14; -fx-border-color: transparent;" text="更多链接 4" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                                         <Hyperlink fx:id="moreLink5" style="-fx-text-fill: #3b82f6; -fx-font-size: 14; -fx-border-color: transparent;" text="更多链接 5" GridPane.rowIndex="2" />
-                                                         <Hyperlink fx:id="moreLink6" style="-fx-text-fill: #3b82f6; -fx-font-size: 14; -fx-border-color: transparent;" text="更多链接 6" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                                         <Hyperlink fx:id="moreLink7" style="-fx-text-fill: #3b82f6; -fx-font-size: 14; -fx-border-color: transparent;" text="更多链接 7" GridPane.rowIndex="3" />
-                                                         <Hyperlink fx:id="moreLink8" style="-fx-text-fill: #3b82f6; -fx-font-size: 14; -fx-border-color: transparent;" text="更多链接 8" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                         <Hyperlink fx:id="PRTSLink" style="-fx-text-fill: #3b82f6; -fx-font-size: 14; -fx-border-color: transparent;" text="普瑞赛斯的记忆" />
+                                                         <Hyperlink fx:id="moreLink2" style="-fx-text-fill: #3b82f6; -fx-font-size: 14; -fx-border-color: transparent;" text="小刻的画室" GridPane.columnIndex="1" />
+                                                         <Hyperlink fx:id="moreLink3" style="-fx-text-fill: #3b82f6; -fx-font-size: 14; -fx-border-color: transparent;" text="海猫的低语" GridPane.rowIndex="1" />
+                                                         <Hyperlink fx:id="moreLink4" style="-fx-text-fill: #3b82f6; -fx-font-size: 14; -fx-border-color: transparent;" text="会飞的树" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                         <Hyperlink fx:id="moreLink5" style="-fx-text-fill: #3b82f6; -fx-font-size: 14; -fx-border-color: transparent;" text="欢迎回家" GridPane.rowIndex="2" />
+                                                         <Hyperlink fx:id="moreLink6" style="-fx-text-fill: #3b82f6; -fx-font-size: 14; -fx-border-color: transparent;" text="留念325" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                         <Hyperlink fx:id="moreLink7" style="-fx-text-fill: #3b82f6; -fx-font-size: 14; -fx-border-color: transparent;" text="快点公测" GridPane.rowIndex="3" />
+                                                         <Hyperlink fx:id="moreLink8" style="-fx-text-fill: #3b82f6; -fx-font-size: 14; -fx-border-color: transparent;" text="崔林特尔梅" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                                      </children>
                                                  </GridPane>
 
@@ -894,12 +892,7 @@
                                                  <!-- 占位符说明 -->
                                                  <VBox spacing="8.0">
                                                      <children>
-                                                         <Label style="-fx-text-fill: #475569; -fx-font-weight: bold;" text="占位符说明">
-                                                             <font>
-                                                                 <Font size="14.0" />
-                                                             </font>
-                                                         </Label>
-                                                         <Label style="-fx-text-fill: #64748b; -fx-font-size: 13; -fx-line-spacing: 3px;" text="以上链接均为占位符，你可以根据需要替换为实际链接。每个链接都可以绑定到相应的事件处理程序。" wrapText="true" />
+                                                         <Label style="-fx-text-fill: #475569; -fx-font-weight: bold;" text="~" />
                                                      </children>
                                                  </VBox>
                                              </children>
@@ -919,45 +912,12 @@
                                      </style>
                                  </TitledPane>
 
-                                 <!-- 联系方式 -->
-                                 <VBox spacing="10.0" style="-fx-background-color: #f8fafc; -fx-background-radius: 8; -fx-padding: 15;">
+                                 <!-- 应用简介 -->
+                                 <VBox spacing="8.0" style="-fx-background-color: #f8fafc; -fx-background-radius: 8; -fx-padding: 15;">
                                      <children>
-                                         <Label style="-fx-text-fill: #1e293b; -fx-font-weight: bold;" text="联系方式">
-                                             <font>
-                                                 <Font size="16.0" />
-                                             </font>
-                                         </Label>
-                                         <VBox spacing="8.0">
-                                             <children>
-                                                 <HBox spacing="10.0">
-                                                     <children>
-                                                         <Label style="-fx-text-fill: #475569; -fx-font-weight: bold;" text="邮箱：" />
-                                                         <Hyperlink fx:id="emailLink" style="-fx-text-fill: #3b82f6; -fx-font-size: 14; -fx-border-color: transparent;" text="support@example.com" />
-                                                     </children>
-                                                 </HBox>
-                                                 <HBox spacing="10.0">
-                                                     <children>
-                                                         <Label style="-fx-text-fill: #475569; -fx-font-weight: bold;" text="论坛：" />
-                                                         <Hyperlink fx:id="forumLink" style="-fx-text-fill: #3b82f6; -fx-font-size: 14; -fx-border-color: transparent;" text="访问官方论坛" />
-                                                     </children>
-                                                 </HBox>
-                                                 <HBox spacing="10.0">
-                                                     <children>
-                                                         <Label style="-fx-text-fill: #475569; -fx-font-weight: bold;" text="文档：" />
-                                                         <Hyperlink fx:id="documentationLink" style="-fx-text-fill: #3b82f6; -fx-font-size: 14; -fx-border-color: transparent;" text="在线文档" />
-                                                     </children>
-                                                 </HBox>
-                                             </children>
-                                         </VBox>
-                                     </children>
-                                 </VBox>
-
-                                 <!-- 页脚 -->
-                                 <VBox alignment="CENTER" spacing="5.0">
-                                     <children>
-                                         <Separator prefWidth="200.0" style="-fx-background-color: #e2e8f0;" />
-                                         <Label style="-fx-text-fill: #94a3b8; -fx-font-size: 12;" text="© 2024 角色管理工具. 保留所有权利。" />
-                                         <Label style="-fx-text-fill: #64748b; -fx-font-size: 13;" text="感谢使用我们的软件！" />
+                                         <Label style="-fx-text-fill: #475569; -fx-font-size: 14; -fx-line-spacing: 5px;" text="谢谢使用喵" wrapText="true" />
+                                           <Label style="-fx-text-fill: #64748b; -fx-font-weight: bold;" text="构建日期：" />
+                                           <Label style="-fx-text-fill: #475569;" text="截止至2026-1-1" />
                                      </children>
                                  </VBox>
                              </VBox>

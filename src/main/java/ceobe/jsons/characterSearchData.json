@@ -22,5 +22,61 @@
     "stars": 5,
     "occupationEnum": "GUARD",
     "defaultImagePath": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\lapland\\idle\\idle_001.png"
+  },
+  "exusiai": {
+    "EnglishName": "exusiai",
+    "ChineseName": "能天使",
+    "description": "苹果派和狙击手",
+    "stars": 6,
+    "occupationEnum": "SNIPER",
+    "defaultImagePath": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\exusiai\\idle\\idle_001.png"
+  },
+  "rope": {
+    "EnglishName": "rope",
+    "ChineseName": "暗锁",
+    "description": "抓住你了哦",
+    "stars": 4,
+    "occupationEnum": "SPECIALIST",
+    "defaultImagePath": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\rope\\idle\\idle_001.png"
+  },
+  "amiya": {
+    "EnglishName": "amiya",
+    "ChineseName": "阿米娅",
+    "description": "兔兔兔兔兔",
+    "stars": 5,
+    "occupationEnum": "ALCHEMIST",
+    "defaultImagePath": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\amiya\\idle\\idle_001.png"
+  },
+  "gravel": {
+    "EnglishName": "gravel",
+    "ChineseName": "砾",
+    "description": "劳模工作狂",
+    "stars": 4,
+    "occupationEnum": "SPECIALIST",
+    "defaultImagePath": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\gravel\\idle\\idle_001.png"
+  },
+  "platinum": {
+    "EnglishName": "platinum",
+    "ChineseName": "白金",
+    "description": "冰淇淋和游乐场",
+    "stars": 5,
+    "occupationEnum": "SNIPER",
+    "defaultImagePath": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\platinum\\idle\\idle_001.png"
+  },
+  "kaltsit": {
+    "EnglishName": "kaltsit",
+    "ChineseName": "凯尔希",
+    "description": "想你了老猫",
+    "stars": 6,
+    "occupationEnum": "MEDIC",
+    "defaultImagePath": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\kaltsit\\idle\\idle_001.png"
+  },
+  "angelina": {
+    "EnglishName": "angelina",
+    "ChineseName": "安洁莉娜",
+    "description": "洁哥还是洁哥",
+    "stars": 6,
+    "occupationEnum": "ASSIST",
+    "defaultImagePath": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\angelina\\idle\\idle_001.png"
   }
 }

@@ -31,6 +31,8 @@ public class Launcher extends Application
         //    PanelController.panelController=new PanelController();
         //是不是这两个不一个，那边stage创建时自动创建了一个controller
 
+        //new VoiceService();
+
         launcherFxml = new FXMLLoader(Launcher.class.getResource("mainPanel.fxml"));
         System.out.println("加载FXML");
         launcherScene=new Scene(launcherFxml.load());
@@ -56,6 +58,7 @@ public class Launcher extends Application
             stage.hide();
         });*/
 
+        //new VoiceService();
 
         //System.out.println("初始化前");
         //initializeTTS();

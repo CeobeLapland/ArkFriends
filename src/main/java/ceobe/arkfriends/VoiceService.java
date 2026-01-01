@@ -4,27 +4,151 @@ import jep.Jep;
 import jep.JepException;
 import jep.JepConfig;
 
+import java.io.File;
+
 public class VoiceService
 {
     public static VoiceService voiceService;
 
     private Jep jep;
     private JepConfig config;
+
+    public String outputDir="output_voice";
+    public String voiceServerDir="D:\\cosyvoice3-rainfall-v2\\cosyvoice-rainfall-v2\\cosyvoice-rainfall\\rainfall_starter.exe";
+
     public VoiceService()
     {
         if (voiceService==null)
         {
             voiceService=this;
         }
+        System.out.println(System.getProperty("java.library.path"));
 
         config = new JepConfig();
         config.addIncludePaths("src//java//ceobe//arkfriends");
         try {
             jep = config.createSubInterpreter();
+
+            jep.eval("import os");
+            jep.eval("print(os.getcwd())");
+
+            //jep.eval("import CosyVoiceManager");
+            // 获取 Python 文件的绝对路径
+            String pythonFilePath = "D:\\ArkFriends\\ArkFriends\\src\\main\\java\\ceobe\\arkfriends\\CosyVoiceManager.py";
+            File file = new File(pythonFilePath);
+            String parentDir = file.getParent();
+
+            jep.eval("import sys");
+            jep.eval("sys.path.append(r'" + parentDir + "')");
             jep.eval("import CosyVoiceManager");
+
+
         } catch (JepException e) {
             e.printStackTrace();
         }
+/*Caused by: java.lang.UnsatisfiedLinkError: no jep in java.library.path: D:\Java\jdk-24\binC:\Windows\Sun\Java\bin
+C:\Windows\system32
+C:\Windows
+C:\Program Files\Common Files\Oracle\Java\javapath
+C:\Program Files (x86)\Common Files\Intel\Shared Libraries\redist\intel64\compiler
+C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common
+C:\Windows\system32
+C:\Windows
+C:\Windows\System32\Wbem
+C:\Windows\System32\WindowsPowerShell\v1.0\
+C:\Windows\System32\OpenSSH\
+C:\Program Files (x86)\Windows Kits\8.1\Windows Performance Toolkit\
+C:\Program Files\dotnet\
+C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR
+C:\ProgramData\chocolatey\bin
+C:\Program Files (x86)\dotnet\
+D:\Git\cmd
+D:\Java\jdk-24\bin
+
+C:\Program Files\Docker\Docker\resources\bin
+C:\Users\1\AppData\Local\Microsoft\WindowsApps
+C:\Users\1\.dotnet\tools
+C:\Users\1\AppData\Local\Programs\Ollama
+E:\ffmpeg20250217\ffmpeg\bin
+D:\PyCharm 2025.2.0.1\bin
+E:\Microsoft VS Code\bin
+D:\JetBrains\IntelliJ IDEA Community Edition 2025.2.2\bin
+D:\Ollama*/
+
+
+/*Caused by: java.lang.UnsatisfiedLinkError: no jep in java.library.path: D:\Java\jdk-24\bin
+C:\Windows\Sun\Java\bin
+C:\Windows\system32
+C:\Windows
+C:\Program Files\Common Files\Oracle\Java\javapath
+C:\Program Files (x86)\Common Files\Intel\Shared Libraries\redist\intel64\compiler
+C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common
+C:\Windows\system32
+C:\Windows
+C:\Windows\System32\Wbem
+C:\Windows\System32\WindowsPowerShell\v1.0\
+C:\Windows\System32\OpenSSH\
+C:\Program Files (x86)\Windows Kits\8.1\Windows Performance Toolkit\
+C:\Program Files\dotnet\
+C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR
+C:\ProgramData\chocolatey\bin
+C:\Program Files (x86)\dotnet\
+D:\Git\cmd
+D:\Java\jdk-24\bin
+
+C:\Program Files\Docker\Docker\resources\bin
+C:\Users\1\AppData\Local\Microsoft\WindowsApps
+C:\Users\1\.dotnet\tools
+C:\Users\1\AppData\Local\Programs\Ollama
+E:\ffmpeg20250217\ffmpeg\bin
+D:\PyCharm 2025.2.0.1\bin
+E:\Microsoft VS Code\bin
+D:\JetBrains\IntelliJ IDEA Community Edition 2025.2.2\bin
+D:\Ollama
+at java.base/java.lang.ClassLoader.loadLibrary(ClassLoader.java:2285)*/
+
+/*D:\Java\jdk-24\bin
+C:\Windows\Sun\Java\bin
+C:\Windows\system32
+C:\Windows
+C:\Program Files\Common Files\Oracle\Java\javapath
+C:\Program Files (x86)\Common Files\Intel\Shared Libraries\redist\intel64\compiler
+C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common
+C:\Windows\system32
+C:\Windows
+C:\Windows\System32\Wbem
+C:\Windows\System32\WindowsPowerShell\v1.0\
+C:\Windows\System32\OpenSSH\
+C:\Program Files (x86)\Windows Kits\8.1\Windows Performance Toolkit\
+C:\Program Files\dotnet\
+C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR
+C:\ProgramData\chocolatey\bin
+C:\Program Files (x86)\dotnet\
+D:\Git\cmd
+D:\Java\jdk-24\bin
+
+C:\Program Files\Docker\Docker\resources\bin
+C:\Users\1\AppData\Local\Microsoft\WindowsApps
+C:\Users\1\.dotnet\tools
+C:\Users\1\AppData\Local\Programs\Ollama
+E:\ffmpeg20250217\ffmpeg\bin
+D:\PyCharm 2025.2.0.1\bin
+E:\Microsoft VS Code\bin
+D:\JetBrains\IntelliJ IDEA Community Edition 2025.2.2\bin
+D:\Ollama
+.
+        WARNING: A restricted method in java.lang.System has been called*/
+        
+        //启动voiceServerDir下的exe文件
+        try {
+            ProcessBuilder processBuilder = new ProcessBuilder(voiceServerDir);
+            processBuilder.start();
+            System.out.println("成功启动exe文件：" + voiceServerDir);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.println("启动exe文件失败：" + voiceServerDir);
+        }
+
     }
     public void GetVoiceWithRainfallZeroShot(String inputText, String promptWav,
                                              String promptText, int speed, String outputDir,
@@ -37,7 +161,7 @@ public class VoiceService
             e.printStackTrace();
         }
     }
-    public void GetVoiceWithRainfallZeroShot(String inputText, String promptWav, String outputDir)
+    public void GetVoiceWithRainfallZeroShot(String inputText, String promptWav)
     {
         try {
             jep.invoke("GetVoiceWithRainfallZeroShot", inputText, promptWav, "",
@@ -66,12 +190,12 @@ public class VoiceService
             e.printStackTrace();
         }
     }
-    public void GetVoiceWithRainfallSFT(String inputText, String sftDropdown,
-                                        String outputDir, String outputFileName)
+    public void GetVoiceWithRainfallSFT(String inputText, String sftDropdown)
+                                        //String outputDir, String outputFileName)
     {
         try {
             jep.invoke("GetVoiceWithRainfallSFT",
-                    inputText, sftDropdown, 1, outputDir, outputFileName, "wav");
+                    inputText, sftDropdown, 1, outputDir, "", "wav");
         } catch (JepException e) {
             e.printStackTrace();
         }
@@ -89,12 +213,11 @@ public class VoiceService
         }
     }
     public void GetVoiceWithRainfallInstruct(String inputText, String sftDropdown,
-                                             String instructText, String outputDir,
-                                             String outputFileName)
+                                             String instructText)
     {
         try {
             jep.invoke("GetVoiceWithRainfallInstruct", inputText, sftDropdown, instructText,
-                    1, outputDir, outputFileName, "wav");
+                    1, outputDir, "", "wav");
         } catch (JepException e) {
             e.printStackTrace();
         }

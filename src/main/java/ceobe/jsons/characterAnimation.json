@@ -4,7 +4,7 @@
     "defaultState": "idle",
     "actions": {
       "idle": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\ceobe\\idle",
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\ceobe\\relax",
         "fps": 24,
         "loop": true,
         "move": false
@@ -32,6 +32,24 @@
         "fps": 24,
         "loop": true,
         "move": false
+      },
+      "sleep": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\ceobe\\sleep",
+        "fps": 24,
+        "loop": true,
+        "move": false
+      },
+      "attack": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\ceobe\\attack",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      },
+      "start": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\ceobe\\start",
+        "fps": 24,
+        "loop": false,
+        "move": false
       }
     }
   },
@@ -40,7 +58,7 @@
     "defaultState": "idle",
     "actions": {
       "idle": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\texas\\idle",
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\texas\\relax",
         "fps": 24,
         "loop": true,
         "move": false
@@ -68,6 +86,24 @@
         "fps": 24,
         "loop": true,
         "move": false
+      },
+      "sleep": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\texas\\sleep",
+        "fps": 24,
+        "loop": true,
+        "move": false
+      },
+      "attack": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\texas\\attack",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      },
+      "start": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\texas\\start",
+        "fps": 24,
+        "loop": false,
+        "move": false
       }
     }
   },
@@ -76,7 +112,7 @@
     "defaultState": "idle",
     "actions": {
       "idle": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\lapland\\idle",
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\lapland\\relax",
         "fps": 24,
         "loop": true,
         "move": false
@@ -103,6 +139,402 @@
         "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\lapland\\sit",
         "fps": 24,
         "loop": true,
+        "move": false
+      },
+      "sleep": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\lapland\\sleep",
+        "fps": 24,
+        "loop": true,
+        "move": false
+      },
+      "attack": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\lapland\\attack",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      },
+      "start": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\lapland\\start",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      }
+    }
+  },
+  "exusiai": {
+    "name": "exusiai",
+    "defaultState": "idle",
+    "actions": {
+      "idle": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\exusiai\\relax",
+        "fps": 24,
+        "loop": true,
+        "move": false
+      },
+      "move": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\exusiai\\move",
+        "fps": 24,
+        "loop": true,
+        "move": true
+      },
+      "interact": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\exusiai\\interact",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      },
+      "drag": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\exusiai\\drag",
+        "fps": 24,
+        "loop": true,
+        "move": false
+      },
+      "sit": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\exusiai\\sit",
+        "fps": 24,
+        "loop": true,
+        "move": false
+      },
+      "sleep": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\exusiai\\sleep",
+        "fps": 24,
+        "loop": true,
+        "move": false
+      },
+      "attack": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\exusiai\\attack",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      },
+      "start": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\exusiai\\start",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      }
+    }
+  },
+  "rope": {
+    "name": "rope",
+    "defaultState": "idle",
+    "actions": {
+      "idle": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\rope\\relax",
+        "fps": 24,
+        "loop": true,
+        "move": false
+      },
+      "move": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\rope\\move",
+        "fps": 24,
+        "loop": true,
+        "move": true
+      },
+      "interact": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\rope\\interact",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      },
+      "drag": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\rope\\drag",
+        "fps": 24,
+        "loop": true,
+        "move": false
+      },
+      "sit": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\rope\\sit",
+        "fps": 24,
+        "loop": true,
+        "move": false
+      },
+      "sleep": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\rope\\sleep",
+        "fps": 24,
+        "loop": true,
+        "move": false
+      },
+      "attack": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\rope\\attack",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      },
+      "start": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\rope\\start",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      }
+    }
+  },
+  "amiya": {
+    "name": "amiya",
+    "defaultState": "idle",
+    "actions": {
+      "idle": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\amiya\\relax",
+        "fps": 24,
+        "loop": true,
+        "move": false
+      },
+      "move": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\amiya\\move",
+        "fps": 24,
+        "loop": true,
+        "move": true
+      },
+      "interact": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\amiya\\interact",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      },
+      "drag": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\amiya\\drag",
+        "fps": 24,
+        "loop": true,
+        "move": false
+      },
+      "sit": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\amiya\\sit",
+        "fps": 24,
+        "loop": true,
+        "move": false
+      },
+      "sleep": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\amiya\\sleep",
+        "fps": 24,
+        "loop": true,
+        "move": false
+      },
+      "attack": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\amiya\\attack",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      },
+      "start": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\amiya\\start",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      }
+    }
+  },
+  "gravel": {
+    "name": "gravel",
+    "defaultState": "idle",
+    "actions": {
+      "idle": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\gravel\\relax",
+        "fps": 24,
+        "loop": true,
+        "move": false
+      },
+      "move": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\gravel\\move",
+        "fps": 24,
+        "loop": true,
+        "move": true
+      },
+      "interact": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\gravel\\interact",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      },
+      "drag": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\gravel\\drag",
+        "fps": 24,
+        "loop": true,
+        "move": false
+      },
+      "sit": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\gravel\\sit",
+        "fps": 24,
+        "loop": true,
+        "move": false
+      },
+      "sleep": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\gravel\\sleep",
+        "fps": 24,
+        "loop": true,
+        "move": false
+      },
+      "attack": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\gravel\\attack",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      },
+      "start": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\gravel\\start",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      }
+    }
+  },
+  "platinum": {
+    "name": "platinum",
+    "defaultState": "idle",
+    "actions": {
+      "idle": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\platinum\\relax",
+        "fps": 24,
+        "loop": true,
+        "move": false
+      },
+      "move": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\platinum\\move",
+        "fps": 24,
+        "loop": true,
+        "move": true
+      },
+      "interact": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\platinum\\interact",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      },
+      "drag": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\platinum\\drag",
+        "fps": 24,
+        "loop": true,
+        "move": false
+      },
+      "sit": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\platinum\\sit",
+        "fps": 24,
+        "loop": true,
+        "move": false
+      },
+      "sleep": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\platinum\\sleep",
+        "fps": 24,
+        "loop": true,
+        "move": false
+      },
+      "attack": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\platinum\\attack",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      },
+      "start": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\platinum\\start",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      }
+    }
+  },
+  "kaltsit": {
+    "name": "kaltsit",
+    "defaultState": "idle",
+    "actions": {
+      "idle": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\kaltsit\\relax",
+        "fps": 24,
+        "loop": true,
+        "move": false
+      },
+      "move": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\kaltsit\\move",
+        "fps": 24,
+        "loop": true,
+        "move": true
+      },
+      "interact": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\kaltsit\\interact",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      },
+      "drag": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\kaltsit\\drag",
+        "fps": 24,
+        "loop": true,
+        "move": false
+      },
+      "sit": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\kaltsit\\sit",
+        "fps": 24,
+        "loop": true,
+        "move": false
+      },
+      "sleep": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\kaltsit\\sleep",
+        "fps": 24,
+        "loop": true,
+        "move": false
+      },
+      "attack": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\kaltsit\\attack",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      },
+      "start": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\kaltsit\\start",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      }
+    }
+  },
+  "angelina": {
+    "name": "angelina",
+    "defaultState": "idle",
+    "actions": {
+      "idle": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\angelina\\relax",
+        "fps": 24,
+        "loop": true,
+        "move": false
+      },
+      "move": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\angelina\\move",
+        "fps": 24,
+        "loop": true,
+        "move": true
+      },
+      "interact": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\angelina\\interact",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      },
+      "drag": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\angelina\\drag",
+        "fps": 24,
+        "loop": true,
+        "move": false
+      },
+      "sit": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\angelina\\sit",
+        "fps": 24,
+        "loop": true,
+        "move": false
+      },
+      "sleep": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\angelina\\sleep",
+        "fps": 24,
+        "loop": true,
+        "move": false
+      },
+      "attack": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\angelina\\attack",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      },
+      "start": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\angelina\\start",
+        "fps": 24,
+        "loop": false,
         "move": false
       }
     }

@@ -1,20 +1,28 @@
 package ceobe.arkfriends;
 
 //region imports
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.animation.FadeTransition;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
 
+//import java.awt.*;
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 import java.util.*;
+import java.util.List;
 
 //import System.out;
 import javafx.fxml.FXML;
@@ -40,6 +48,7 @@ public class PanelController
     public Region curPanel;
     //public AnchorPane curPanel;
     public ImageView previewImage;
+    public Label nameLabel;
 
 
     public CheckBox vanguardCheckBox,guardCheckBox,sniperCheckBox,alchemistCheckBox,
@@ -216,6 +225,10 @@ public class PanelController
 //        titleBar.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
 //            System.out.println(Launcher.launcher.launcherStage.getX()+" , "+Launcher.launcher.launcherStage.getY());
 //        });
+        InitializeSettings();
+        LoadPreferredSettings();
+
+        SetupHyperlinkActions();
     }
 
     public void LoadCharacterSearchData()
@@ -368,6 +381,7 @@ public class PanelController
             //allCharacterSearchData.get(name).defaultImagePath
             new File(allCharacterSearchData.get(name).defaultImagePath).toURI().toString()
         ));
+        nameLabel.setText(allCharacterSearchData.get(name).ChineseName+" ("+allCharacterSearchData.get(name).EnglishName+")");
         /*for (Object item : characterListView.getItems())
         {
             if (item instanceof String && item.equals(name))
@@ -773,69 +787,109 @@ public class PanelController
     //endregion
 
     //region 设置相关
-    /*@FXML private Button restoreDefaultsButton;
-    @FXML private Button saveSettingsButton;
-    @FXML private Label settingsSavedLabel;
+    @FXML public Button restoreDefaultsButton;
+    @FXML public Button saveSettingsButton;
+    @FXML public Label settingsSavedLabel;
 
     // 启动器设置
-    @FXML private CheckBox allowBackgroundCheckBox;
-    @FXML private CheckBox closeLauncherCheckBox;
-    @FXML private CheckBox transparentModeCheckBox;
-    @FXML private CheckBox outputLogCheckBox;
-    @FXML private TextField initialXField;
-    @FXML private TextField initialYField;
-    @FXML private TextField downloadPathField;
+    @FXML public CheckBox allowBackgroundCheckBox;
+    @FXML public CheckBox isCloseLauncherCheckBox;
+    @FXML public CheckBox transparentModeCheckBox;
+    @FXML public CheckBox outputLogCheckBox;
+    @FXML public TextField initialXField;
+    @FXML public TextField initialYField;
+    @FXML public TextField downloadPathField;
 
     // 声音设置
-    @FXML private CheckBox voiceInteractionCheckBox;
-    @FXML private CheckBox aiDialogueCheckBox;
-    @FXML private Slider characterVoiceSlider;
-    @FXML private Label characterVoiceValue;
-    @FXML private Slider soundVolumeSlider;
-    @FXML private Label soundVolumeValue;
+    @FXML public CheckBox voiceInteractionCheckBox;
+    @FXML public CheckBox aiDialogueCheckBox;
+
+    public TextField voiceAPITextField;
+
+    @FXML public Slider characterVoiceSlider;
+    @FXML public Label characterVoiceValue;
+    @FXML public Slider soundVolumeSlider;
+    @FXML public Label soundVolumeValue;
+    public Slider noiseFilterSlider;
+    public Label noiseFilterValue;
+    public Slider soundPlaceholderSlider;
+    public Label soundPlaceholderValue;
 
     // 动画设置
-    @FXML private ToggleButton fps20Button;
-    @FXML private ToggleButton fps24Button;
-    @FXML private ToggleButton fps30Button;
-    @FXML private Slider scaleSlider;
-    @FXML private Label scaleValue;
-    @FXML private Slider opacitySlider;
-    @FXML private Label opacityValue;
-    @FXML private CheckBox flipAxisCheckBox;
-    @FXML private ToggleButton frameAnimationButton;
-    @FXML private ToggleButton skeletalAnimationButton;
+    @FXML public Button fps20Button,fps24Button,fps30Button;
+    @FXML public Slider scaleSlider;
+    @FXML public Label scaleValue;
+    @FXML public Slider opacitySlider;
+    @FXML public Label opacityValue;
+    @FXML public CheckBox flipAxisCheckBox;
+    public CheckBox boomCheckBox;
+
+    @FXML public Button frameAnimationButton,spineAnimationButton;
 
     // 行为设置
-    @FXML private CheckBox idleCheckBox;
-    @FXML private CheckBox ignoreGravityCheckBox;
-    @FXML private CheckBox sleepCheckBox;
-    @FXML private CheckBox sitCheckBox;
-    @FXML private Slider movementSpeedSlider;
-    @FXML private Label movementSpeedValue;
+    @FXML public CheckBox idleCheckBox;
+    @FXML public CheckBox ignoreGravityCheckBox;
+    @FXML public CheckBox sleepCheckBox;
+    @FXML public CheckBox sitCheckBox;
+    public CheckBox climbCheckBox;
+    public CheckBox hideAndSeekCheckBox;
+    public CheckBox interactableCheckBox;
+    public CheckBox specialActionCheckBox;
+
+    public Slider actionFrequencySlider;
+    public Label actionFrequencyValue;
+    @FXML public Slider movementSpeedSlider;
+    @FXML public Label movementSpeedValue;
 
     // AI设置
-    @FXML private CheckBox aiPlaceholderCheckBox1;
-    @FXML private Slider aiParam1Slider;
-    @FXML private Label aiParam1Value;
+    @FXML public CheckBox activeReplyCheckBox;
+    public CheckBox outputEmotionCheckBox;
+    @FXML public Slider activeReplyFrequencySlider;
+    @FXML public Label activeReplyFrequencyValue;
+
+    @FXML public Slider coralationDegreeSlider;
+    @FXML public Label coralationDegreeValue;
 
     @FXML
-    public void initialize() {
+    public void InitializeSettings()
+    {
         // 绑定滑动条和标签
         bindSliderToLabel(characterVoiceSlider, characterVoiceValue, "%");
         bindSliderToLabel(soundVolumeSlider, soundVolumeValue, "%");
+        bindSliderToLabel(noiseFilterSlider, noiseFilterValue, "%");
+        bindSliderToLabel(soundPlaceholderSlider, soundPlaceholderValue, "%");
+
         bindSliderToLabel(scaleSlider, scaleValue, "x", 1.0);
         bindSliderToLabel(opacitySlider, opacityValue, "%");
         bindSliderToLabel(movementSpeedSlider, movementSpeedValue, "%");
-        bindSliderToLabel(aiParam1Slider, aiParam1Value, "%");
+        bindSliderToLabel(actionFrequencySlider, actionFrequencyValue, "%");
+
+        bindSliderToLabel(activeReplyFrequencySlider, activeReplyFrequencyValue, "%");
+        bindSliderToLabel(coralationDegreeSlider, coralationDegreeValue, "%");
+
+
+        //给几个按钮添加效果
+        fps20Button.setOnMouseEntered(this::WhenButtonHover);
+        fps20Button.setOnMouseExited(this::WhenButtonExit);
+        fps24Button.setOnMouseEntered(this::WhenButtonHover);
+        fps24Button.setOnMouseExited(this::WhenButtonExit);
+        fps30Button.setOnMouseEntered(this::WhenButtonHover);
+        fps30Button.setOnMouseExited(this::WhenButtonExit);
+
+        frameAnimationButton.setOnMouseEntered(this::WhenButtonHover);
+        frameAnimationButton.setOnMouseExited(this::WhenButtonExit);
+        spineAnimationButton.setOnMouseEntered(this::WhenButtonHover);
+        spineAnimationButton.setOnMouseExited(this::WhenButtonExit);
+
+        //style="-fx-background-color: #e2e8f0; -fx-text-fill: #334155; -fx-background-radius: 4;"
 
         // 设置默认值
-        fps30Button.setSelected(true);
-        frameAnimationButton.setSelected(true);
+        //fps30Button.setSelected(true);
+        //frameAnimationButton.setSelected(true);
 
         // 按钮事件
-        saveSettingsButton.setOnAction(e -> saveSettings());
-        restoreDefaultsButton.setOnAction(e -> restoreDefaults());
+        //saveSettingsButton.setOnAction(e -> saveSettings());
+        //restoreDefaultsButton.setOnAction(e -> restoreDefaults());
     }
 
     private void bindSliderToLabel(Slider slider, Label label, String suffix) {
@@ -850,150 +904,302 @@ public class PanelController
         });
     }
 
-    private void saveSettings() {
-        // 保存设置逻辑
-        settingsSavedLabel.setText("设置已保存！");
-        settingsSavedLabel.setVisible(true);
+    @FXML
+    private void SaveSettings()
+    {
+        Map<String, Object> settings = new HashMap<>();
+        settings.put("allowBackground", allowBackgroundCheckBox.isSelected());
+        settings.put("isCloseLauncher", isCloseLauncherCheckBox.isSelected());
+        settings.put("transparentMode", transparentModeCheckBox.isSelected());
+        settings.put("outputLog", outputLogCheckBox.isSelected());
+        settings.put("initialX", initialXField.getText());
+        settings.put("initialY", initialYField.getText());
+        settings.put("downloadPath", downloadPathField.getText());
 
+        settings.put("voiceInteraction", voiceInteractionCheckBox.isSelected());
+        settings.put("aiDialogue", aiDialogueCheckBox.isSelected());
+        settings.put("voiceAPI", voiceAPITextField.getText());
+        settings.put("characterVoiceVolume", characterVoiceSlider.getValue());
+        settings.put("soundVolume", soundVolumeSlider.getValue());
+        settings.put("noiseFilter", noiseFilterSlider.getValue());
+        settings.put("soundPlaceholder", soundPlaceholderSlider.getValue());
+
+        settings.put("scale", scaleSlider.getValue());
+        settings.put("opacity", opacitySlider.getValue());
+        settings.put("flipAxis", flipAxisCheckBox.isSelected());
+        settings.put("boom", boomCheckBox.isSelected());
+
+        settings.put("idle", idleCheckBox.isSelected());
+        settings.put("ignoreGravity", ignoreGravityCheckBox.isSelected());
+        settings.put("sleep", sleepCheckBox.isSelected());
+        settings.put("sit", sitCheckBox.isSelected());
+        settings.put("climb", climbCheckBox.isSelected());
+        settings.put("hideAndSeek", hideAndSeekCheckBox.isSelected());
+        settings.put("interactable", interactableCheckBox.isSelected());
+        settings.put("specialAction", specialActionCheckBox.isSelected());
+        settings.put("actionFrequency", actionFrequencySlider.getValue());
+        settings.put("movementSpeed", movementSpeedSlider.getValue());
+
+        settings.put("activeReply", activeReplyCheckBox.isSelected());
+        settings.put("outputEmotion", outputEmotionCheckBox.isSelected());
+        settings.put("activeReplyFrequency", activeReplyFrequencySlider.getValue());
+        settings.put("coralationDegree", coralationDegreeSlider.getValue());
+
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            objectMapper.writeValue(new File("D:\\ArkFriends\\ArkFriends\\src\\main\\java\\ceobe\\jsons\\preferenceSettings.json"), settings);
+            settingsSavedLabel.setText("设置已保存！");
+            settingsSavedLabel.setVisible(true);
+            System.out.println("Settings saved successfully.");
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Failed to save settings.");
+        }
         // 3秒后隐藏提示
         new Thread(() -> {
             try {
                 Thread.sleep(3000);
                 javafx.application.Platform.runLater(() ->
-                        settingsSavedLabel.setVisible(false));
+                {
+                    settingsSavedLabel.setVisible(false);
+
+                });
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }).start();
     }
 
-    private void restoreDefaults() {
-        // 恢复默认值逻辑
-        allowBackgroundCheckBox.setSelected(true);
-        closeLauncherCheckBox.setSelected(false);
-        transparentModeCheckBox.setSelected(false);
-        outputLogCheckBox.setSelected(true);
+    @FXML
+    private void RestoreDefaults()
+    {
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            Map<String, Object> defaultSettings = objectMapper.readValue(
+                new File("D:\\ArkFriends\\ArkFriends\\src\\main\\java\\ceobe\\jsons\\defaultSettings.json"),
+                new TypeReference<Map<String, Object>>() {}
+            );
 
-        initialXField.setText("0.5");
-        initialYField.setText("0.5");
+            allowBackgroundCheckBox.setSelected((boolean) defaultSettings.get("allowBackground"));
+            isCloseLauncherCheckBox.setSelected((boolean) defaultSettings.get("isCloseLauncher"));
+            transparentModeCheckBox.setSelected((boolean) defaultSettings.get("transparentMode"));
+            outputLogCheckBox.setSelected((boolean) defaultSettings.get("outputLog"));
+            initialXField.setText((String) defaultSettings.get("initialX"));
+            initialYField.setText((String) defaultSettings.get("initialY"));
+            downloadPathField.setText((String) defaultSettings.get("downloadPath"));
 
-        characterVoiceSlider.setValue(50);
-        soundVolumeSlider.setValue(75);
+            voiceInteractionCheckBox.setSelected((boolean) defaultSettings.get("voiceInteraction"));
+            aiDialogueCheckBox.setSelected((boolean) defaultSettings.get("aiDialogue"));
+            voiceAPITextField.setText((String) defaultSettings.get("voiceAPI"));
+            characterVoiceSlider.setValue(((Number) defaultSettings.get("characterVoiceVolume")).floatValue());
+            soundVolumeSlider.setValue(((Number) defaultSettings.get("soundVolume")).floatValue());
+            noiseFilterSlider.setValue(((Number) defaultSettings.get("noiseFilter")).floatValue());
+            soundPlaceholderSlider.setValue(((Number) defaultSettings.get("soundPlaceholder")).floatValue());
 
-        fps30Button.setSelected(true);
-        scaleSlider.setValue(1.0);
-        opacitySlider.setValue(100);
+            scaleSlider.setValue(((Number) defaultSettings.get("scale")).floatValue());
+            opacitySlider.setValue(((Number) defaultSettings.get("opacity")).floatValue());
+            flipAxisCheckBox.setSelected((boolean) defaultSettings.get("flipAxis"));
+            boomCheckBox.setSelected((boolean) defaultSettings.get("boom"));
 
-        // 显示恢复成功的提示
-        settingsSavedLabel.setText("已恢复默认设置！");
-        settingsSavedLabel.setVisible(true);
-    }*/
+            idleCheckBox.setSelected((boolean) defaultSettings.get("idle"));
+            ignoreGravityCheckBox.setSelected((boolean) defaultSettings.get("ignoreGravity"));
+            sleepCheckBox.setSelected((boolean) defaultSettings.get("sleep"));
+            sitCheckBox.setSelected((boolean) defaultSettings.get("sit"));
+            climbCheckBox.setSelected((boolean) defaultSettings.get("climb"));
+            hideAndSeekCheckBox.setSelected((boolean) defaultSettings.get("hideAndSeek"));
+            interactableCheckBox.setSelected((boolean) defaultSettings.get("interactable"));
+            specialActionCheckBox.setSelected((boolean) defaultSettings.get("specialAction"));
+            actionFrequencySlider.setValue(((Number) defaultSettings.get("actionFrequency")).floatValue());
+            movementSpeedSlider.setValue(((Number) defaultSettings.get("movementSpeed")).floatValue());
+
+            activeReplyCheckBox.setSelected((boolean) defaultSettings.get("activeReply"));
+            outputEmotionCheckBox.setSelected((boolean) defaultSettings.get("outputEmotion"));
+            activeReplyFrequencySlider.setValue(((Number) defaultSettings.get("activeReplyFrequency")).floatValue());
+            coralationDegreeSlider.setValue(((Number) defaultSettings.get("coralationDegree")).floatValue());
+
+            settingsSavedLabel.setText("已恢复默认设置！");
+            settingsSavedLabel.setVisible(true);
+            System.out.println("Settings restored to default.");
+        } catch (IOException e) {
+            System.out.println("Failed to restore default settings.");
+            e.printStackTrace();
+        }
+        // 3秒后隐藏提示
+        new Thread(() -> {
+            try {
+                Thread.sleep(3000);
+                javafx.application.Platform.runLater(() ->
+                {
+                    settingsSavedLabel.setVisible(false);
+                });
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }).start();
+    }
+
+    public void LoadPreferredSettings()
+    {
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            Map<String, Object> preferredSettings = objectMapper.readValue(
+                new File("D:\\ArkFriends\\ArkFriends\\src\\main\\java\\ceobe\\jsons\\preferenceSettings.json"),
+                new TypeReference<Map<String, Object>>() {}
+            );
+
+            allowBackgroundCheckBox.setSelected((boolean) preferredSettings.get("allowBackground"));
+            isCloseLauncherCheckBox.setSelected((boolean) preferredSettings.get("isCloseLauncher"));
+            transparentModeCheckBox.setSelected((boolean) preferredSettings.get("transparentMode"));
+            outputLogCheckBox.setSelected((boolean) preferredSettings.get("outputLog"));
+            initialXField.setText((String) preferredSettings.get("initialX"));
+            initialYField.setText((String) preferredSettings.get("initialY"));
+            downloadPathField.setText((String) preferredSettings.get("downloadPath"));
+
+            voiceInteractionCheckBox.setSelected((boolean) preferredSettings.get("voiceInteraction"));
+            aiDialogueCheckBox.setSelected((boolean) preferredSettings.get("aiDialogue"));
+            voiceAPITextField.setText((String) preferredSettings.get("voiceAPI"));
+            characterVoiceSlider.setValue(((Number) preferredSettings.get("characterVoiceVolume")).floatValue());
+            soundVolumeSlider.setValue(((Number) preferredSettings.get("soundVolume")).floatValue());
+            noiseFilterSlider.setValue(((Number) preferredSettings.get("noiseFilter")).floatValue());
+            soundPlaceholderSlider.setValue(((Number) preferredSettings.get("soundPlaceholder")).floatValue());
+
+            scaleSlider.setValue(((Number) preferredSettings.get("scale")).floatValue());
+            opacitySlider.setValue(((Number) preferredSettings.get("opacity")).floatValue());
+            flipAxisCheckBox.setSelected((boolean) preferredSettings.get("flipAxis"));
+            boomCheckBox.setSelected((boolean) preferredSettings.get("boom"));
+
+            idleCheckBox.setSelected((boolean) preferredSettings.get("idle"));
+            ignoreGravityCheckBox.setSelected((boolean) preferredSettings.get("ignoreGravity"));
+            sleepCheckBox.setSelected((boolean) preferredSettings.get("sleep"));
+            sitCheckBox.setSelected((boolean) preferredSettings.get("sit"));
+            climbCheckBox.setSelected((boolean) preferredSettings.get("climb"));
+            hideAndSeekCheckBox.setSelected((boolean) preferredSettings.get("hideAndSeek"));
+            interactableCheckBox.setSelected((boolean) preferredSettings.get("interactable"));
+            specialActionCheckBox.setSelected((boolean) preferredSettings.get("specialAction"));
+            actionFrequencySlider.setValue(((Number) preferredSettings.get("actionFrequency")).floatValue());
+            movementSpeedSlider.setValue(((Number) preferredSettings.get("movementSpeed")).floatValue());
+
+            activeReplyCheckBox.setSelected((boolean) preferredSettings.get("activeReply"));
+            outputEmotionCheckBox.setSelected((boolean) preferredSettings.get("outputEmotion"));
+            activeReplyFrequencySlider.setValue(((Number) preferredSettings.get("activeReplyFrequency")).floatValue());
+            coralationDegreeSlider.setValue(((Number) preferredSettings.get("coralationDegree")).floatValue());
+
+            System.out.println("Preferred settings loaded successfully.");
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Failed to load preferred settings.");
+        }
+    }
     //endregion
 
     //region 更多面板相关
-    /*
-    @FXML private Hyperlink quickStartLink;
-    @FXML private Hyperlink faqLink;
-    @FXML private Hyperlink tutorialLink;
-    @FXML private Hyperlink troubleshootingLink;
-    @FXML private Hyperlink advancedUsageLink;
 
-    @FXML private Hyperlink githubLink;
-    @FXML private Hyperlink bilibiliLink;
-    @FXML private Hyperlink catTalkLink;
-    @FXML private Hyperlink safetyStatementLink;
+    @FXML public Hyperlink quickStartLink;
+    @FXML public Hyperlink faqLink;
+    @FXML public Hyperlink tutorialLink;
+    @FXML public Hyperlink troubleshootingLink;
+    @FXML public Hyperlink advancedUsageLink;
 
-    @FXML private Hyperlink moreLink1;
-    @FXML private Hyperlink moreLink2;
-    @FXML private Hyperlink moreLink3;
-    @FXML private Hyperlink moreLink4;
-    @FXML private Hyperlink moreLink5;
-    @FXML private Hyperlink moreLink6;
-    @FXML private Hyperlink moreLink7;
-    @FXML private Hyperlink moreLink8;
+    @FXML public Hyperlink githubLink;
+    @FXML public Hyperlink bilibiliLink;
+    @FXML public Hyperlink catTalkLink;
+    @FXML public Hyperlink safetyStatementLink;
 
-    @FXML private Hyperlink emailLink;
-    @FXML private Hyperlink forumLink;
-    @FXML private Hyperlink documentationLink;
+    @FXML public Hyperlink PRTSLink;
+    @FXML public Hyperlink moreLink2;
+    @FXML public Hyperlink moreLink3;
+    @FXML public Hyperlink moreLink4;
+    @FXML public Hyperlink moreLink5;
+    @FXML public Hyperlink moreLink6;
+    @FXML public Hyperlink moreLink7;
+    @FXML public Hyperlink moreLink8;
 
-    @FXML
-    public void initialize() {
+    @FXML public Hyperlink emailLink;
+    @FXML public Hyperlink forumLink;
+    @FXML public Hyperlink documentationLink;
+
+    //@FXML
+    //public void initialize() {
         // 绑定超链接事件
-        setupHyperlinkActions();
-    }
+    //    setupHyperlinkActions();
+    //}
 
-    private void setupHyperlinkActions() {
+    private void SetupHyperlinkActions() {
         // GitHub链接
-        githubLink.setOnAction(e -> openURL("https://github.com/yourusername/your-repo"));
+        githubLink.setOnAction(e -> OpenURL("https://github.com/CeobeLapland/ArkFriends"));
 
         // B站链接
-        bilibiliLink.setOnAction(e -> openURL("https://space.bilibili.com/your-id"));
+        bilibiliLink.setOnAction(e -> OpenURL("https://space.bilibili.com/490290276?spm_id_from=333.788.0.0"));
 
         // 邮箱链接
-        emailLink.setOnAction(e -> openURL("mailto:support@example.com"));
+        //emailLink.setOnAction(e -> OpenURL("mailto:support@example.com"));
 
         // 论坛链接
-        forumLink.setOnAction(e -> openURL("https://forum.example.com"));
+        //forumLink.setOnAction(e -> OpenURL("https://forum.example.com"));
 
         // 文档链接
-        documentationLink.setOnAction(e -> openURL("https://docs.example.com"));
+        //documentationLink.setOnAction(e -> OpenURL("https://docs.example.com"));
 
         // 宇宙安全声明（示例：显示对话框）
-        safetyStatementLink.setOnAction(e -> showSafetyStatement());
+        //safetyStatementLink.setOnAction(e -> showSafetyStatement());
 
         // 喵言喵语（示例：显示趣味对话框）
-        catTalkLink.setOnAction(e -> showCatTalk());
+        //catTalkLink.setOnAction(e -> showCatTalk());
 
         // 更多链接（占位符）
-        moreLink1.setOnAction(e -> showPlaceholderAlert("更多链接 1"));
+        /*moreLink1.setOnAction(e -> showPlaceholderAlert("更多链接 1"));
         moreLink2.setOnAction(e -> showPlaceholderAlert("更多链接 2"));
         moreLink3.setOnAction(e -> showPlaceholderAlert("更多链接 3"));
         moreLink4.setOnAction(e -> showPlaceholderAlert("更多链接 4"));
         moreLink5.setOnAction(e -> showPlaceholderAlert("更多链接 5"));
         moreLink6.setOnAction(e -> showPlaceholderAlert("更多链接 6"));
         moreLink7.setOnAction(e -> showPlaceholderAlert("更多链接 7"));
-        moreLink8.setOnAction(e -> showPlaceholderAlert("更多链接 8"));
+        moreLink8.setOnAction(e -> showPlaceholderAlert("更多链接 8"));*/
 
         // 帮助链接
-        quickStartLink.setOnAction(e -> openURL("https://docs.example.com/quick-start"));
-        faqLink.setOnAction(e -> openURL("https://docs.example.com/faq"));
-        tutorialLink.setOnAction(e -> openURL("https://docs.example.com/tutorials"));
-        troubleshootingLink.setOnAction(e -> openURL("https://docs.example.com/troubleshooting"));
-        advancedUsageLink.setOnAction(e -> openURL("https://docs.example.com/advanced"));
+        //quickStartLink.setOnAction(e -> OpenURL("https://docs.example.com/quick-start"));
+        //faqLink.setOnAction(e -> OpenURL("https://docs.example.com/faq"));
+        //tutorialLink.setOnAction(e -> OpenURL("https://docs.example.com/tutorials"));
+        //troubleshootingLink.setOnAction(e -> OpenURL("https://docs.example.com/troubleshooting"));
+        //advancedUsageLink.setOnAction(e -> OpenURL("https://docs.example.com/advanced"));
     }
 
-    private void openURL(String url) {
+    private void OpenURL(String url)
+    {
         try {
             if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
                 Desktop.getDesktop().browse(new URI(url));
+                System.out.println("Opened URL: " + url);
             } else {
-                showAlert("无法打开链接", "请手动访问: " + url, AlertType.INFORMATION);
+                //showAlert("无法打开链接", "请手动访问: " + url, Alert.AlertType.INFORMATION);
+                System.out.println("Desktop browsing not supported.");
             }
         } catch (Exception ex) {
-            showAlert("错误", "无法打开链接: " + ex.getMessage(), AlertType.ERROR);
+            //showAlert("错误", "无法打开链接: " + ex.getMessage(), Alert.AlertType.ERROR);
+            System.out.println("Failed to open URL: " + ex.getMessage());
         }
     }
 
-    private void showSafetyStatement() {
-        Alert alert = new Alert(AlertType.INFORMATION);
+    /*private void showSafetyStatement() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("宇宙安全声明");
         alert.setHeaderText("宇宙安全声明");
         alert.setContentText("本软件在设计和实现过程中严格遵守宇宙安全法则。\n\n" +
-                           "1. 不会产生任何形式的宇宙射线\n" +
-                           "2. 不会导致时空扭曲\n" +
-                           "3. 不会影响平行宇宙的稳定性\n" +
-                           "4. 已通过银河系安全委员会认证");
+                "1. 不会产生任何形式的宇宙射线\n" +
+                "2. 不会导致时空扭曲\n" +
+                "3. 不会影响平行宇宙的稳定性\n" +
+                "4. 已通过银河系安全委员会认证");
         alert.showAndWait();
     }
 
     private void showCatTalk() {
-        Alert alert = new Alert(AlertType.INFORMATION);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("喵言喵语");
         alert.setHeaderText("来自开发者的喵喵消息");
         alert.setContentText("喵~ 感谢使用我们的软件！\n\n" +
-                           "开发者正在努力学习猫语中...\n" +
-                           "目前只会说：喵喵喵，喵！\n\n" +
-                           "翻译：祝你使用愉快！");
+                "开发者正在努力学习猫语中...\n" +
+                "目前只会说：喵喵喵，喵！\n\n" +
+                "翻译：祝你使用愉快！");
         alert.showAndWait();
     }
 
@@ -1002,7 +1208,7 @@ public class PanelController
         alert.setTitle("占位符链接");
         alert.setHeaderText(linkName);
         alert.setContentText("这是一个占位符链接。\n\n" +
-                           "你可以在控制器中将其替换为实际的功能。");
+                "你可以在控制器中将其替换为实际的功能。");
         alert.showAndWait();
     }
 
@@ -1021,12 +1227,9 @@ public class PanelController
 
     public String getBuildDate() {
         return "2024-01-15";
-    }
-    */
+    }*/
+
     //endregion
-    //<ToggleButton fx:id="fps20Button" mnemonicParsing="false" style="-fx-background-color: #e2e8f0; -fx-text-fill: #334155; -fx-background-radius: 4;" text="20 FPS" toggleGroup="$fpsToggleGroup" />
-    //<ToggleButton fx:id="fps24Button" mnemonicParsing="false" style="-fx-background-color: #e2e8f0; -fx-text-fill: #334155; -fx-background-radius: 4;" text="24 FPS" toggleGroup="$fpsToggleGroup" />
-    //<ToggleButton fx:id="fps30Button" mnemonicParsing="false" selected="true" style="-fx-background-color: #3b82f6; -fx-text-fill: white; -fx-background-radius: 4;" text="30 FPS" toggleGroup="$fpsToggleGroup" />
 }
 
 class CharacterSearchData
