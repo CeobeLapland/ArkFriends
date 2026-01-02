@@ -1,0 +1,42 @@
+{
+  "ceobe":{
+    "cn": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\voices\\zn\\ceobe\\ceremony.wav",
+    "jp": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\voices\\jp\\ceobe\\ceremony.wav"
+  },
+  "texas": {
+    "cn": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\voices\\zn\\texas\\ceremony.wav",
+    "jp": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\voices\\jp\\texas\\ceremony.wav"
+  },
+  "lapland": {
+    "cn": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\voices\\zn\\lapland\\ceremony.wav",
+    "jp": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\voices\\jp\\lapland\\ceremony.wav"
+  },
+  "exusiai": {
+    "cn": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\voices\\zn\\exusiai\\ceremony.wav",
+    "jp": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\voices\\jp\\exusiai\\ceremony.wav"
+  },
+  "rope": {
+    "cn": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\voices\\zn\\rope\\ceremony.wav",
+    "jp": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\voices\\jp\\rope\\ceremony.wav"
+  },
+  "amiya": {
+    "cn": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\voices\\zn\\amiya\\ceremony.wav",
+    "jp": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\voices\\jp\\amiya\\ceremony.wav"
+  },
+  "gravel": {
+    "cn": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\voices\\zn\\gravel\\ceremony.wav",
+    "jp": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\voices\\jp\\gravel\\ceremony.wav"
+  },
+  "platinum": {
+    "cn": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\voices\\zn\\platinum\\ceremony.wav",
+    "jp": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\voices\\jp\\platinum\\ceremony.wav"
+  },
+  "kaltsit": {
+    "cn": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\voices\\zn\\kaltsit\\ceremony.wav",
+    "jp": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\voices\\jp\\kaltsit\\ceremony.wav"
+  },
+  "angelina": {
+    "cn": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\voices\\zn\\angelina\\ceremony.wav",
+    "jp": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\voices\\jp\\angelina\\ceremony.wav"
+  }
+}

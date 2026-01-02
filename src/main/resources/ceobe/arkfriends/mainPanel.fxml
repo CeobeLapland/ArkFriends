@@ -706,10 +706,13 @@
                                              </columnConstraints>
                                              <rowConstraints>
                                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                              </rowConstraints>
                                              <children>
                                                  <CheckBox fx:id="activeReplyCheckBox" style="-fx-text-fill: #334155;" text="允许主动回复" />
                                                  <CheckBox fx:id="outputEmotionCheckBox" style="-fx-text-fill: #334155;" text="输出当前心情" GridPane.columnIndex="1" />
+                                       <CheckBox fx:id="printerEffectCheckBox" style="-fx-text-fill: #334155;" text="打字机效果" GridPane.rowIndex="1" />
+                                       <CheckBox fx:id="voiceStreamCheckBox" style="-fx-text-fill: #334155;" text="语音流式输出" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                              </children>
                                          </GridPane>
 

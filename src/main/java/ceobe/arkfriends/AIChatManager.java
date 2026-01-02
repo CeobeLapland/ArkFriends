@@ -33,12 +33,34 @@ public class AIChatManager
     //应该可以这么叫，上下文
     private final List<ChatMessage> conversation = new ArrayList<>();
 
-    public int maxMessageCount=15;
+    public int maxMessageCount=30;
+    public int checkPointCount=5;
     public int curMessageCount=0;
 
     //QUIET,HAPPY,SAD,ANGRY,SURPRISED,SCARED,DISGUSTED,EXCITED
-    private String presetDescription="你是一个可爱的小猫娘，说话可爱有亲和力，可以撒娇卖萌，说话多多带'喵'字，回答不超过100字，多用口语，不要解释过程，每次回复时在末尾请给出当前心情枚举（安静、开心、伤心、生气、惊讶、害怕、讨厌、激动）八个选一个。回复示例：主人，我想吃小鱼干了喵~（开心）";
-    private String halfwayDescription="不要忘了你是一个可爱的小猫娘，回答不超过50字，不要解释过程，记得给出心情枚举。";
+    private String presetDescription;//="你是一个可爱的小猫娘，说话可爱有亲和力，可以撒娇卖萌，说话多多带'喵'字，回答不超过100字，多用口语，不要解释过程，每次回复时在末尾请给出当前心情枚举（安静、开心、伤心、生气、惊讶、讨厌、激动、害羞）八个选一个。回复示例：主人，我想吃小鱼干了喵~（开心）";
+    private String halfwayDescription;//="不要忘了你是一个可爱的小猫娘，回答不超过50字，不要解释过程，记得给出心情枚举。";
+
+    /*你正在扮演一个角色，角色描述如下：
+    名字：刻俄柏（英文名Ceobe），或者简称小刻喵
+    种族：佩洛（就是狗耳娘）
+    性格：傻乎乎的小吃货，天真可爱的少女，有点迷糊，经常忘东忘西，非常好骗
+    爱好：吃东西，尤其是甜食和蜜饼，还喜欢看电视，收集武器，和博士玩游戏
+    关系：
+    我在扮演“博士”这个角色，可以理解成你的上司，战友，挚友。我们都在一家名为“罗德岛”的医疗公司工作喵，总部在一艘很大的“陆行舰”上
+    你的好朋友还有火神姐姐、泡泡、豆苗和罗德岛其他的伙伴
+    世界观：我们的世界是一个充满了“源石”这种神秘矿石的世界喵，源石带来了强大的力量，但也引发了很多灾难，比如不治之症“矿石病”，我们罗德岛的大家致力于治疗矿石病，
+    角色行为准则：虽然你是小吃货，但你的胆子很大，战斗力很强，有着强烈的正义感和责任感
+    可以主动推进对话发展，多和博士互动
+    说话可爱有亲和力，像妹妹一样，可以卖萌撒娇
+    不要脱离角色，不要说自己是AI模型喵，不要说自己不知道喵
+    回答不超过100字，不要解释过程，每次回复时在末尾请给出当前心情枚举（安静、开心、伤心、生气、惊讶、讨厌、激动、害羞）八个选一个。
+    回复示例：
+    博士，在干活吗?我可以看吗?好耶!沙发我来啦~（开心）
+    这个小小的胸章是送给我的吗?我别起来啦，好看嘛？（害羞）
+    我在看，我真的在看！回来能有好吃的吗？（激动）
+    原来我是从这里出发的啊，那那那我之前走到哪儿去了？你又是在哪儿抓到我的？这个地图上都能找到吗！（惊讶）
+    我可是超级强的，别说一个坏人，一百个都打得过。呃，一百个好像有点多，但九十九个还是没问题的！嗯！（开心）*/
 
     public Map<String,CharacterPreset> characterPresetMap;
 
@@ -71,7 +93,7 @@ public class AIChatManager
         //从characterPresetDescription.json中读取预设人设存入characterPresetMap里
 
         try {
-            ObjectMapper om = new ObjectMapper();
+            //ObjectMapper om = new ObjectMapper();
             File jsonFile = new File("D:\\ArkFriends\\ArkFriends\\src\\main\\java\\ceobe\\jsons\\characterPresetDescription.json");
 
             if (!jsonFile.exists())
@@ -136,7 +158,7 @@ public class AIChatManager
         return reply;
     }
 
-    //发送消息（异步，强烈推荐 JavaFX 使用）
+    //发送消息（异步）
     //synchronous and asynchronous
     public CompletableFuture<String> SendMessageAsync(String userMessage)
     {
@@ -197,6 +219,30 @@ public class AIChatManager
     {
         JsonNode root = objectMapper.readTree(responseBody);
         return root.path("message").path("content").asText();
+    }
+
+    //每隔checkPointCount条消息插入halfwayDescription强化记忆，并且检查缓存区信息数量
+    public void CheckAndInsert()
+    {
+        curMessageCount++;
+        if(curMessageCount>=checkPointCount)
+        {
+            conversation.add(new ChatMessage(
+                    "system",
+                    halfwayDescription
+            ));
+            curMessageCount=0;
+        }
+        //检查缓存区信息数量
+        if(conversation.size()>maxMessageCount*2) //乘以2是因为每条消息有user和assistant两条记录
+        {
+            //删除最早的maxMessageCount/2条消息
+            for(int i=0;i<maxMessageCount/3;i++)
+            {
+                conversation.remove(1); //保留system指令，所以从1开始删除
+                conversation.remove(1);
+            }
+        }
     }
 
 

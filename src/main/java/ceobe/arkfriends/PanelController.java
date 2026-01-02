@@ -844,6 +844,9 @@ public class PanelController
     // AI设置
     @FXML public CheckBox activeReplyCheckBox;
     public CheckBox outputEmotionCheckBox;
+    public CheckBox printerEffectCheckBox;
+    public CheckBox voiceStreamCheckBox;
+
     @FXML public Slider activeReplyFrequencySlider;
     @FXML public Label activeReplyFrequencyValue;
 
@@ -942,6 +945,8 @@ public class PanelController
 
         settings.put("activeReply", activeReplyCheckBox.isSelected());
         settings.put("outputEmotion", outputEmotionCheckBox.isSelected());
+        settings.put("printerEffect", printerEffectCheckBox.isSelected());
+        settings.put("voiceStream", voiceStreamCheckBox.isSelected());
         settings.put("activeReplyFrequency", activeReplyFrequencySlider.getValue());
         settings.put("coralationDegree", coralationDegreeSlider.getValue());
 
@@ -1014,6 +1019,8 @@ public class PanelController
 
             activeReplyCheckBox.setSelected((boolean) defaultSettings.get("activeReply"));
             outputEmotionCheckBox.setSelected((boolean) defaultSettings.get("outputEmotion"));
+            printerEffectCheckBox.setSelected((boolean) defaultSettings.get("printerEffect"));
+            voiceStreamCheckBox.setSelected((boolean) defaultSettings.get("voiceStream"));
             activeReplyFrequencySlider.setValue(((Number) defaultSettings.get("activeReplyFrequency")).floatValue());
             coralationDegreeSlider.setValue(((Number) defaultSettings.get("coralationDegree")).floatValue());
 
@@ -1081,6 +1088,8 @@ public class PanelController
 
             activeReplyCheckBox.setSelected((boolean) preferredSettings.get("activeReply"));
             outputEmotionCheckBox.setSelected((boolean) preferredSettings.get("outputEmotion"));
+            printerEffectCheckBox.setSelected((boolean) preferredSettings.get("printerEffect"));
+            voiceStreamCheckBox.setSelected((boolean) preferredSettings.get("voiceStream"));
             activeReplyFrequencySlider.setValue(((Number) preferredSettings.get("activeReplyFrequency")).floatValue());
             coralationDegreeSlider.setValue(((Number) preferredSettings.get("coralationDegree")).floatValue());
 

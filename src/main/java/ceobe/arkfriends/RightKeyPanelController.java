@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
 import java.util.Timer;
+import java.util.concurrent.CompletableFuture;
 
 
 public class RightKeyPanelController
@@ -223,21 +224,76 @@ public class RightKeyPanelController
         //让我试试
         //Platform.runLater(()->{AIChatManager.ACM.sendMessageAsync(userText).thenAccept(reply -> {Platform.runLater(() -> {System.out.println("开始打字");OpenDialog();PrinterFlow(reply + "\n");});}).exceptionally(ex -> {ex.printStackTrace();return null;});});
         //好像也没多长
-        Platform.runLater(()->{
+        Platform.runLater(()->
+        {
             AIChatManager.ACM.SendMessageAsync(userText)
                     .thenAccept(reply -> {
+                        //取最后四个字符作为情感分析依据
+                        String emotionString=reply.substring(Math.max(0,reply.length()-4));
+                        //EmotionAnalyzer.EmotionType emotion=EmotionAnalyzer.AnalyzeEmotion(emotionString);
+                        switch (emotionString)//有八个安静、开心、伤心、生气、惊讶、讨厌、激动、害羞
+                        {
+                            case "（开心）"->{
+                                AnimationController.animationController.ChangeEmotion(Emotion.HAPPY);
+                                System.out.println("情感分析为开心");
+                            }
+                            case "（伤心）"->{
+                                AnimationController.animationController.ChangeEmotion(Emotion.SAD);
+                                System.out.println("情感分析为伤心");
+                            }
+                            case "（生气）"->{
+                                AnimationController.animationController.ChangeEmotion(Emotion.ANGRY);
+                                System.out.println("情感分析为生气");
+                            }
+                            case "（惊讶）"->{
+                                AnimationController.animationController.ChangeEmotion(Emotion.SURPRISED);
+                                System.out.println("情感分析为惊讶");
+                            }
+                            case "（讨厌）"->{
+                                AnimationController.animationController.ChangeEmotion(Emotion.DISGUSTED);
+                                System.out.println("情感分析为讨厌");
+                            }
+                            case "（激动）"->{
+                                AnimationController.animationController.ChangeEmotion(Emotion.EXCITED);
+                                System.out.println("情感分析为激动");
+                            }
+                            case "（害羞）"->{
+                                AnimationController.animationController.ChangeEmotion(Emotion.SHY);
+                                System.out.println("情感分析为害羞");
+                            }
+                            default-> {
+                                AnimationController.animationController.ChangeEmotion(Emotion.QUIET);
+                                System.out.println("情感分析为安静");
+                            }
+                        }
+
+                        //把reply去掉最后四个字符
+                        reply=reply.substring(0,Math.max(0,reply.length()-4));
+                        String finalReply = reply;
+                        //也不知道为什么必须用final
+
+                        //发送语音请求
+                        //VoiceService.voiceService.GetVoiceWithRainfallSFT(finalReply, VoiceService.voiceService.sftDropdown.getValue());
+                        //异步调用这句话VoiceService.voiceService.GetVoiceWithRainfallZeroShot(finalReply);
+                        CompletableFuture.runAsync(()->
+                        {
+                            VoiceService.voiceService.GetVoiceWithRainfallZeroShot(finalReply);
+                        });
+
                         Platform.runLater(() -> {
                             //chatArea.appendText("桌宠：" + reply + "\n");
                             System.out.println("开始打字");
 
                             OpenDialog();
-                            PrinterFlow(reply + "\n");
+                            PrinterFlow(finalReply + "\n");
                         });
                     })
                     .exceptionally(ex -> {
                         ex.printStackTrace();
                         return null;
                     });
+            //检查缓冲区
+            AIChatManager.ACM.CheckAndInsert();
         });
     }
 

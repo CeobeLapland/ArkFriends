@@ -33,6 +33,8 @@
 
   "activeReply": true,
   "outputEmotion": true,
+  "printerEffect":true,
+  "voiceStream": false,
   "activeReplyFrequency": 50.0,
   "coralationDegree": 80.0
 }

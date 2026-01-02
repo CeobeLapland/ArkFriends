@@ -4,7 +4,7 @@
     "defaultState": "idle",
     "actions": {
       "idle": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\ceobe\\relax",
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\ceobe\\idle",
         "fps": 24,
         "loop": true,
         "move": false
@@ -50,6 +50,54 @@
         "fps": 24,
         "loop": false,
         "move": false
+      },
+      "happy": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\ceobe\\happy",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      },
+      "sad": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\ceobe\\sad",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      },
+      "angry": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\ceobe\\angry",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      },
+      "surprised": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\ceobe\\surprised",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      },
+      "quiet": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\ceobe\\quiet",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      },
+      "excited": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\ceobe\\excited",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      },
+      "disgusted": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\ceobe\\disgusted",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      },
+      "shy": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\ceobe\\shy",
+        "fps": 24,
+        "loop": false,
+        "move": false
       }
     }
   },
@@ -58,7 +106,7 @@
     "defaultState": "idle",
     "actions": {
       "idle": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\texas\\relax",
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\texas\\idle",
         "fps": 24,
         "loop": true,
         "move": false
@@ -104,6 +152,54 @@
         "fps": 24,
         "loop": false,
         "move": false
+      },
+      "happy": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\texas\\happy",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      },
+      "sad": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\texas\\sad",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      },
+      "angry": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\texas\\angry",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      },
+      "surprised": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\texas\\surprised",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      },
+      "quiet": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\texas\\quiet",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      },
+      "excited": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\texas\\excited",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      },
+      "disgusted": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\texas\\disgusted",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      },
+      "shy": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\texas\\shy",
+        "fps": 24,
+        "loop": false,
+        "move": false
       }
     }
   },
@@ -112,7 +208,7 @@
     "defaultState": "idle",
     "actions": {
       "idle": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\lapland\\relax",
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\lapland\\idle",
         "fps": 24,
         "loop": true,
         "move": false
@@ -158,6 +254,54 @@
         "fps": 24,
         "loop": false,
         "move": false
+      },
+      "happy": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\lapland\\happy",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      },
+      "sad": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\lapland\\sad",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      },
+      "angry": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\lapland\\angry",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      },
+      "surprised": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\lapland\\surprised",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      },
+      "quiet": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\lapland\\quiet",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      },
+      "excited": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\lapland\\excited",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      },
+      "disgusted": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\lapland\\disgusted",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      },
+      "shy": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\lapland\\shy",
+        "fps": 24,
+        "loop": false,
+        "move": false
       }
     }
   },
@@ -166,7 +310,7 @@
     "defaultState": "idle",
     "actions": {
       "idle": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\exusiai\\relax",
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\exusiai\\idle",
         "fps": 24,
         "loop": true,
         "move": false
@@ -212,6 +356,54 @@
         "fps": 24,
         "loop": false,
         "move": false
+      },
+      "happy": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\exusiai\\happy",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      },
+      "sad": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\exusiai\\sad",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      },
+      "angry": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\exusiai\\angry",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      },
+      "surprised": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\exusiai\\surprised",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      },
+      "quiet": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\exusiai\\quiet",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      },
+      "excited": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\exusiai\\excited",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      },
+      "disgusted": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\exusiai\\disgusted",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      },
+      "shy": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\,characters\\exusiai\\shy",
+        "fps": 24,
+        "loop": false,
+        "move": false
       }
     }
   },
@@ -220,7 +412,7 @@
     "defaultState": "idle",
     "actions": {
       "idle": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\rope\\relax",
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\rope\\idle",
         "fps": 24,
         "loop": true,
         "move": false
@@ -266,6 +458,54 @@
         "fps": 24,
         "loop": false,
         "move": false
+      },
+      "happy": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\rope\\happy",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      },
+      "sad": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\rope\\sad",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      },
+      "angry": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\rope\\angry",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      },
+      "surprised": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\rope\\surprised",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      },
+      "quiet": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\rope\\quiet",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      },
+      "excited": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\rope\\excited",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      },
+      "disgusted": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\rope\\disgusted",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      },
+      "shy": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\rope\\shy",
+        "fps": 24,
+        "loop": false,
+        "move": false
       }
     }
   },
@@ -274,7 +514,7 @@
     "defaultState": "idle",
     "actions": {
       "idle": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\amiya\\relax",
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\amiya\\idle",
         "fps": 24,
         "loop": true,
         "move": false
@@ -320,6 +560,54 @@
         "fps": 24,
         "loop": false,
         "move": false
+      },
+      "happy": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\amiya\\happy",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      },
+      "sad": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\amiya\\sad",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      },
+      "angry": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\amiya\\angry",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      },
+      "surprised": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\amiya\\surprised",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      },
+      "quiet": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\amiya\\quiet",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      },
+      "excited": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\amiya\\excited",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      },
+      "disgusted": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\amiya\\disgusted",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      },
+      "shy": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\amiya\\shy",
+        "fps": 24,
+        "loop": false,
+        "move": false
       }
     }
   },
@@ -328,7 +616,7 @@
     "defaultState": "idle",
     "actions": {
       "idle": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\gravel\\relax",
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\gravel\\idle",
         "fps": 24,
         "loop": true,
         "move": false
@@ -374,6 +662,54 @@
         "fps": 24,
         "loop": false,
         "move": false
+      },
+      "happy": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\gravel\\happy",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      },
+      "sad": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\gravel\\sad",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      },
+      "angry": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\gravel\\angry",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      },
+      "surprised": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\gravel\\surprised",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      },
+      "quiet": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\gravel\\quiet",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      },
+      "excited": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\gravel\\excited",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      },
+      "disgusted": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\gravel\\disgusted",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      },
+      "shy": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\gravel\\shy",
+        "fps": 24,
+        "loop": false,
+        "move": false
       }
     }
   },
@@ -382,7 +718,7 @@
     "defaultState": "idle",
     "actions": {
       "idle": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\platinum\\relax",
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\platinum\\idle",
         "fps": 24,
         "loop": true,
         "move": false
@@ -428,6 +764,54 @@
         "fps": 24,
         "loop": false,
         "move": false
+      },
+      "happy": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\platinum\\happy",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      },
+      "sad": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\platinum\\sad",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      },
+      "angry": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\platinum\\angry",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      },
+      "surprised": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\platinum\\surprised",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      },
+      "quiet": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\platinum\\quiet",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      },
+      "excited": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\platinum\\excited",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      },
+      "disgusted": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\platinum\\disgusted",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      },
+      "shy": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\platinum\\shy",
+        "fps": 24,
+        "loop": false,
+        "move": false
       }
     }
   },
@@ -436,7 +820,7 @@
     "defaultState": "idle",
     "actions": {
       "idle": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\kaltsit\\relax",
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\kaltsit\\idle",
         "fps": 24,
         "loop": true,
         "move": false
@@ -482,6 +866,54 @@
         "fps": 24,
         "loop": false,
         "move": false
+      },
+      "happy": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\kaltsit\\happy",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      },
+      "sad": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\kaltsit\\sad",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      },
+      "angry": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\kaltsit\\angry",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      },
+      "surprised": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\kaltsit\\surprised",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      },
+      "quiet": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\kaltsit\\quiet",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      },
+      "excited": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\kaltsit\\excited",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      },
+      "disgusted": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\kaltsit\\disgusted",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      },
+      "shy": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\kaltsit\\shy",
+        "fps": 24,
+        "loop": false,
+        "move": false
       }
     }
   },
@@ -490,7 +922,7 @@
     "defaultState": "idle",
     "actions": {
       "idle": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\angelina\\relax",
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\angelina\\idle",
         "fps": 24,
         "loop": true,
         "move": false
@@ -533,6 +965,54 @@
       },
       "start": {
         "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\angelina\\start",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      },
+      "happy": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\angelina\\happy",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      },
+      "sad": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\angelina\\sad",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      },
+      "angry": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\angelina\\angry",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      },
+      "surprised": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\angelina\\surprised",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      },
+      "quiet": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\angelina\\quiet",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      },
+      "excited": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\angelina\\excited",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      },
+      "disgusted": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\angelina\\disgusted",
+        "fps": 24,
+        "loop": false,
+        "move": false
+      },
+      "shy": {
+        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\angelina\\shy",
         "fps": 24,
         "loop": false,
         "move": false

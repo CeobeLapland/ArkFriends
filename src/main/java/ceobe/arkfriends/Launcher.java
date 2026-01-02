@@ -58,7 +58,7 @@ public class Launcher extends Application
             stage.hide();
         });*/
 
-        //new VoiceService();
+        //new VoiceService();//放下面了
 
         //System.out.println("初始化前");
         //initializeTTS();
@@ -73,8 +73,6 @@ public class Launcher extends Application
 
         //我想破脑袋都没想到是这里出的问题
         //详细说明在AnimationController的构造函数里
-
-
         petFxml= new FXMLLoader(Launcher.class.getResource("petPanel.fxml"));
 
         //加了一句比较重要的
@@ -113,18 +111,23 @@ public class Launcher extends Application
             {
                 AnimationController.animationController.DelayedInitialization();
 
-                new AIChatManager();
+                //new AIChatManager();
+                //AIChatManager.ACM.ChangePresetDescription(AnimationController.animationController.curCharName);
+
+                new VoiceService();
+
+                VoiceService.voiceService.GetVoiceWithRainfallZeroShot("博士博士晚上好呀，今天也要天天开心呀");
                 //这个也必须放在这里面
                 //我也不知道为什么，明明ACM里面不涉及到UI更新，但他还是会导致timeline线程爆炸
                 new WindowsScanner();
 
                 timer.cancel();
             }
-        },300);//延迟一秒执行
+        },500);//延迟一秒执行
         //AnimationController.animationController.DelayedInitialization();
         //放到DelayedInitialization里去了
 
-        //new AIChatManager();
+        //new AIChatManager();//放里面了
     }
 
 

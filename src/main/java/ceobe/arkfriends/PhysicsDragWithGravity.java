@@ -30,13 +30,13 @@ public class PhysicsDragWithGravity implements IPhysicsDragController
     private double damping = 10;
 
     // 角度
-    private double angularStiffness = 35;
-    private double angularDamping = 8;
-    private double maxAngle = 30;
+    private double angularStiffness = 30;
+    private double angularDamping = 5;
+    private double maxAngle = 60;
 
     // 反弹 & 摩擦
     private double bounce = 0.55;
-    private double friction = 0.8;
+    private double friction = 0.9;
 
     // 地面（任务栏）
     private double groundY;
@@ -45,12 +45,14 @@ public class PhysicsDragWithGravity implements IPhysicsDragController
     private double leftBound = 0;
     private double rightBound;
 
-    public PhysicsDragWithGravity(DoublePoint startPos, double petWidth, double petHeight) {
+    public PhysicsDragWithGravity(DoublePoint startPos, double petWidth, double petHeight)
+    {
         this.position = startPos;
 
         var bounds = Screen.getPrimary().getVisualBounds();
-        this.rightBound = bounds.getWidth() - petWidth;
-        this.groundY = bounds.getHeight() - petHeight;
+        this.rightBound = bounds.getWidth() - petWidth+200;
+        //this.groundY = bounds.getHeight() - petHeight;
+        this.groundY = bounds.getHeight() - petHeight + 150; //预留任务栏高度
     }
 
     public void SetIsDragging(boolean dragging)
@@ -63,7 +65,8 @@ public class PhysicsDragWithGravity implements IPhysicsDragController
     }
     /* ================== 鼠标事件 ================== */
 
-    public void OnMousePressed(double mx, double my) {
+    public void OnMousePressed(double mx, double my)
+    {
         isDragging = true;
 
         mouseTarget.x = mx;
@@ -75,7 +78,8 @@ public class PhysicsDragWithGravity implements IPhysicsDragController
         velocity.x = velocity.y = 0;
     }
 
-    public void OnMouseDragged(double mx, double my) {
+    public void OnMouseDragged(double mx, double my)
+    {
         mouseTarget.x = mx;
         mouseTarget.y = my;
 
@@ -99,7 +103,8 @@ public class PhysicsDragWithGravity implements IPhysicsDragController
     }
 
     //主更新
-    public void Update(double dt) {
+    public void Update(double dt)
+    {
 
         if (isDragging) {
             // 拖拽弹簧（弱重力）
@@ -111,8 +116,16 @@ public class PhysicsDragWithGravity implements IPhysicsDragController
 
         } else {
             // 自由落体
-            velocity.y += gravity * dt;
+            if(Math.abs(position.y-groundY)<=5)
+                velocity.y=0;
+            else
+                velocity.y += gravity * dt;
         }
+        if(velocity.x<0.1 && velocity.x>-0.1)
+            velocity.x=0;
+
+
+        velocity.x *= friction;
 
         // 更新位置
         position.x += velocity.x * dt;
@@ -128,10 +141,13 @@ public class PhysicsDragWithGravity implements IPhysicsDragController
     }
 
     //边界 & 地面
-    private void HandleBounds() {
+    private void HandleBounds()
+    {
 
         // 地面
-        if (position.y >= groundY) {
+        if (position.y >= groundY)
+        //if(Math.abs(position.y-groundY)<=5)
+        {
             position.y = groundY;
 
             if (Math.abs(velocity.y) > 50) {
@@ -151,6 +167,12 @@ public class PhysicsDragWithGravity implements IPhysicsDragController
         if (position.x >= rightBound) {
             position.x = rightBound;
             velocity.x = -velocity.x * bounce;
+        }
+
+        //上方
+        if (position.y <= 0) {
+            position.y = 0;
+            velocity.y = -velocity.y * bounce;
         }
     }
 

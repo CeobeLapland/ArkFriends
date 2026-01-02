@@ -1,10 +1,16 @@
 package ceobe.arkfriends;
 
+//import com.sun.util.*;
 import jep.Jep;
 import jep.JepException;
 import jep.JepConfig;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.Map;
 
 public class VoiceService
 {
@@ -13,16 +19,22 @@ public class VoiceService
     private Jep jep;
     private JepConfig config;
 
-    public String outputDir="output_voice";
+    public String outputDir="D:\\ArkFriends\\ArkFriends\\temp\\outputs";
     public String voiceServerDir="D:\\cosyvoice3-rainfall-v2\\cosyvoice-rainfall-v2\\cosyvoice-rainfall\\rainfall_starter.exe";
+
+    public Map<String, CharacterVoicePresets> characterVoicePresetsMap;
+    public String chineseVoicePreset;
+    public String japaneseVoicePreset;
+    public String englishVoicePreset;
 
     public VoiceService()
     {
+        System.out.println("初始化VoiceService");
         if (voiceService==null)
         {
             voiceService=this;
         }
-        System.out.println(System.getProperty("java.library.path"));
+        //System.out.println(System.getProperty("java.library.path"));
 
         config = new JepConfig();
         config.addIncludePaths("src//java//ceobe//arkfriends");
@@ -32,113 +44,40 @@ public class VoiceService
             jep.eval("import os");
             jep.eval("print(os.getcwd())");
 
-            //jep.eval("import CosyVoiceManager");
-            // 获取 Python 文件的绝对路径
-            String pythonFilePath = "D:\\ArkFriends\\ArkFriends\\src\\main\\java\\ceobe\\arkfriends\\CosyVoiceManager.py";
+
+
+            String pythonFilePath = "D:\\ArkFriends\\ArkFriends\\src\\main\\py\\CosyVoiceManager.py";
             File file = new File(pythonFilePath);
             String parentDir = file.getParent();
 
             jep.eval("import sys");
             jep.eval("sys.path.append(r'" + parentDir + "')");
-            jep.eval("import CosyVoiceManager");
+            jep.eval("from CosyVoiceManager import GetVoiceWithRainfallZeroShot");
+            jep.eval("print('Functions loaded:', dir())");
 
+            //jep.eval("import CosyVoiceManager");
+            // 获取 Python 文件的绝对路径
+            //String pythonFilePath = "D:\\ArkFriends\\ArkFriends\\src\\main\\java\\ceobe\\arkfriends\\CosyVoiceManager.py";
+            /*String pythonFilePath = "D:\\ArkFriends\\ArkFriends\\src\\main\\py\\CosyVoiceManager.py";
+            File file = new File(pythonFilePath);
+            String parentDir = file.getParent();
+
+            jep.eval("import sys");
+            jep.eval("sys.path.append(r'" + parentDir + "')");
+            jep.eval("import CosyVoiceManager");*/
+
+            System.out.println("成功加载CosyVoiceManager.py");
+
+            jep.eval("import sys");
+            jep.eval("print(sys.path)");
+            jep.eval("print('CosyVoiceManager loaded successfully')");
 
         } catch (JepException e) {
             e.printStackTrace();
+            System.out.println("加载CosyVoiceManager.py失败");
         }
-/*Caused by: java.lang.UnsatisfiedLinkError: no jep in java.library.path: D:\Java\jdk-24\binC:\Windows\Sun\Java\bin
-C:\Windows\system32
-C:\Windows
-C:\Program Files\Common Files\Oracle\Java\javapath
-C:\Program Files (x86)\Common Files\Intel\Shared Libraries\redist\intel64\compiler
-C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common
-C:\Windows\system32
-C:\Windows
-C:\Windows\System32\Wbem
-C:\Windows\System32\WindowsPowerShell\v1.0\
-C:\Windows\System32\OpenSSH\
-C:\Program Files (x86)\Windows Kits\8.1\Windows Performance Toolkit\
-C:\Program Files\dotnet\
-C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR
-C:\ProgramData\chocolatey\bin
-C:\Program Files (x86)\dotnet\
-D:\Git\cmd
-D:\Java\jdk-24\bin
 
-C:\Program Files\Docker\Docker\resources\bin
-C:\Users\1\AppData\Local\Microsoft\WindowsApps
-C:\Users\1\.dotnet\tools
-C:\Users\1\AppData\Local\Programs\Ollama
-E:\ffmpeg20250217\ffmpeg\bin
-D:\PyCharm 2025.2.0.1\bin
-E:\Microsoft VS Code\bin
-D:\JetBrains\IntelliJ IDEA Community Edition 2025.2.2\bin
-D:\Ollama*/
-
-
-/*Caused by: java.lang.UnsatisfiedLinkError: no jep in java.library.path: D:\Java\jdk-24\bin
-C:\Windows\Sun\Java\bin
-C:\Windows\system32
-C:\Windows
-C:\Program Files\Common Files\Oracle\Java\javapath
-C:\Program Files (x86)\Common Files\Intel\Shared Libraries\redist\intel64\compiler
-C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common
-C:\Windows\system32
-C:\Windows
-C:\Windows\System32\Wbem
-C:\Windows\System32\WindowsPowerShell\v1.0\
-C:\Windows\System32\OpenSSH\
-C:\Program Files (x86)\Windows Kits\8.1\Windows Performance Toolkit\
-C:\Program Files\dotnet\
-C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR
-C:\ProgramData\chocolatey\bin
-C:\Program Files (x86)\dotnet\
-D:\Git\cmd
-D:\Java\jdk-24\bin
-
-C:\Program Files\Docker\Docker\resources\bin
-C:\Users\1\AppData\Local\Microsoft\WindowsApps
-C:\Users\1\.dotnet\tools
-C:\Users\1\AppData\Local\Programs\Ollama
-E:\ffmpeg20250217\ffmpeg\bin
-D:\PyCharm 2025.2.0.1\bin
-E:\Microsoft VS Code\bin
-D:\JetBrains\IntelliJ IDEA Community Edition 2025.2.2\bin
-D:\Ollama
-at java.base/java.lang.ClassLoader.loadLibrary(ClassLoader.java:2285)*/
-
-/*D:\Java\jdk-24\bin
-C:\Windows\Sun\Java\bin
-C:\Windows\system32
-C:\Windows
-C:\Program Files\Common Files\Oracle\Java\javapath
-C:\Program Files (x86)\Common Files\Intel\Shared Libraries\redist\intel64\compiler
-C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common
-C:\Windows\system32
-C:\Windows
-C:\Windows\System32\Wbem
-C:\Windows\System32\WindowsPowerShell\v1.0\
-C:\Windows\System32\OpenSSH\
-C:\Program Files (x86)\Windows Kits\8.1\Windows Performance Toolkit\
-C:\Program Files\dotnet\
-C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR
-C:\ProgramData\chocolatey\bin
-C:\Program Files (x86)\dotnet\
-D:\Git\cmd
-D:\Java\jdk-24\bin
-
-C:\Program Files\Docker\Docker\resources\bin
-C:\Users\1\AppData\Local\Microsoft\WindowsApps
-C:\Users\1\.dotnet\tools
-C:\Users\1\AppData\Local\Programs\Ollama
-E:\ffmpeg20250217\ffmpeg\bin
-D:\PyCharm 2025.2.0.1\bin
-E:\Microsoft VS Code\bin
-D:\JetBrains\IntelliJ IDEA Community Edition 2025.2.2\bin
-D:\Ollama
-.
-        WARNING: A restricted method in java.lang.System has been called*/
-        
+        /*System.out.println("启动语音服务程序");
         //启动voiceServerDir下的exe文件
         try {
             ProcessBuilder processBuilder = new ProcessBuilder(voiceServerDir);
@@ -149,23 +88,68 @@ D:\Ollama
             System.err.println("启动exe文件失败：" + voiceServerDir);
         }
 
+        try {
+            ProcessBuilder processBuilder = new ProcessBuilder("D:\\cosyvoice3-rainfall-v2\\cosyvoice-rainfall-v2\\cosyvoice-rainfall\\CosyVoice3雨落版启动器.exe");
+            processBuilder.start();
+            System.out.println("成功启动exe文件：" + "D:\\cosyvoice3-rainfall-v2\\cosyvoice-rainfall-v2\\cosyvoice-rainfall\\CosyVoice3雨落版启动器.exe");
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.println("启动exe文件失败：" + "D:\\cosyvoice3-rainfall-v2\\cosyvoice-rainfall-v2\\cosyvoice-rainfall\\CosyVoice3雨落版启动器.exe");
+        }*/
+
+
+        LoadVoicePresets();
+        chineseVoicePreset=characterVoicePresetsMap.get(AnimationController.animationController.curCharName).chinesePreset;
+        japaneseVoicePreset=characterVoicePresetsMap.get(AnimationController.animationController.curCharName).japanesePreset;
+    }
+    //从characterVoice.json读取json文件存入characterVoicePresetsMap里
+    public void LoadVoicePresets()
+    {
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            // 读取 JSON 文件并解析为 Map
+            Map<String, Map<String, String>> data = objectMapper.readValue(
+                Paths.get("D:\\ArkFriends\\ArkFriends\\src\\main\\java\\ceobe\\jsons\\characterVoice.json").toFile(),
+                objectMapper.getTypeFactory().constructMapType(Map.class, String.class, Map.class)
+            );
+
+            // 初始化 characterVoicePresetsMap
+            characterVoicePresetsMap = new HashMap<>();
+
+            // 遍历 JSON 数据并填充 characterVoicePresetsMap
+            for (Map.Entry<String, Map<String, String>> entry : data.entrySet()) {
+                String characterName = entry.getKey();
+                Map<String, String> presets = entry.getValue();
+                String chinesePreset = presets.get("cn");
+                String japanesePreset = presets.get("jp");
+
+                // 创建 CharacterVoicePresets 对象并存入 Map
+                characterVoicePresetsMap.put(characterName, new CharacterVoicePresets(chinesePreset, japanesePreset));
+            }
+
+            System.out.println("成功加载角色语音预设！");
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("加载角色语音预设失败！");
+        }
     }
     public void GetVoiceWithRainfallZeroShot(String inputText, String promptWav,
                                              String promptText, int speed, String outputDir,
                                              String outputFileName, String singleFileSuffix)
     {
         try {
-            jep.invoke("GetVoiceWithRainfallZeroShot", inputText, promptWav, promptText,
-                    speed, outputDir, outputFileName, singleFileSuffix);
+            //jep.invoke("GetVoiceWithRainfallZeroShot", inputText, promptWav, promptText, speed, outputDir, outputFileName, singleFileSuffix);
+            jep.eval("GetVoiceWithRainfallZeroShot(r'" + inputText + "', r'" + promptWav + "', r'" +promptText + "', " + speed + ", r'" + outputDir + "', r'" + outputFileName + "', r'" + singleFileSuffix + "')");
         } catch (JepException e) {
             e.printStackTrace();
         }
     }
-    public void GetVoiceWithRainfallZeroShot(String inputText, String promptWav)
+    public void GetVoiceWithRainfallZeroShot(String inputText)
     {
         try {
-            jep.invoke("GetVoiceWithRainfallZeroShot", inputText, promptWav, "",
+            jep.invoke("GetVoiceWithRainfallZeroShot", inputText, chineseVoicePreset, "",
                     1, outputDir, "", "wav");
+            //jep.eval("GetVoiceWithRainfallZeroShot(r'" + inputText + "', r'" + chineseVoicePreset + "', r'', 1, r'" + outputDir + "', r'', r'wav')");
         } catch (JepException e) {
             e.printStackTrace();
         }
@@ -222,93 +206,17 @@ D:\Ollama
             e.printStackTrace();
         }
     }
-    /*public void GetVoiceWithRainfallPromptText(String inputText, String promptText,
-                                               int speed, String outputDir,
-                                               String outputFileName, String singleFileSuffix) {
-        try {
-            jep.invoke("GetVoiceWithRainfallPromptText", inputText, promptText,
-                    speed, outputDir, outputFileName, singleFileSuffix);
-        } catch (JepException e) {
-            e.printStackTrace();
-        }
-    }*/
-    /*public void Speak(String text) {
-        try {
-            jep.invoke("CosyVoiceManager.speak_text", text);
-        } catch (JepException e) {
-            e.printStackTrace();
-        }
-    }*/
-    /*public void StartService() {
-        try (Jep jep = new Jep()) {
-            jep.eval("import pyttsx3");
-            jep.eval("engine = pyttsx3.init()");
-            jep.eval("engine.setProperty('rate', 150)"); // 设置语速
-            jep.eval("engine.setProperty('volume', 1.0)"); // 设置音量
-        } catch (JepException e) {
-            e.printStackTrace();
-        }
-    }*/
-    public void Test()
+}
+class CharacterVoicePresets
+{
+    //public String characterName;
+    public String chinesePreset;
+    public String japanesePreset;
+    //public String englishPreset;
+
+    public CharacterVoicePresets(String chinesePreset, String japanesePreset)
     {
-        // 1. 创建 Jep 配置对象（替代原构造方法的参数）
-        JepConfig config = new JepConfig();
-        // 设置 Python 脚本路径（对应旧版本的 "src/main/resources" 参数）
-        config.addIncludePaths("src/main/resources");
-        // 可选：关闭共享模式（对应旧版本的第一个参数 false）
-        //config.setSharedModules(false);
-        //config.setSharedInterpreter(false);
-        //关闭共享模式
-        //config.setInteractive(false);
-
-
-        // 2. 通过配置创建 Jep 实例（关键：不再 new Jep()）
-        try (
-                //Jep jep = config.createJep()
-                // 适配 4.0-4.2 版本的静态创建方法
-                //Jep jep = Jep.create(config);
-                Jep jep=config.createSubInterpreter();
-        ) { // 自动关闭资源（try-with-resources）
-            // 3. 后续调用 Python 函数的逻辑和旧版本一致
-            jep.eval("import demo"); // 导入 demo.py
-
-            // 调用 add 函数
-            int addResult = (int) jep.invoke("demo.add", 10, 20);
-            System.out.println("add(10,20) 结果：" + addResult); // 输出 30
-
-            // 调用 say_hello 函数
-            String helloResult = (String) jep.invoke("demo.say_hello", "Java");
-            System.out.println("say_hello(Java) 结果：" + helloResult); // 输出 "Hello, Java!"
-
-            // 调用带 numpy 的函数
-            jep.eval("import numpy as np");
-            jep.eval("def calc_sum(arr): return np.sum(arr)");
-            double sumResult = (double) jep.invoke("calc_sum", new int[]{1,2,3,4});
-            System.out.println("numpy 求和结果：" + sumResult); // 输出 10.0
-
-        } catch (JepException e) {
-            e.printStackTrace();
-        }
-        /*try (Jep jep = new Jep(false, "src/main/resources")) { // 脚本所在目录
-            // 2. 导入 Python 模块并调用函数
-            jep.eval("import demo"); // 导入 demo.py
-
-            // 调用 add 函数
-            int addResult = (int) jep.invoke("demo.add", 10, 20);
-            System.out.println("add(10,20) 结果：" + addResult); // 输出 30
-
-            // 调用 say_hello 函数
-            String helloResult = (String) jep.invoke("demo.say_hello", "Java");
-            System.out.println("say_hello(Java) 结果：" + helloResult); // 输出 "Hello, Java!"
-
-            // 支持调用带 numpy 的函数（示例）
-            jep.eval("import numpy as np");
-            jep.eval("def calc_sum(arr): return np.sum(arr)");
-            double sumResult = (double) jep.invoke("calc_sum", new int[]{1,2,3,4});
-            System.out.println("numpy 求和结果：" + sumResult); // 输出 10.0
-        } catch (JepException e) {
-            e.printStackTrace();
-        }*/
+        this.chinesePreset = chinesePreset;
+        this.japanesePreset = japanesePreset;
     }
-
 }
