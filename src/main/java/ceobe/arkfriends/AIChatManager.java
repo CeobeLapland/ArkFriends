@@ -64,6 +64,8 @@ public class AIChatManager
 
     public Map<String,CharacterPreset> characterPresetMap;
 
+    public boolean isRunning=false;
+
     public AIChatManager()
     {
         if(ACM==null)
@@ -109,6 +111,7 @@ public class AIChatManager
         }
         //characterPresetMap=CharacterPresetLoader.LoadCharacterPresets("characterPresetDescription.json");
 
+        isRunning=true;
     }
 
     /*public void ChangePresetDescription(String presetDesc, String halfwayDesc)

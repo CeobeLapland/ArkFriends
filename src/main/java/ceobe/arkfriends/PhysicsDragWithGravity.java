@@ -143,7 +143,6 @@ public class PhysicsDragWithGravity implements IPhysicsDragController
     //边界 & 地面
     private void HandleBounds()
     {
-
         // 地面
         if (position.y >= groundY)
         //if(Math.abs(position.y-groundY)<=5)

@@ -3,6 +3,7 @@ package ceobe.arkfriends;
 //region imports
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sun.jna.platform.win32.WinDef;
 import javafx.animation.FadeTransition;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -39,6 +40,7 @@ public class PanelController
     //region 引用模块
     public static PanelController panelController;
 
+    public WinDef.HWND mainWindowHandle;
     public boolean isLaunched=false;
 
     public Button starterButton,agentButton,settingsButton,moreButton;

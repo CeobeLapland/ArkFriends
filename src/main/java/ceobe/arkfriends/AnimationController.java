@@ -1,6 +1,7 @@
 package ceobe.arkfriends;
 
 //region imports
+import com.sun.jna.platform.win32.WinDef;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
@@ -45,6 +46,8 @@ public class AnimationController
 
     //public PhysicsDragWithoutGravity dragController;
     public IPhysicsDragController physicsDragController;
+
+    public WinDef.HWND petWindowHandle;
     //endregion
 
     public AnimationController()
@@ -58,7 +61,12 @@ public class AnimationController
         //有用//至少在我用println调试的时候发现每创建一个右键小窗口就会实例化一个控制器
 
         //DelayedInitialization();
-        SetPhysicsMode(true);
+        //SetPhysicsMode(true);
+        SetPhysicsMode(!PanelController.panelController.ignoreGravityCheckBox.isSelected());
+        /*if(!PanelController.panelController.ignoreGravityCheckBox.isSelected())
+            SetPhysicsMode(true);
+        else
+            SetPhysicsMode(false);*/
         //SetPhysicsUpdateMode(false);//SetPhysicsRandomMode(false);
     }
     private boolean physicsModeBoolean=false;
@@ -94,7 +102,8 @@ public class AnimationController
         //Filter和Handler的区别在于Filter会先于Handler执行
         // 设置主窗口右键事件
         //把scene换成ImageView
-        if(rightKeyPanelController==null) {
+        if(rightKeyPanelController==null)
+        {
             rightKeyPanelController = new RightKeyPanelController();
 
             //我真草了
@@ -120,19 +129,23 @@ public class AnimationController
                     dialogStage.setX(newX.doubleValue()+100);
                 }));
                 stage.yProperty().addListener(((observableValue, oldY, newY) -> {
-                    dialogStage.setY(newY.doubleValue()+50);
+                    dialogStage.setY(newY.doubleValue());
                 }));
             });
         }
 
 
         if(physicsDragController==null) {
-            if (physicsModeBoolean) {
+            if (physicsModeBoolean)
+            {
+                stage.setY(762);
                 physicsDragController = new PhysicsDragWithGravity(
-                        new DoublePoint(stage.getX(), stage.getY()),200,200);
+                        //new DoublePoint(stage.getX(), stage.getY()),200,200);
+                        new DoublePoint(stage.getX(), stage.getY()),200,200);//硬编码成762试试
                         //content.getImage().getWidth(),content.getImage().getHeight());
                 //ChangeState(curChar.states.get("start"));
-            } else {
+            } else
+            {
                 physicsDragController = new PhysicsDragWithoutGravity(
                         new DoublePoint(stage.getX(), stage.getY()));
             }
@@ -144,6 +157,7 @@ public class AnimationController
 
             //System.out.println("Mouse clicked for interact");
             System.out.println("Mouse clicked");
+            System.out.println("current Window position: ("+stage.getX()+","+stage.getY()+")");
             if(isDragged)
                 return;
             if(event.getButton()==MouseButton.PRIMARY &&
@@ -240,6 +254,10 @@ public class AnimationController
             if(event.getButton()!=MouseButton.PRIMARY)
                 return;
 
+            if(!isDragged)
+                return;
+
+
             System.out.println("filter Mouse released");
 
             //改掉了dragController.isDragging=false//physicsDragController.isDragging=false;
@@ -250,7 +268,8 @@ public class AnimationController
             leaveDragExecutor= java.util.concurrent.Executors.newSingleThreadScheduledExecutor();
             //scheduler.scheduleAtFixedRate(()->{
             leaveDragExecutor.scheduleAtFixedRate(()->{
-                System.out.println(velocity.x+"   x   "+velocity.y+"   y  "+"in scheduled release");
+
+                //System.out.println(velocity.x+"   x   "+velocity.y+"   y  "+"in scheduled release");
                 //if(Math.abs(dragController.velocity.x)>10 || Math.abs(dragController.velocity.y)>10)
                 if(Math.abs(velocity.x)>10 || Math.abs(velocity.y)>10)
                 {
@@ -277,6 +296,7 @@ public class AnimationController
                     physicsDragController.OnMouseReleased();
                     System.out.println("鼠标释放");
                     nextState = curChar.states.get("interact");
+                    nextNullTime=0;
 
                     leaveDragExecutor.shutdown();
                 }
@@ -307,7 +327,7 @@ public class AnimationController
             {
                 System.out.println("Shut down leaveDragExecutor");
                 leaveDragExecutor.shutdownNow();
-                leaveDragExecutor=null;
+                //leaveDragExecutor=null;
             }
             //dragController.OnMousePressed(event.getScreenX(),event.getScreenY());
             physicsDragController.OnMousePressed(event.getScreenX(),event.getScreenY());
@@ -321,6 +341,9 @@ public class AnimationController
 
         ChangeCharacter(curCharName);
         StartAnimation();
+
+
+        //petWindowHandle= WindowsScanner.windowsScanner.GetStageHwnd(stage);
     }
 
 
@@ -404,9 +427,11 @@ public class AnimationController
                 nextNullTime++;
 
                 CheckNextState();
+            }else
+            {
+                physicsDragController.Update(deltaTime);
+                physicsDragController.Apply(stage, content);
             }
-            physicsDragController.Update(deltaTime);
-            physicsDragController.Apply(stage,content);
         }
         if(frameCount>=totalFrame)
         {
@@ -458,7 +483,8 @@ public class AnimationController
 
     public void ChangeEmotion(Emotion emotion)
     {
-        if(leaveDragExecutor!=null)
+        //if(leaveDragExecutor!=null)
+        if(leaveDragExecutor!=null&&!leaveDragExecutor.isShutdown())
         {
             System.out.println("还在拖拽，无法改变情绪");
             return;
@@ -519,6 +545,19 @@ public class AnimationController
     {
         if (newState==null)
             return;
+        if(isHiding)
+        {
+            //恢复显示优先级
+            WindowsScanner.windowsScanner.ExchangeDisplayPriority(curWindow.hWnd,petWindowHandle);
+            content.setRotate(0);
+            isHiding=false;
+        }
+        /*if (curWindow!=null) {
+            Point tempPoint = WindowsScanner.windowsScanner.GetWindowPosition(curWindow.hWnd);
+            System.out.println("改编动画状态时Current window position: (" + curWindowX + "," + curWindowY + ")");
+        } else {
+            System.out.println("curWindow is null in ChangeState");
+        }*/
         curState=newState;
         frameCount=0;
         totalFrame =curState.imageList.size();
@@ -591,7 +630,36 @@ public class AnimationController
     }
     private AnimationState RandomStateWithPhysics()
     {
-        return null;
+        int r=ran.nextInt(0,100);
+
+        //if(followWindowExecutor!=null)
+        //    followWindowExecutor.shutdown();
+
+        if(r<10){//默认idle
+            lastingTime=240;
+            return curChar.defaultState;
+        }
+        else if (r<40){//move
+            point=new Point(ran.nextInt(150+xExcursion,1500+xExcursion), (int) stage.getY());
+            System.out.println(point.x+"  "+point.y);
+            double distance=Math.abs(point.x-stage.getX());
+            dx= point.x-stage.getX()>0?1:-1;
+            dy=0;
+            ChangeDirection();
+
+            lastingTime=(int)(distance/speed*20)+200;
+            return curChar.states.get("move");
+        }
+        else if(r<70){//sit
+            //直接原地坐下
+            return curChar.states.get("sit");
+        }
+        else if(r<90){//sleep
+            return curChar.states.get("sleep");
+        }
+        else {
+            return curChar.defaultState;
+        }
     }
 
     private Point saveCurWindowPosition;
@@ -602,19 +670,22 @@ public class AnimationController
         if(followWindowExecutor!=null)
             followWindowExecutor.shutdown();
 
-        if(r<1){//默认idle
+        if(r<5){//默认idle
             lastingTime=240;
             return curChar.defaultState;
         }
-        else if (r<4){//move
+        else if (r<30){//move
             return MoveState();
         }
-        else if(r<7){//sit
+        else if(r<70){//sit
             return SitState();
         }
         else if (r<90){//sleep
             return SleepState();
         }
+        //else if(r<100){//hide and seek
+        //    return HideAndSeekState();
+        //}
         else {
             return curChar.defaultState;
         }
@@ -634,6 +705,7 @@ public class AnimationController
     }
     private AnimationState SitState()
     {
+
         WindowsScanner.windowsScanner.GiveHorizontalLine(a,b);
         //从窗口中找到合适的位置
         //WindowsScanner.windowsScanner.FindTargetWindow(200,200);
@@ -642,9 +714,12 @@ public class AnimationController
             //找不到线，没有找到合适的窗口
             return curChar.defaultState;
         }
-        //saveCurWindowPosition=WindowsScanner.windowsScanner.GetWindowPosition(WindowsScanner.windowsScanner.curWindow.hWnd);
+
+        saveCurWindowPosition=WindowsScanner.windowsScanner.GetWindowPosition(WindowsScanner.windowsScanner.curWindow.hWnd);
+        System.out.println("第一种get window position: ("+saveCurWindowPosition.x+","+saveCurWindowPosition.y+")");
+
         saveCurWindowPosition=new Point(WindowsScanner.windowsScanner.curWindow.x,WindowsScanner.windowsScanner.curWindow.y);
-        System.out.println("Saved window position: ("+saveCurWindowPosition.x+","+saveCurWindowPosition.y+")");
+        System.out.println("第二种Saved window position: ("+saveCurWindowPosition.x+","+saveCurWindowPosition.y+")");
 
         System.out.println("Found window line: ("+a.x+","+a.y+") to ("+b.x+","+b.y+")");
         //在ab中间随机一个点
@@ -665,17 +740,20 @@ public class AnimationController
             @Override
             public void run()
             {
-                Platform.runLater(()->{
+                //Platform.runLater(()->{
                     movingToNextMovementTimer.cancel();
                     //下面这句话其实可以挪到前面去
                     curWindow=WindowsScanner.windowsScanner.curWindow;
 
+                    System.out.println("Current window handle: "+curWindow.hWnd);
+                    //System.out.println("变换前"+curWindowPosition.x+" "+curWindowPosition.y);
                     curWindowPosition=WindowsScanner.windowsScanner.GetWindowPosition(curWindow.hWnd);
                     curWindowX=curWindowPosition.x;
                     curWindowY=curWindowPosition.y;
-                    System.out.println("Current window position: ("+curWindowX+","+curWindowY+")");
+                    System.out.println("检查Current window position: ("+curWindowX+","+curWindowY+")");
+                    System.out.println("检查Saved window position: ("+saveCurWindowPosition.x+","+saveCurWindowPosition.y+")");
                     if (Math.sqrt(Math.pow(saveCurWindowPosition.x - curWindowX, 2)
-                            + Math.pow(saveCurWindowPosition.y - curWindowY, 2)) > 50)
+                            + Math.pow(saveCurWindowPosition.y - curWindowY, 2)) > 100)
                     {
                         System.out.println("不要乱动窗口喵！cancel sitting");
                         nextState = curChar.states.get("interact");
@@ -686,7 +764,7 @@ public class AnimationController
                     nextState=curChar.states.get("sit");
 
                     //开始跟随窗口
-                    if(followWindowExecutor==null)
+                    //if(followWindowExecutor==null)
                         followWindowExecutor= java.util.concurrent.Executors.newSingleThreadScheduledExecutor();
                     followWindowExecutor.scheduleAtFixedRate(()->{
                         if(curWindow==null)
@@ -702,10 +780,10 @@ public class AnimationController
                         Platform.runLater(()->{
                             AdjustStagePosition();
                         });
-                    },0,100,java.util.concurrent.TimeUnit.MILLISECONDS);
+                    },0,80,java.util.concurrent.TimeUnit.MILLISECONDS);
 
 
-                });
+                //});
             }
         },(long)(distance/speed*1000)+2000);//走到坐的位置然后切换sit
 
@@ -720,13 +798,103 @@ public class AnimationController
             //找不到线，没有找到合适的窗口
             return curChar.defaultState;
         }
-        saveCurWindowPosition=new Point(WindowsScanner.windowsScanner.curWindow.x,WindowsScanner.windowsScanner.curWindow.y);
+        //saveCurWindowPosition=new Point(WindowsScanner.windowsScanner.curWindow.x,WindowsScanner.windowsScanner.curWindow.y);
+        saveCurWindowPosition= WindowsScanner.windowsScanner.GetWindowPosition(WindowsScanner.windowsScanner.curWindow.hWnd);
         System.out.println("Saved window position: ("+saveCurWindowPosition.x+","+saveCurWindowPosition.y+")");
 
         System.out.println("Found window line: ("+a.x+","+a.y+") to ("+b.x+","+b.y+")");
         //在ab中间随机一个点
-        point=new Point(ran.nextInt(a.x,b.x)+yExcursion,a.y+yExcursion);
+        point=new Point(ran.nextInt(a.x,b.x)+xExcursion,a.y+yExcursion);
+        //好像写错了
         System.out.println("Target point for sleeping: ("+point.x+","+point.y+")");
+        System.out.println("当前saved window position: ("+saveCurWindowPosition.x+","+saveCurWindowPosition.y+")");
+
+        double distance=Math.sqrt(Math.pow(stage.getX()-point.x,2)+Math.pow(stage.getY()-point.y,2));
+        dx=(point.x-stage.getX())/distance;
+        dy=(point.y-stage.getY())/distance;
+        ChangeDirection();
+
+        if(movingToNextMovementTimer !=null)
+        {
+            movingToNextMovementTimer.cancel();
+        }
+        movingToNextMovementTimer =new Timer();
+        movingToNextMovementTimer.schedule(new java.util.TimerTask(){
+            @Override
+            public void run()
+            {
+                //Platform.runLater(()->{
+                    movingToNextMovementTimer.cancel();
+                    //下面这句话其实可以挪到前面去
+                    curWindow=WindowsScanner.windowsScanner.curWindow;
+
+                    curWindowPosition=WindowsScanner.windowsScanner.GetWindowPosition(curWindow.hWnd);
+                    curWindowX=curWindowPosition.x;
+                    curWindowY=curWindowPosition.y;
+                    System.out.println("检查Current window position: ("+curWindowX+","+curWindowY+")");
+                    System.out.println("检查Saved window position: ("+saveCurWindowPosition.x+","+saveCurWindowPosition.y+")");
+                    if (Math.sqrt(Math.pow(saveCurWindowPosition.x - curWindowX, 2)
+                            + Math.pow(saveCurWindowPosition.y - curWindowY, 2)) > 100)
+                    {
+                        System.out.println("不要乱动窗口喵！cancel sleeping");
+                        nextState = curChar.states.get("attack");
+                        movingToNextMovementTimer.cancel();
+                        return;
+                    }
+
+                    nextState=curChar.states.get("sleep");
+
+                    //开始跟随窗口
+                    //if(followWindowExecutor==null)
+                        followWindowExecutor= java.util.concurrent.Executors.newSingleThreadScheduledExecutor();
+                    followWindowExecutor.scheduleAtFixedRate(()->{
+                        if(curWindow==null)
+                            return;
+                        if(curWindow.minimized)
+                        {
+                            System.out.println("窗口最小化，取消睡觉");
+                            nextState=curChar.states.get("interact");
+                            followWindowExecutor.shutdownNow();
+                            followWindowExecutor=null;
+                            return;
+                        }
+                        Platform.runLater(()->{
+                            AdjustStagePosition();
+                        });
+                    },0,80,java.util.concurrent.TimeUnit.MILLISECONDS);
+
+                //});
+            }
+        },(long)(distance/speed*1000)+2000);//走到睡觉的位置然后切换sleep
+
+
+        lastingTime=(int)(distance/speed*20)+800;
+
+        return curChar.states.get("move");
+    }
+
+    private boolean isHiding=false;
+
+    private AnimationState HideAndSeekState()
+    {
+        boolean leftOrRight=ran.nextBoolean();
+        //随机选取窗口左边或者右边的线
+        if(leftOrRight)
+            WindowsScanner.windowsScanner.GiveLeftVerticalLine(a,b);
+        else
+            WindowsScanner.windowsScanner.GiveRightVerticalLine(a,b);
+        if(a.y==b.y){
+            //找不到线，没有找到合适的窗口
+            return curChar.defaultState;
+        }
+        //saveCurWindowPosition=new Point(WindowsScanner.windowsScanner.curWindow.x,WindowsScanner.windowsScanner.curWindow.y);
+        saveCurWindowPosition= WindowsScanner.windowsScanner.GetWindowPosition(WindowsScanner.windowsScanner.curWindow.hWnd);
+        System.out.println("保存的Saved window position: ("+saveCurWindowPosition.x+","+saveCurWindowPosition.y+")");
+        System.out.println("Found window line: ("+a.x+","+a.y+") to ("+b.x+","+b.y+")");
+        //在ab中间随机一个点
+        point=new Point(a.x + xExcursion,ran.nextInt(a.y,b.y)+yExcursion);
+
+        System.out.println("Target point for hiding: ("+point.x+","+point.y+")");
 
         double distance=Math.sqrt(Math.pow(stage.getX()-point.x,2)+Math.pow(stage.getY()-point.y,2));
         dx=(point.x-stage.getX())/distance;
@@ -744,7 +912,7 @@ public class AnimationController
             {
                 Platform.runLater(()->{
                     movingToNextMovementTimer.cancel();
-                    //下面这句话其实可以挪到前面去
+
                     curWindow=WindowsScanner.windowsScanner.curWindow;
 
                     curWindowPosition=WindowsScanner.windowsScanner.GetWindowPosition(curWindow.hWnd);
@@ -752,25 +920,41 @@ public class AnimationController
                     curWindowY=curWindowPosition.y;
                     System.out.println("Current window position: ("+curWindowX+","+curWindowY+")");
                     if (Math.sqrt(Math.pow(saveCurWindowPosition.x - curWindowX, 2)
-                            + Math.pow(saveCurWindowPosition.y - curWindowY, 2)) > 50)
+                            + Math.pow(saveCurWindowPosition.y - curWindowY, 2)) > 100)
                     {
-                        System.out.println("不要乱动窗口喵！cancel sleeping");
+                        //System.out
+                        System.out.println("不要乱动窗口喵！cancel hiding");
                         nextState = curChar.states.get("attack");
                         movingToNextMovementTimer.cancel();
                         return;
                     }
 
-                    nextState=curChar.states.get("sleep");
+                    //将桌宠放在窗口下面，并且按照leftOrRight旋转角度
+                    WindowsScanner.windowsScanner.ExchangeDisplayPriority(petWindowHandle,curWindow.hWnd);
+                    //只旋转content
+                    if(leftOrRight) {
+                        //content.setScaleX(-1);
+                        content.setRotate(-45);
+                    }
+                    else {
+                        //content.setScaleX(1);
+                        content.setRotate(45);
+                    }
+
+
+                    nextState=curChar.states.get("idle");
+                    isHiding=true;
+                    //这俩位置很重要
 
                     //开始跟随窗口
-                    if(followWindowExecutor==null)
+                    //if(followWindowExecutor==null)
                         followWindowExecutor= java.util.concurrent.Executors.newSingleThreadScheduledExecutor();
                     followWindowExecutor.scheduleAtFixedRate(()->{
                         if(curWindow==null)
                             return;
                         if(curWindow.minimized)
                         {
-                            System.out.println("窗口最小化，取消睡觉");
+                            System.out.println("窗口最小化，取消捉迷藏");
                             nextState=curChar.states.get("interact");
                             followWindowExecutor.shutdownNow();
                             followWindowExecutor=null;
@@ -779,23 +963,36 @@ public class AnimationController
                         Platform.runLater(()->{
                             AdjustStagePosition();
                         });
-                    },0,100,java.util.concurrent.TimeUnit.MILLISECONDS);
+                    },0,80,java.util.concurrent.TimeUnit.MILLISECONDS);
 
                 });
             }
-        },(long)(distance/speed*1000)+2000);//走到坐的位置然后切换sit
+        },(long)(distance/speed*1000)+2000);
 
 
-        lastingTime=(int)(distance/speed*20)+800;
+        lastingTime=(int)(distance/speed*20)+200;
 
         return curChar.states.get("move");
     }
+
     private ScheduledExecutorService followWindowExecutor;
     public WindowsScanner.DesktopWindow curWindow;
     private int curWindowX,curWindowY;
     Point curWindowPosition;
     private void AdjustStagePosition()
     {
+        if(WindowsScanner.windowsScanner.IsWindowClosed(curWindow.hWnd)
+                ||WindowsScanner.windowsScanner.IsWindowMinimized(curWindow.hWnd))
+        {
+            System.out.println("窗口最小化，取消跟随");
+            nextState=curChar.states.get("interact");
+            if(followWindowExecutor!=null)
+            {
+                followWindowExecutor.shutdownNow();
+                followWindowExecutor=null;
+            }
+            return;
+        }
         curWindowPosition=WindowsScanner.windowsScanner.GetWindowPosition(curWindow.hWnd);
         int deltaX=curWindowPosition.x-curWindowX;
         int deltaY=curWindowPosition.y-curWindowY;
@@ -825,6 +1022,7 @@ public class AnimationController
         System.out.println("Changed character to "+name);
         if(physicsModeBoolean) {
             ChangeState(curChar.states.get("start"));
+            //stage.setY(762);
         } else {
             ChangeState(curChar.defaultState);
         }

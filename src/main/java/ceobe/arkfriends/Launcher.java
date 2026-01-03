@@ -111,15 +111,18 @@ public class Launcher extends Application
             {
                 AnimationController.animationController.DelayedInitialization();
 
-                //new AIChatManager();
-                //AIChatManager.ACM.ChangePresetDescription(AnimationController.animationController.curCharName);
+                new AIChatManager();
+                AIChatManager.ACM.ChangePresetDescription(AnimationController.animationController.curCharName);
 
-                new VoiceService();
+                //new VoiceService();
 
-                VoiceService.voiceService.GetVoiceWithRainfallZeroShot("博士博士晚上好呀，今天也要天天开心呀");
+                //VoiceService.voiceService.GetVoiceWithRainfallZeroShot("博士博士晚上好呀，今天也要天天开心呀");
                 //这个也必须放在这里面
                 //我也不知道为什么，明明ACM里面不涉及到UI更新，但他还是会导致timeline线程爆炸
                 new WindowsScanner();
+                AnimationController.animationController.petWindowHandle = WindowsScanner.windowsScanner.GetStageHwnd(petStage);
+                PanelController.panelController.mainWindowHandle= WindowsScanner.windowsScanner.GetStageHwnd(launcherStage);
+
 
                 timer.cancel();
             }

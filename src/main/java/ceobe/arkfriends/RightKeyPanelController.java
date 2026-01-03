@@ -214,6 +214,9 @@ public class RightKeyPanelController
 
     public void SendMessage()
     {
+        //如果未连接AI服务则直接返回
+        if(!AIChatManager.ACM.isRunning)
+            return;
         String userText = inputField.getText();
         if(Objects.equals(userText, ""))
             return;
@@ -297,7 +300,7 @@ public class RightKeyPanelController
         });
     }
 
-
+//-fx-background-color linear-gradient(to bottom right, #87CEEB, #1E90FF)
 
     //region 打字机相关
     //public DialogPrinter dialogPrinter;
@@ -326,6 +329,7 @@ public class RightKeyPanelController
         //Parent tempContent = loader.load();
         System.out.println("Loaded dialogPrinter.fxml successfully");
         dialogStage=new Stage();
+        //dialogStage
         try{
             dialogScene = new Scene(loader.load());
         }catch (IOException e){

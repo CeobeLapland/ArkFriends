@@ -5,6 +5,7 @@ import com.sun.jna.Pointer;
 import com.sun.jna.platform.win32.User32;
 import com.sun.jna.platform.win32.WinDef.HWND;
 import com.sun.jna.platform.win32.WinDef.RECT;
+import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -135,7 +136,7 @@ public class WindowsScanner
     public void GiveHorizontalLine(Point a,Point b)
     {
         curWindow=null;//好像多此一举了
-        curWindow=FindTargetWindow(200,200);
+        curWindow=FindTargetWindow(300,300);
         if(curWindow==null)
         {
             System.out.println("未找到合适的窗口");
@@ -152,9 +153,9 @@ public class WindowsScanner
         b.x=curWindow.x+curWindow.width;
         b.y= curWindow.y;
     }
-    public void GiveVerticalLine(Point a,Point b)
+    public void GiveLeftVerticalLine(Point a,Point b)
     {
-        curWindow = FindTargetWindow(200, 200);
+        curWindow = FindTargetWindow(300, 300);
         if (curWindow == null) {
             System.out.println("未找到合适的窗口");
             a.y=b.y=0;
@@ -165,6 +166,19 @@ public class WindowsScanner
         b.x=curWindow.x;
         b.y= curWindow.y+curWindow.height;
     }
+    public void GiveRightVerticalLine(Point a,Point b)
+    {
+        curWindow = FindTargetWindow(300, 300);
+        if (curWindow == null) {
+            System.out.println("未找到合适的窗口");
+            a.y=b.y=0;
+            return;
+        }
+        a.x=curWindow.x+curWindow.width;
+        a.y= curWindow.y;
+        b.x=curWindow.x+curWindow.width;
+        b.y= curWindow.y+curWindow.height;
+    }
 
     public Point GetWindowPosition(HWND hWnd)
     {
@@ -172,12 +186,107 @@ public class WindowsScanner
         User32.INSTANCE.GetWindowRect(hWnd, rect);
         int x=(int)(rect.left*0.667);
         int y=(int)(rect.top*0.667);
-        //System.out.println("窗口位置："+x+","+y);
+        //System.out.println("扫描器这边的窗口位置："+x+","+y);
         return new Point(x,y);
     }
+    public boolean IsWindowMinimized(HWND hWnd)
+    {
+        return ExtendedUser32.INSTANCE.IsIconic(hWnd);
+    }
+    //窗口是否已经关闭
+    public boolean IsWindowClosed(HWND hWnd)
+    {
+        return !User32.INSTANCE.IsWindow(hWnd);
+    }
+
+    public void ShakeWindow(HWND hWnd)
+    {
+        new Thread(() -> {
+            RECT rect = new RECT();
+            User32.INSTANCE.GetWindowRect(hWnd, rect);
+            int originalX = (int) (rect.left * 0.667);
+            int originalY = (int) (rect.top * 0.667);
+
+            long startTime = System.currentTimeMillis();
+            long duration = 2000; // 持续时间 2 秒
+            double frequency = 10; // 摇晃频率
+            double damping = 0.05; // 阻尼系数
+
+            while (System.currentTimeMillis() - startTime < duration)
+            {
+                long elapsed = System.currentTimeMillis() - startTime;
+                double progress = elapsed / (double) duration;
+
+                // 简谐阻尼公式：振幅随时间指数衰减
+                double amplitude = Math.exp(-damping * elapsed) * 20; // 最大偏移量为 20
+                double offsetX = amplitude * Math.sin(2 * Math.PI * frequency * progress);
+                double offsetY = amplitude * Math.cos(2 * Math.PI * frequency * progress);
+
+                User32.INSTANCE.SetWindowPos(hWnd, null,
+                        originalX + (int) offsetX,
+                        originalY + (int) offsetY,
+                        0, 0, 1 | 2);
+
+                try {
+                    Thread.sleep(25); // 每帧大约 16ms (约 60FPS)
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            // 恢复窗口到原始位置
+            User32.INSTANCE.SetWindowPos(hWnd, null, originalX, originalY, 0, 0, 1 | 2);
+        }).start();
+    }
+
+    public HWND GetStageHwnd(Stage stage)
+    {
+        HWND[] hwnd = new HWND[1];
+        User32.INSTANCE.EnumWindows((hWnd, data) -> {
+            char[] buffer = new char[512];
+            User32.INSTANCE.GetWindowText(hWnd, buffer, 512);
+            String title = Native.toString(buffer).trim();
+            if (title.equals(stage.getTitle())) {
+                hwnd[0] = hWnd;
+                return false; // 找到后停止枚举
+            }
+            return true; // 继续枚举
+        }, Pointer.NULL);
+        return hwnd[0];
+    }
+    //交换两个窗口的显示优先级
+    public void ExchangeDisplayPriority(HWND a,HWND b)
+    {
+        User32.INSTANCE.SetWindowPos(a, b, 0, 0, 0, 0, 3);
+        User32.INSTANCE.SetWindowPos(b, a, 0, 0, 0, 0, 3);
+    }
+    //将窗口显示到最上方
+    /*public void BringWindowToTop(HWND hWnd)
+    {
+        User32.INSTANCE.SetWindowPos(hWnd, User32.INSTANCE.GetTopWindow(null), 0, 0, 0, 0, 3);
+    }*/
 }
 interface ExtendedUser32 extends User32
 {
     ExtendedUser32 INSTANCE = Native.load("user32",ExtendedUser32.class);
     boolean IsIconic(HWND hwnd);
 }
+/*public void ShakeWindow(HWND hWnd)
+    {
+        RECT rect = new RECT();
+        User32.INSTANCE.GetWindowRect(hWnd, rect);
+        int originalX=(int)(rect.left*0.667);
+        int originalY=(int)(rect.top*0.667);
+        for(int i=0;i<10;i++)
+        {
+            int offsetX=(int)(Math.random()*20-10);
+            int offsetY=(int)(Math.random()*20-10);
+            User32.INSTANCE.SetWindowPos(hWnd, null, originalX+offsetX, originalY+offsetY, 0, 0, 1 | 2);
+            try {
+                Thread.sleep(20);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        User32.INSTANCE.SetWindowPos(hWnd, null, originalX, originalY, 0, 0, 1 | 2);
+    }*/
