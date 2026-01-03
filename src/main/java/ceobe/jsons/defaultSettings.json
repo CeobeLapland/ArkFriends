@@ -9,7 +9,7 @@
 
   "voiceInteraction": true,
   "aiDialogue": true,
-  "voiceAPI": "default",
+  "voiceAPI": "D:\\cosyvoice3-rainfall-v2\\cosyvoice-rainfall-v2\\cosyvoice-rainfall\\rainfall_starter.exe",
   "characterVoiceVolume": 50.0,
   "soundVolume": 50.0,
   "noiseFilter": 10.0,
@@ -17,6 +17,16 @@
 
   "scale": 1.0,
   "opacity": 100.0,
+  "gravity": 2000.0,
+  "stiffness": 30.0,
+  "bounce": 0.55,
+  "damping": 10.0,
+  "friction": 0.9,
+  "angularDamping": 5.0,
+  "angularStiffness": 60.0,
+  "maxAngle": 60.0,
+  "groundExcursion": 150,
+  "boundaryExcursion": 100,
   "flipAxis": false,
   "boom": false,
 
@@ -31,6 +41,7 @@
   "actionFrequency": 50.0,
   "movementSpeed": 50.0,
 
+  "ollamaPath": "D:\\Ollama\\ollama app.exe",
   "activeReply": true,
   "outputEmotion": true,
   "printerEffect":true,

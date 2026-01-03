@@ -24,7 +24,7 @@ public class PhysicsDragWithoutGravity implements IPhysicsDragController
 
     // 参数（可调）
     //我把所有double全改成int了
-    private double stiffness = 20;     // 弹性
+    private double stiffness = 30;     // 弹性
     private double damping = 5;        // 阻尼
     private double angularStiffness = 30;
     private double angularDamping = 1;
@@ -111,19 +111,23 @@ public class PhysicsDragWithoutGravity implements IPhysicsDragController
                 position.x = 0;
                 velocity.x = -velocity.x;
                 System.out.println("碰到左边");
+                LogRecorder.logRecorder.RecordLog("碰到左边");
             } else if (position.x>1700) {
                 position.x = 1700;
                 velocity.x = -velocity.x;
                 System.out.println("碰到右边");
+                LogRecorder.logRecorder.RecordLog("碰到右边");
             }
             if(position.y<0) {
                 position.y = 0;
                 velocity.y = -velocity.y;
                 System.out.println("碰到上边");
+                LogRecorder.logRecorder.RecordLog("碰到上边");
             } else if (position.y>900) {
                 position.y= 900;
                 velocity.y = -velocity.y;
                 System.out.println("碰到下边");
+                LogRecorder.logRecorder.RecordLog("碰到下边");
             }
 
             velocity.x *= 0.95;

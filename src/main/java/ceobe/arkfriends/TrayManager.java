@@ -35,6 +35,7 @@ public class TrayManager
         if (!SystemTray.isSupported())
         {
             System.out.println("系统不支持托盘");
+            LogRecorder.logRecorder.RecordLog("系统不支持托盘");
             return;
         }
         this.stage=stage;
@@ -122,8 +123,8 @@ public class TrayManager
         try {
             tray.add(trayIcon);
             trayIcon.displayMessage(
-                    "桌宠启动",
-                    "我已经在后台啦～",
+                    "ArkFriends",
+                    "启动成功",
                     TrayIcon.MessageType.INFO
             );
         } catch (Exception e) {
@@ -140,11 +141,12 @@ public class TrayManager
 
     public void showPet() {
         Platform.runLater(() -> {
-            //stage.show();
-            //stage.toFront();
+            stage.show();
+            stage.toFront();
             //PanelController.panelController.
             //AnimationController.animationController.
             System.out.println("显示桌宠");
+            LogRecorder.logRecorder.RecordLog("显示桌宠");
         });
     }
 
@@ -152,6 +154,7 @@ public class TrayManager
         //Platform.runLater(stage::hide);
         Platform.runLater(() -> {
             System.out.println("隐藏桌宠");
+            LogRecorder.logRecorder.RecordLog("隐藏桌宠");
         });
     }
 

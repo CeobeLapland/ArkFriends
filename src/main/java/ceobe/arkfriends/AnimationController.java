@@ -157,19 +157,23 @@ public class AnimationController
 
             //System.out.println("Mouse clicked for interact");
             System.out.println("Mouse clicked");
+            LogRecorder.logRecorder.RecordLog("Mouse clicked at ("+event.getScreenX()+","+event.getScreenY()+")");
             System.out.println("current Window position: ("+stage.getX()+","+stage.getY()+")");
+            LogRecorder.logRecorder.RecordLog("Current Window position: ("+stage.getX()+","+stage.getY()+")");
             if(isDragged)
                 return;
             if(event.getButton()==MouseButton.PRIMARY &&
                     (popupStage==null||!popupStage.isShowing()))
             {
                 System.out.println("interact");
+                LogRecorder.logRecorder.RecordLog("Interact triggered");
                 nextState=curChar.states.get("interact");
                 return;
             }
             if (event.getButton() == MouseButton.SECONDARY)
             {
                 System.out.println("RightMouse clicked");
+                LogRecorder.logRecorder.RecordLog("Right mouse clicked at ("+event.getScreenX()+","+event.getScreenY()+")");
                 // 如果已有弹出窗口，先关闭
                 if (popupStage != null && popupStage.isShowing())
                 {
@@ -191,10 +195,12 @@ public class AnimationController
                     //popupStage.close();
                     popupStage.hide();
                     System.out.println("Closed popup stage");
+                    LogRecorder.logRecorder.RecordLog("Closed popup stage due to outside click");
                 }
             }
         });
         System.out.println("have set");
+        LogRecorder.logRecorder.RecordLog("Set mouse clicked handler");
 
         //region 鼠标点击事件，已放在一起了
         //这个只能绑定一个事件
@@ -259,6 +265,7 @@ public class AnimationController
 
 
             System.out.println("filter Mouse released");
+            LogRecorder.logRecorder.RecordLog("Mouse released at ("+event.getScreenX()+","+event.getScreenY()+")");
 
             //改掉了dragController.isDragging=false//physicsDragController.isDragging=false;
             physicsDragController.SetIsDragging(false);
@@ -295,6 +302,7 @@ public class AnimationController
                     //dragController.OnMouseReleased();
                     physicsDragController.OnMouseReleased();
                     System.out.println("鼠标释放");
+                    LogRecorder.logRecorder.RecordLog("Mouse released processed, switching to interact state");
                     nextState = curChar.states.get("interact");
                     nextNullTime=0;
 
@@ -306,26 +314,31 @@ public class AnimationController
 
         content.addEventHandler(MouseEvent.MOUSE_PRESSED,event -> {
             System.out.println("Mouse pressed");
+            LogRecorder.logRecorder.RecordLog("Mouse pressed at ("+event.getScreenX()+","+event.getScreenY()+")");
             //加了这个
             if(event.getButton()!=MouseButton.PRIMARY)
                 return;
 
             System.out.println("左键按下");
+            LogRecorder.logRecorder.RecordLog("Left mouse button pressed at ("+event.getScreenX()+","+event.getScreenY()+")");
             if(followWindowExecutor!=null)
             {
                 System.out.println("Shut down followWindowExecutor");
+                LogRecorder.logRecorder.RecordLog("Shut down followWindowExecutor due to mouse press");
                 followWindowExecutor.shutdown();
                 followWindowExecutor=null;
             }
             if(movingToNextMovementTimer !=null)
             {
                 System.out.println("Cancel movingToSitTimer");
+                LogRecorder.logRecorder.RecordLog("Cancel movingToSitTimer due to mouse press");
                 movingToNextMovementTimer.cancel();
                 movingToNextMovementTimer =null;
             }
             if(leaveDragExecutor!=null)
             {
                 System.out.println("Shut down leaveDragExecutor");
+                LogRecorder.logRecorder.RecordLog("Shut down leaveDragExecutor due to mouse press");
                 leaveDragExecutor.shutdownNow();
                 //leaveDragExecutor=null;
             }
@@ -487,6 +500,7 @@ public class AnimationController
         if(leaveDragExecutor!=null&&!leaveDragExecutor.isShutdown())
         {
             System.out.println("还在拖拽，无法改变情绪");
+            LogRecorder.logRecorder.RecordLog("Cannot change emotion while dragging");
             return;
         }
         //关掉当前的动作计时器
@@ -532,6 +546,7 @@ public class AnimationController
             }
             default: {
                 System.out.println("Unknown emotion");
+                LogRecorder.logRecorder.RecordLog("Unknown emotion in ChangeEmotion");
                 nextState=curChar.defaultState;
                 break;
             }
@@ -562,6 +577,7 @@ public class AnimationController
         frameCount=0;
         totalFrame =curState.imageList.size();
         System.out.println("Change to state"+curState.assertsPath);
+        LogRecorder.logRecorder.RecordLog("Changed to state "+curState.assertsPath);
     }
     public AnimationState RandomState()
     {
@@ -589,6 +605,7 @@ public class AnimationController
     {
         if (point == null) {
             System.out.println("next point is null");
+            LogRecorder.logRecorder.RecordLog("Next point is null in MoveToPoint");
             return;
         }
         double moveX=speed*deltaTime*dx,moveY=speed*deltaTime*dy;
@@ -635,13 +652,14 @@ public class AnimationController
         //if(followWindowExecutor!=null)
         //    followWindowExecutor.shutdown();
 
-        if(r<10){//默认idle
+        if(r<1){//默认idle
             lastingTime=240;
             return curChar.defaultState;
         }
-        else if (r<40){//move
+        else if (r<2){//move
             point=new Point(ran.nextInt(150+xExcursion,1500+xExcursion), (int) stage.getY());
             System.out.println(point.x+"  "+point.y);
+            LogRecorder.logRecorder.RecordLog("Random move to point: ("+point.x+","+point.y+")");
             double distance=Math.abs(point.x-stage.getX());
             dx= point.x-stage.getX()>0?1:-1;
             dy=0;
@@ -654,7 +672,7 @@ public class AnimationController
             //直接原地坐下
             return curChar.states.get("sit");
         }
-        else if(r<90){//sleep
+        else if(r<100){//sleep
             return curChar.states.get("sleep");
         }
         else {
@@ -670,17 +688,17 @@ public class AnimationController
         if(followWindowExecutor!=null)
             followWindowExecutor.shutdown();
 
-        if(r<5){//默认idle
+        if(r<1){//默认idle
             lastingTime=240;
             return curChar.defaultState;
         }
-        else if (r<30){//move
+        else if (r<3){//move
             return MoveState();
         }
         else if(r<70){//sit
             return SitState();
         }
-        else if (r<90){//sleep
+        else if (r<100){//sleep
             return SleepState();
         }
         //else if(r<100){//hide and seek
@@ -695,6 +713,8 @@ public class AnimationController
         point=new Point(ran.nextInt(150+xExcursion,1500+xExcursion),ran.nextInt(50+yExcursion,700+yExcursion));
         //在原来基础上减去了20
         System.out.println(point.x+"  "+point.y);
+        LogRecorder.logRecorder.RecordLog("Random move to point: ("+point.x+","+point.y+")");
+
         double distance=Math.sqrt(Math.pow(stage.getX()-point.x,2)+Math.pow(stage.getY()-point.y,2));
         dx=(point.x-stage.getX())/distance;
         dy=(point.y-stage.getY())/distance;
@@ -717,14 +737,18 @@ public class AnimationController
 
         saveCurWindowPosition=WindowsScanner.windowsScanner.GetWindowPosition(WindowsScanner.windowsScanner.curWindow.hWnd);
         System.out.println("第一种get window position: ("+saveCurWindowPosition.x+","+saveCurWindowPosition.y+")");
+        LogRecorder.logRecorder.RecordLog("Saved window position: ("+saveCurWindowPosition.x+","+saveCurWindowPosition.y+")");
 
         saveCurWindowPosition=new Point(WindowsScanner.windowsScanner.curWindow.x,WindowsScanner.windowsScanner.curWindow.y);
         System.out.println("第二种Saved window position: ("+saveCurWindowPosition.x+","+saveCurWindowPosition.y+")");
+        LogRecorder.logRecorder.RecordLog("Saved window position: ("+saveCurWindowPosition.x+","+saveCurWindowPosition.y+")");
 
         System.out.println("Found window line: ("+a.x+","+a.y+") to ("+b.x+","+b.y+")");
+        LogRecorder.logRecorder.RecordLog("Found window line: ("+a.x+","+a.y+") to ("+b.x+","+b.y+")");
         //在ab中间随机一个点
         point=new Point(ran.nextInt(a.x,b.x)+yExcursion,a.y+yExcursion);
         System.out.println("Target point for sitting: ("+point.x+","+point.y+")");
+        LogRecorder.logRecorder.RecordLog("Target point for sitting: ("+point.x+","+point.y+")");
 
         double distance=Math.sqrt(Math.pow(stage.getX()-point.x,2)+Math.pow(stage.getY()-point.y,2));
         dx=(point.x-stage.getX())/distance;
@@ -746,16 +770,20 @@ public class AnimationController
                     curWindow=WindowsScanner.windowsScanner.curWindow;
 
                     System.out.println("Current window handle: "+curWindow.hWnd);
+                LogRecorder.logRecorder.RecordLog("Current window handle: "+curWindow.hWnd);
                     //System.out.println("变换前"+curWindowPosition.x+" "+curWindowPosition.y);
                     curWindowPosition=WindowsScanner.windowsScanner.GetWindowPosition(curWindow.hWnd);
                     curWindowX=curWindowPosition.x;
                     curWindowY=curWindowPosition.y;
                     System.out.println("检查Current window position: ("+curWindowX+","+curWindowY+")");
+                LogRecorder.logRecorder.RecordLog("检查Current window position: ("+curWindowX+","+curWindowY+")");
                     System.out.println("检查Saved window position: ("+saveCurWindowPosition.x+","+saveCurWindowPosition.y+")");
+                LogRecorder.logRecorder.RecordLog("检查Saved window position: ("+saveCurWindowPosition.x+","+saveCurWindowPosition.y+")");
                     if (Math.sqrt(Math.pow(saveCurWindowPosition.x - curWindowX, 2)
                             + Math.pow(saveCurWindowPosition.y - curWindowY, 2)) > 100)
                     {
                         System.out.println("不要乱动窗口喵！cancel sitting");
+                        LogRecorder.logRecorder.RecordLog("Window moved too much, cancel sitting");
                         nextState = curChar.states.get("interact");
                         movingToNextMovementTimer.cancel();
                         return;
@@ -772,6 +800,7 @@ public class AnimationController
                         if(curWindow.minimized)
                         {
                             System.out.println("窗口最小化，取消坐下");
+                            LogRecorder.logRecorder.RecordLog("Window minimized, cancel sitting");
                             nextState=curChar.states.get("interact");
                             followWindowExecutor.shutdownNow();
                             followWindowExecutor=null;
@@ -787,7 +816,7 @@ public class AnimationController
             }
         },(long)(distance/speed*1000)+2000);//走到坐的位置然后切换sit
 
-        lastingTime=(int)(distance/speed*20)+400;
+        lastingTime=(int)(distance/speed*20)+1000;
 
         return curChar.states.get("move");
     }
@@ -801,13 +830,17 @@ public class AnimationController
         //saveCurWindowPosition=new Point(WindowsScanner.windowsScanner.curWindow.x,WindowsScanner.windowsScanner.curWindow.y);
         saveCurWindowPosition= WindowsScanner.windowsScanner.GetWindowPosition(WindowsScanner.windowsScanner.curWindow.hWnd);
         System.out.println("Saved window position: ("+saveCurWindowPosition.x+","+saveCurWindowPosition.y+")");
+        LogRecorder.logRecorder.RecordLog("Saved window position: ("+saveCurWindowPosition.x+","+saveCurWindowPosition.y+")");
 
         System.out.println("Found window line: ("+a.x+","+a.y+") to ("+b.x+","+b.y+")");
+        LogRecorder.logRecorder.RecordLog("Found window line: ("+a.x+","+a.y+") to ("+b.x+","+b.y+")");
         //在ab中间随机一个点
         point=new Point(ran.nextInt(a.x,b.x)+xExcursion,a.y+yExcursion);
         //好像写错了
         System.out.println("Target point for sleeping: ("+point.x+","+point.y+")");
+        LogRecorder.logRecorder.RecordLog("Target point for sleeping: ("+point.x+","+point.y+")");
         System.out.println("当前saved window position: ("+saveCurWindowPosition.x+","+saveCurWindowPosition.y+")");
+        LogRecorder.logRecorder.RecordLog("当前saved window position: ("+saveCurWindowPosition.x+","+saveCurWindowPosition.y+")");
 
         double distance=Math.sqrt(Math.pow(stage.getX()-point.x,2)+Math.pow(stage.getY()-point.y,2));
         dx=(point.x-stage.getX())/distance;
@@ -832,11 +865,14 @@ public class AnimationController
                     curWindowX=curWindowPosition.x;
                     curWindowY=curWindowPosition.y;
                     System.out.println("检查Current window position: ("+curWindowX+","+curWindowY+")");
+                LogRecorder.logRecorder.RecordLog("检查Current window position: ("+curWindowX+","+curWindowY+")");
                     System.out.println("检查Saved window position: ("+saveCurWindowPosition.x+","+saveCurWindowPosition.y+")");
+                LogRecorder.logRecorder.RecordLog("检查Saved window position: ("+saveCurWindowPosition.x+","+saveCurWindowPosition.y+")");
                     if (Math.sqrt(Math.pow(saveCurWindowPosition.x - curWindowX, 2)
                             + Math.pow(saveCurWindowPosition.y - curWindowY, 2)) > 100)
                     {
                         System.out.println("不要乱动窗口喵！cancel sleeping");
+                        LogRecorder.logRecorder.RecordLog("Window moved too much, cancel sleeping");
                         nextState = curChar.states.get("attack");
                         movingToNextMovementTimer.cancel();
                         return;
@@ -853,6 +889,7 @@ public class AnimationController
                         if(curWindow.minimized)
                         {
                             System.out.println("窗口最小化，取消睡觉");
+                            LogRecorder.logRecorder.RecordLog("Window minimized, cancel sleeping");
                             nextState=curChar.states.get("interact");
                             followWindowExecutor.shutdownNow();
                             followWindowExecutor=null;
@@ -890,11 +927,14 @@ public class AnimationController
         //saveCurWindowPosition=new Point(WindowsScanner.windowsScanner.curWindow.x,WindowsScanner.windowsScanner.curWindow.y);
         saveCurWindowPosition= WindowsScanner.windowsScanner.GetWindowPosition(WindowsScanner.windowsScanner.curWindow.hWnd);
         System.out.println("保存的Saved window position: ("+saveCurWindowPosition.x+","+saveCurWindowPosition.y+")");
+        LogRecorder.logRecorder.RecordLog("Saved window position: ("+saveCurWindowPosition.x+","+saveCurWindowPosition.y+")");
         System.out.println("Found window line: ("+a.x+","+a.y+") to ("+b.x+","+b.y+")");
+        LogRecorder.logRecorder.RecordLog("Found window line: ("+a.x+","+a.y+") to ("+b.x+","+b.y+")");
         //在ab中间随机一个点
         point=new Point(a.x + xExcursion,ran.nextInt(a.y,b.y)+yExcursion);
 
         System.out.println("Target point for hiding: ("+point.x+","+point.y+")");
+        LogRecorder.logRecorder.RecordLog("Target point for hiding: ("+point.x+","+point.y+")");
 
         double distance=Math.sqrt(Math.pow(stage.getX()-point.x,2)+Math.pow(stage.getY()-point.y,2));
         dx=(point.x-stage.getX())/distance;
@@ -919,11 +959,13 @@ public class AnimationController
                     curWindowX=curWindowPosition.x;
                     curWindowY=curWindowPosition.y;
                     System.out.println("Current window position: ("+curWindowX+","+curWindowY+")");
+                LogRecorder.logRecorder.RecordLog("Current window position: ("+curWindowX+","+curWindowY+")");
                     if (Math.sqrt(Math.pow(saveCurWindowPosition.x - curWindowX, 2)
                             + Math.pow(saveCurWindowPosition.y - curWindowY, 2)) > 100)
                     {
                         //System.out
                         System.out.println("不要乱动窗口喵！cancel hiding");
+                        LogRecorder.logRecorder.RecordLog("Window moved too much, cancel hiding");
                         nextState = curChar.states.get("attack");
                         movingToNextMovementTimer.cancel();
                         return;
@@ -955,6 +997,7 @@ public class AnimationController
                         if(curWindow.minimized)
                         {
                             System.out.println("窗口最小化，取消捉迷藏");
+                            LogRecorder.logRecorder.RecordLog("Window minimized, cancel hiding");
                             nextState=curChar.states.get("interact");
                             followWindowExecutor.shutdownNow();
                             followWindowExecutor=null;
@@ -985,6 +1028,7 @@ public class AnimationController
                 ||WindowsScanner.windowsScanner.IsWindowMinimized(curWindow.hWnd))
         {
             System.out.println("窗口最小化，取消跟随");
+            LogRecorder.logRecorder.RecordLog("Window closed or minimized, cancel following");
             nextState=curChar.states.get("interact");
             if(followWindowExecutor!=null)
             {
@@ -1000,6 +1044,7 @@ public class AnimationController
             return;
 
         System.out.println("Adjusting stage position "+deltaX+","+deltaY);
+        LogRecorder.logRecorder.RecordLog("Adjusting stage position by ("+deltaX+","+deltaY+")");
         stage.setX(stage.getX()+deltaX);
         stage.setY(stage.getY()+deltaY);
 
@@ -1020,11 +1065,19 @@ public class AnimationController
             allChars.put(name,curChar);
         }
         System.out.println("Changed character to "+name);
+        LogRecorder.logRecorder.RecordLog("Changed character to "+name);
+
         if(physicsModeBoolean) {
             ChangeState(curChar.states.get("start"));
             //stage.setY(762);
         } else {
             ChangeState(curChar.defaultState);
         }
+    }
+
+    public void PrintFlow(String message)
+    {
+        rightKeyPanelController.OpenDialog();
+        rightKeyPanelController.PrinterFlow(message);
     }
 }

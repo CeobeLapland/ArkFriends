@@ -21,6 +21,7 @@ import javafx.scene.layout.Region;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.net.URI;
 import java.util.*;
 import java.util.List;
@@ -164,8 +165,10 @@ public class PanelController
     private void DelayedInitialization()
     {
         curPanel=starterPanel;
-        if(curPanel==null)
+        if(curPanel==null) {
             System.out.println("curPanel is null");
+            LogRecorder.logRecorder.RecordLog("curPanel is null in DelayedInitialization");
+        }
 
         //AddWindowsEffect();
         //这个还必须放在Launcher里面
@@ -205,6 +208,7 @@ public class PanelController
         };
 
         System.out.println(allCharacterSearchData.size()+"  allCharacterSearchData.size()");
+        LogRecorder.logRecorder.RecordLog(allCharacterSearchData.size()+"  allCharacterSearchData.size() in DelayedInitialization");
         //curCharacterSearchData=allCharacterSearchData;
         curCharacterSearchData=new HashMap<>(allCharacterSearchData);
         PopolateCharacterListView();
@@ -247,6 +251,7 @@ public class PanelController
             if (!jsonFile.exists())
             {
                 System.out.println("JSON 文件未找到: " + jsonFile.getAbsolutePath());
+                LogRecorder.logRecorder.RecordLog("JSON 文件未找到: " + jsonFile.getAbsolutePath());
                 return;
             }
             //System.out.println(3);
@@ -263,6 +268,7 @@ public class PanelController
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Failed to load character search data.");
+            LogRecorder.logRecorder.RecordLog("Failed to load character search data: "+e.getMessage());
         }
         //curCharacterSearchData=allCharacterSearchData;
     }
@@ -330,10 +336,15 @@ public class PanelController
         if(regionOpen.isVisible())
         {
             System.out.println("Region already open");
+            LogRecorder.logRecorder.RecordLog("Region already open when changing region");
             return;//如果已经打开就不操作了
         }
         if(curPanel==null)
+        {
             System.out.println("curPanel is null when changing region");
+            LogRecorder.logRecorder.RecordLog("curPanel is null when changing region");
+        }
+
         if (regionClose != null)
         {
             FadeTransition fadeOut = new FadeTransition(Duration.millis(1000), regionClose);
@@ -342,7 +353,9 @@ public class PanelController
             fadeOut.setOnFinished(e -> regionClose.setVisible(false));
             fadeOut.play();
             regionClose.setVisible(false);
+
             System.out.println("Region Close");
+            LogRecorder.logRecorder.RecordLog("Region Close when changing region");
         }
         if (regionOpen != null)
         {
@@ -355,7 +368,9 @@ public class PanelController
             fadeIn.setToValue(1.0);
             fadeIn.play();
             regionOpen.toFront();
+
             System.out.println("Region Open");
+            LogRecorder.logRecorder.RecordLog("Region Open when changing region");
         }
     }
 
@@ -411,7 +426,8 @@ public class PanelController
             if (cb != null && cb.isSelected() && e.getValue() != null)
             {
                 selectedOccupations.add(e.getValue());
-                System.out.println(e.getValue());
+                System.out.println("Selected  "+e.getValue());
+                LogRecorder.logRecorder.RecordLog("Selected occupation: "+e.getValue());
             }
             //这里getValue一直为空，我在想为什么
             //不会又是线程延迟导致十四个checkBox还没初始化吧
@@ -429,6 +445,7 @@ public class PanelController
             {
                 selectedStars.add(e.getValue());
                 System.out.println(e.getValue());
+                LogRecorder.logRecorder.RecordLog("Selected star: "+e.getValue());
             }
 //            if (e.getKey().isSelected())
 //                selectedStars.add(e.getValue());
@@ -458,6 +475,7 @@ public class PanelController
                 boolean matchOccupation = data.occupationEnum != null && selectedOccupations.contains(data.occupationEnum);
                 boolean matchStar = selectedStars.contains(data.stars);
                 System.out.println(data.EnglishName+"  "+data.stars+" stars"+data.occupationEnum+" occupation");
+                LogRecorder.logRecorder.RecordLog(data.EnglishName+"  "+data.stars+" stars "+data.occupationEnum+" occupation");
                 //System.out.println();
                 if (matchOccupation || matchStar)
                     filtered.put(entry.getKey(), data);
@@ -576,6 +594,7 @@ public class PanelController
                         new ArrayList<>(allListItems)
                 ));
         System.out.println(allListItems.size()+"  allListItems.size()");
+        LogRecorder.logRecorder.RecordLog("PopolateBack called" );
     }
     public void PopolateCharacterListView()
     {
@@ -598,6 +617,7 @@ public class PanelController
                         // 提取角色英文名（假设英文名在第一行）
                         String selectedName = ((String)newValue).split(" ")[0];
                         System.out.println("Selected character: " + selectedName);
+                        LogRecorder.logRecorder.RecordLog("Selected character: " + selectedName);
                         //这个性能不咋地
                         SelectCharacterInListView(selectedName);
                         //完蛋了，订阅多次呜呜呜//重新搞一版
@@ -607,13 +627,16 @@ public class PanelController
         characterListView.setItems(FXCollections.observableArrayList(
                         new ArrayList<>(allListItems)));
         System.out.println(allListItems.size()+"  all and cur ListItems.size()");
+        LogRecorder.logRecorder.RecordLog("allListItems size: "+allListItems.size()+" in PopolateCharacterListView");
         System.out.println(allListItems.size()+"  allListItems.size()");
+        LogRecorder.logRecorder.RecordLog("allListItems size: "+allListItems.size()+" in PopolateCharacterListView end");
 
     }
     public void RefreshCharacterListView()
     {
         // 清空当前列表项
         System.out.println(characterListView.getItems().size()+"  before characterListView.getItems().size()");
+        LogRecorder.logRecorder.RecordLog("Refreshing Character List View, current size: "+characterListView.getItems().size());
         characterListView.getItems().clear();
         ObservableList list=characterListView.getItems();
 
@@ -645,6 +668,7 @@ public class PanelController
                 });*/
         searchCountLabel.setText("筛选结果："+curCharacterSearchData.size()+"个角色");
         System.out.println(characterListView.getItems().size()+"  after characterListView.getItems().size()");
+        LogRecorder.logRecorder.RecordLog("Refreshed Character List View, new size: "+characterListView.getItems().size());
     }
     /*public void PopulateCharacterInListView()
     {
@@ -721,6 +745,7 @@ public class PanelController
         if(titleBar==null)
         {
             System.out.println("Title bar is null!");
+            LogRecorder.logRecorder.RecordLog("Title bar is null in AddWindowsEffect");
             return;
         }
         titleBar.setOnMousePressed((MouseEvent event) -> {
@@ -785,6 +810,7 @@ public class PanelController
     public void ButtonTest()
     {
         System.out.println("Button clicked!");
+        //LogRecorder.logRecorder.RecordLog("Test Button clicked!");
     }
     //endregion
 
@@ -802,6 +828,7 @@ public class PanelController
     @FXML public TextField initialYField;
     @FXML public TextField downloadPathField;
 
+
     // 声音设置
     @FXML public CheckBox voiceInteractionCheckBox;
     @FXML public CheckBox aiDialogueCheckBox;
@@ -817,12 +844,27 @@ public class PanelController
     public Slider soundPlaceholderSlider;
     public Label soundPlaceholderValue;
 
+
     // 动画设置
     @FXML public Button fps20Button,fps24Button,fps30Button;
     @FXML public Slider scaleSlider;
     @FXML public Label scaleValue;
     @FXML public Slider opacitySlider;
     @FXML public Label opacityValue;
+    //物理参数设置
+    public TextField gravityField;
+    public TextField stiffnessField;
+    public TextField bounceField;
+    public TextField dampingField;
+    public TextField frictionField;
+
+    public TextField angularDampingField;
+    public TextField angularStiffnessField;
+    public TextField maxAngleField;
+
+    public TextField groundExcursionField;
+    public TextField boundaryExcursionField;
+
     @FXML public CheckBox flipAxisCheckBox;
     public CheckBox boomCheckBox;
 
@@ -843,7 +885,10 @@ public class PanelController
     @FXML public Slider movementSpeedSlider;
     @FXML public Label movementSpeedValue;
 
+
     // AI设置
+    public TextField ollamaPathField;
+
     @FXML public CheckBox activeReplyCheckBox;
     public CheckBox outputEmotionCheckBox;
     public CheckBox printerEffectCheckBox;
@@ -897,13 +942,15 @@ public class PanelController
         //restoreDefaultsButton.setOnAction(e -> restoreDefaults());
     }
 
-    private void bindSliderToLabel(Slider slider, Label label, String suffix) {
+    private void bindSliderToLabel(Slider slider, Label label, String suffix)
+    {
         slider.valueProperty().addListener((obs, oldVal, newVal) -> {
             label.setText(String.format("%.0f%s", newVal.doubleValue(), suffix));
         });
     }
 
-    private void bindSliderToLabel(Slider slider, Label label, String suffix, double multiplier) {
+    private void bindSliderToLabel(Slider slider, Label label, String suffix, double multiplier)
+    {
         slider.valueProperty().addListener((obs, oldVal, newVal) -> {
             label.setText(String.format("%.1f%s", newVal.doubleValue() * multiplier, suffix));
         });
@@ -913,6 +960,7 @@ public class PanelController
     private void SaveSettings()
     {
         Map<String, Object> settings = new HashMap<>();
+
         settings.put("allowBackground", allowBackgroundCheckBox.isSelected());
         settings.put("isCloseLauncher", isCloseLauncherCheckBox.isSelected());
         settings.put("transparentMode", transparentModeCheckBox.isSelected());
@@ -920,6 +968,7 @@ public class PanelController
         settings.put("initialX", initialXField.getText());
         settings.put("initialY", initialYField.getText());
         settings.put("downloadPath", downloadPathField.getText());
+
 
         settings.put("voiceInteraction", voiceInteractionCheckBox.isSelected());
         settings.put("aiDialogue", aiDialogueCheckBox.isSelected());
@@ -929,10 +978,24 @@ public class PanelController
         settings.put("noiseFilter", noiseFilterSlider.getValue());
         settings.put("soundPlaceholder", soundPlaceholderSlider.getValue());
 
+
         settings.put("scale", scaleSlider.getValue());
         settings.put("opacity", opacitySlider.getValue());
+
+        settings.put("gravity", gravityField.getText());
+        settings.put("stiffness", stiffnessField.getText());
+        settings.put("bounce", bounceField.getText());
+        settings.put("damping", dampingField.getText());
+        settings.put("friction", frictionField.getText());
+        settings.put("angularDamping", angularDampingField.getText());
+        settings.put("angularStiffness", angularStiffnessField.getText());
+        settings.put("maxAngle", maxAngleField.getText());
+        settings.put("groundExcursion", groundExcursionField.getText());
+        settings.put("boundaryExcursion", boundaryExcursionField.getText());
+
         settings.put("flipAxis", flipAxisCheckBox.isSelected());
         settings.put("boom", boomCheckBox.isSelected());
+
 
         settings.put("idle", idleCheckBox.isSelected());
         settings.put("ignoreGravity", ignoreGravityCheckBox.isSelected());
@@ -945,6 +1008,8 @@ public class PanelController
         settings.put("actionFrequency", actionFrequencySlider.getValue());
         settings.put("movementSpeed", movementSpeedSlider.getValue());
 
+
+        settings.put("ollamaPath", ollamaPathField.getText());
         settings.put("activeReply", activeReplyCheckBox.isSelected());
         settings.put("outputEmotion", outputEmotionCheckBox.isSelected());
         settings.put("printerEffect", printerEffectCheckBox.isSelected());
@@ -958,9 +1023,11 @@ public class PanelController
             settingsSavedLabel.setText("设置已保存！");
             settingsSavedLabel.setVisible(true);
             System.out.println("Settings saved successfully.");
+            LogRecorder.logRecorder.RecordLog("Settings saved successfully.");
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("Failed to save settings.");
+            LogRecorder.logRecorder.RecordLog("Failed to save settings: "+e.getMessage());
         }
         // 3秒后隐藏提示
         new Thread(() -> {
@@ -995,6 +1062,7 @@ public class PanelController
             initialYField.setText((String) defaultSettings.get("initialY"));
             downloadPathField.setText((String) defaultSettings.get("downloadPath"));
 
+
             voiceInteractionCheckBox.setSelected((boolean) defaultSettings.get("voiceInteraction"));
             aiDialogueCheckBox.setSelected((boolean) defaultSettings.get("aiDialogue"));
             voiceAPITextField.setText((String) defaultSettings.get("voiceAPI"));
@@ -1003,10 +1071,24 @@ public class PanelController
             noiseFilterSlider.setValue(((Number) defaultSettings.get("noiseFilter")).floatValue());
             soundPlaceholderSlider.setValue(((Number) defaultSettings.get("soundPlaceholder")).floatValue());
 
+
             scaleSlider.setValue(((Number) defaultSettings.get("scale")).floatValue());
             opacitySlider.setValue(((Number) defaultSettings.get("opacity")).floatValue());
+
+            gravityField.setText((String) defaultSettings.get("gravity"));
+            stiffnessField.setText((String) defaultSettings.get("stiffness"));
+            bounceField.setText((String) defaultSettings.get("bounce"));
+            dampingField.setText((String) defaultSettings.get("damping"));
+            frictionField.setText((String) defaultSettings.get("friction"));
+            angularDampingField.setText((String) defaultSettings.get("angularDamping"));
+            angularStiffnessField.setText((String) defaultSettings.get("angularStiffness"));
+            maxAngleField.setText((String) defaultSettings.get("maxAngle"));
+            groundExcursionField.setText((String) defaultSettings.get("groundExcursion"));
+            boundaryExcursionField.setText((String) defaultSettings.get("boundaryExcursion"));
+
             flipAxisCheckBox.setSelected((boolean) defaultSettings.get("flipAxis"));
             boomCheckBox.setSelected((boolean) defaultSettings.get("boom"));
+
 
             idleCheckBox.setSelected((boolean) defaultSettings.get("idle"));
             ignoreGravityCheckBox.setSelected((boolean) defaultSettings.get("ignoreGravity"));
@@ -1019,6 +1101,8 @@ public class PanelController
             actionFrequencySlider.setValue(((Number) defaultSettings.get("actionFrequency")).floatValue());
             movementSpeedSlider.setValue(((Number) defaultSettings.get("movementSpeed")).floatValue());
 
+
+            ollamaPathField.setText((String) defaultSettings.get("ollamaPath"));
             activeReplyCheckBox.setSelected((boolean) defaultSettings.get("activeReply"));
             outputEmotionCheckBox.setSelected((boolean) defaultSettings.get("outputEmotion"));
             printerEffectCheckBox.setSelected((boolean) defaultSettings.get("printerEffect"));
@@ -1026,11 +1110,14 @@ public class PanelController
             activeReplyFrequencySlider.setValue(((Number) defaultSettings.get("activeReplyFrequency")).floatValue());
             coralationDegreeSlider.setValue(((Number) defaultSettings.get("coralationDegree")).floatValue());
 
+
             settingsSavedLabel.setText("已恢复默认设置！");
             settingsSavedLabel.setVisible(true);
             System.out.println("Settings restored to default.");
+            LogRecorder.logRecorder.RecordLog("Settings restored to default.");
         } catch (IOException e) {
             System.out.println("Failed to restore default settings.");
+            LogRecorder.logRecorder.RecordLog("Failed to restore default settings: "+e.getMessage());
             e.printStackTrace();
         }
         // 3秒后隐藏提示
@@ -1064,6 +1151,7 @@ public class PanelController
             initialYField.setText((String) preferredSettings.get("initialY"));
             downloadPathField.setText((String) preferredSettings.get("downloadPath"));
 
+
             voiceInteractionCheckBox.setSelected((boolean) preferredSettings.get("voiceInteraction"));
             aiDialogueCheckBox.setSelected((boolean) preferredSettings.get("aiDialogue"));
             voiceAPITextField.setText((String) preferredSettings.get("voiceAPI"));
@@ -1072,10 +1160,34 @@ public class PanelController
             noiseFilterSlider.setValue(((Number) preferredSettings.get("noiseFilter")).floatValue());
             soundPlaceholderSlider.setValue(((Number) preferredSettings.get("soundPlaceholder")).floatValue());
 
+
             scaleSlider.setValue(((Number) preferredSettings.get("scale")).floatValue());
             opacitySlider.setValue(((Number) preferredSettings.get("opacity")).floatValue());
+
+            /*gravityField.setText((String) preferredSettings.get("gravity"));
+            stiffnessField.setText((String) preferredSettings.get("stiffness"));
+            bounceField.setText((String) preferredSettings.get("bounce"));
+            dampingField.setText((String) preferredSettings.get("damping"));
+            frictionField.setText((String) preferredSettings.get("friction"));
+            angularDampingField.setText((String) preferredSettings.get("angularDamping"));
+            angularStiffnessField.setText((String) preferredSettings.get("angularStiffness"));
+            maxAngleField.setText((String) preferredSettings.get("maxAngle"));
+            groundExcursionField.setText((String) preferredSettings.get("groundExcursion"));
+            boundaryExcursionField.setText((String) preferredSettings.get("boundaryExcursion"));*/
+            gravityField.setText(String.valueOf(preferredSettings.get("gravity")));
+            stiffnessField.setText(String.valueOf(preferredSettings.get("stiffness")));
+            bounceField.setText(String.valueOf(preferredSettings.get("bounce")));
+            dampingField.setText(String.valueOf(preferredSettings.get("damping")));
+            frictionField.setText(String.valueOf(preferredSettings.get("friction")));
+            angularDampingField.setText(String.valueOf(preferredSettings.get("angularDamping")));
+            angularStiffnessField.setText(String.valueOf(preferredSettings.get("angularStiffness")));
+            maxAngleField.setText(String.valueOf(preferredSettings.get("maxAngle")));
+            groundExcursionField.setText(String.valueOf(preferredSettings.get("groundExcursion")));
+            boundaryExcursionField.setText(String.valueOf(preferredSettings.get("boundaryExcursion")));
+
             flipAxisCheckBox.setSelected((boolean) preferredSettings.get("flipAxis"));
             boomCheckBox.setSelected((boolean) preferredSettings.get("boom"));
+
 
             idleCheckBox.setSelected((boolean) preferredSettings.get("idle"));
             ignoreGravityCheckBox.setSelected((boolean) preferredSettings.get("ignoreGravity"));
@@ -1088,6 +1200,8 @@ public class PanelController
             actionFrequencySlider.setValue(((Number) preferredSettings.get("actionFrequency")).floatValue());
             movementSpeedSlider.setValue(((Number) preferredSettings.get("movementSpeed")).floatValue());
 
+
+            ollamaPathField.setText((String) preferredSettings.get("ollamaPath"));
             activeReplyCheckBox.setSelected((boolean) preferredSettings.get("activeReply"));
             outputEmotionCheckBox.setSelected((boolean) preferredSettings.get("outputEmotion"));
             printerEffectCheckBox.setSelected((boolean) preferredSettings.get("printerEffect"));
@@ -1095,10 +1209,13 @@ public class PanelController
             activeReplyFrequencySlider.setValue(((Number) preferredSettings.get("activeReplyFrequency")).floatValue());
             coralationDegreeSlider.setValue(((Number) preferredSettings.get("coralationDegree")).floatValue());
 
+
             System.out.println("Preferred settings loaded successfully.");
+            LogRecorder.logRecorder.RecordLog("Preferred settings loaded successfully.");
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("Failed to load preferred settings.");
+            LogRecorder.logRecorder.RecordLog("Failed to load preferred settings: "+e.getMessage());
         }
     }
     //endregion
@@ -1181,13 +1298,16 @@ public class PanelController
             if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
                 Desktop.getDesktop().browse(new URI(url));
                 System.out.println("Opened URL: " + url);
+                LogRecorder.logRecorder.RecordLog("Opened URL: " + url);
             } else {
                 //showAlert("无法打开链接", "请手动访问: " + url, Alert.AlertType.INFORMATION);
                 System.out.println("Desktop browsing not supported.");
+                LogRecorder.logRecorder.RecordLog("Desktop browsing not supported.");
             }
         } catch (Exception ex) {
             //showAlert("错误", "无法打开链接: " + ex.getMessage(), Alert.AlertType.ERROR);
             System.out.println("Failed to open URL: " + ex.getMessage());
+            LogRecorder.logRecorder.RecordLog("Failed to open URL: " + ex.getMessage());
         }
     }
 
@@ -1241,6 +1361,7 @@ public class PanelController
     }*/
 
     //endregion
+
 }
 
 class CharacterSearchData
@@ -1254,3 +1375,41 @@ class CharacterSearchData
     //public String occupation;
     public String defaultImagePath;
 }
+/*
+{
+  "specialAction":true,
+  "boom":false,
+  "scale":1.0,
+  "ignoreGravity":true,
+  "movementSpeed":50.0,
+  "activeReplyFrequency":50.0,
+  "sleep":true,
+  "climb":true,
+  "coralationDegree":80.0,
+  "soundVolume":100.0,
+  "isCloseLauncher":false,
+  "downloadPath":"C:/Downloads",
+  "transparentMode":false,
+  "initialY":"0.5",
+  "activeReply":true,
+  "initialX":"0.5",
+  "characterVoiceVolume":100.0,
+  "sit":true,
+  "flipAxis":false,
+  "hideAndSeek":true,
+  "voiceAPI":"default",
+  "idle":true,
+  "voiceStream":false,
+  "actionFrequency":50.0,
+  "outputEmotion":true,
+  "noiseFilter":10.0,
+  "allowBackground":true,
+  "voiceInteraction":true,
+  "outputLog":true,
+  "soundPlaceholder":5.0,
+  "aiDialogue":true,
+  "interactable":true,
+  "opacity":100.0,
+  "printerEffect":true
+}
+*/

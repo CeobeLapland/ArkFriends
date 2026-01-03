@@ -24,6 +24,8 @@ public class AIChatManager
     //private String API_KEY = ""; //如果需要的话
     private String MODEL_NAME = "qwen2.5:3b";
 
+    public String OllamaPath="D:\\Ollama\\ollama app.exe";
+
     private final HttpClient httpClient;
     private final ObjectMapper objectMapper;
 
@@ -101,6 +103,7 @@ public class AIChatManager
             if (!jsonFile.exists())
             {
                 System.out.println("JSON 没找到: " + jsonFile.getAbsolutePath());
+                LogRecorder.logRecorder.RecordLog("JSON 没找到: " + jsonFile.getAbsolutePath());
                 return;
             }
             characterPresetMap = objectMapper.readValue(jsonFile,
@@ -108,10 +111,19 @@ public class AIChatManager
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Failed to load character preset description.");
+            LogRecorder.logRecorder.RecordLog("Failed to load character preset description.");
         }
         //characterPresetMap=CharacterPresetLoader.LoadCharacterPresets("characterPresetDescription.json");
 
         isRunning=true;
+
+        try {
+            StartOllamaService();
+        } catch (Exception e) {
+            System.out.println("Failed to start Ollama service.");
+            LogRecorder.logRecorder.RecordLog("Failed to start Ollama service.");
+            throw new RuntimeException(e);
+        }
     }
 
     /*public void ChangePresetDescription(String presetDesc, String halfwayDesc)
@@ -211,6 +223,7 @@ public class AIChatManager
             messagesNode.add(msgNode);
 
             System.out.println(msg.getRole()+"  "+msg.getContent());
+            LogRecorder.logRecorder.RecordLog(msg.getRole()+"  "+msg.getContent());
         }
         root.set("messages", messagesNode);
 
@@ -409,16 +422,30 @@ public class AIChatManager
     //不要忘了有IOException哦
     public void StartOllamaService() throws Exception
     {
-        ProcessBuilder pb = new ProcessBuilder("cmd.exe", "/c", "start", "ollama serve");
+        System.out.println("启动Ollama服务...");
+        LogRecorder.logRecorder.RecordLog("启动Ollama服务...");
+        ProcessBuilder pb = new ProcessBuilder(OllamaPath);
         pb.inheritIO();
         pb.start();
+        //ProcessBuilder pb = new ProcessBuilder("cmd.exe", "/c", "start", "ollama serve");
+        //pb.inheritIO();
+        //pb.start();
     }
     //关闭Ollama
     public void StopOllamaService() throws Exception
     {
-        ProcessBuilder pb = new ProcessBuilder("cmd.exe", "/c", "taskkill", "/F", "/IM", "ollama.exe");
-        pb.inheritIO();
-        pb.start();
+        System.out.println("关闭Ollama服务...");
+        LogRecorder.logRecorder.RecordLog("关闭Ollama服务...");
+        Runtime.getRuntime().exec("taskkill /F /IM ollama app.exe");
+        //关闭exe进程
+
+
+
+
+        //Runtime.getRuntime().exec("taskkill /F /IM ollama.exe");
+        //ProcessBuilder pb = new ProcessBuilder("cmd.exe", "/c", "taskkill", "/F", "/IM", "ollama.exe");
+        //pb.inheritIO();
+        //pb.start();
     }
 }
 class ChatMessage

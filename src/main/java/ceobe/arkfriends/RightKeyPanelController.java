@@ -52,9 +52,11 @@ public class RightKeyPanelController
                 loader.setController(this);
 
                 System.out.println(getClass().getResource("petRightKeyPanel.fxml").toString());
+                LogRecorder.logRecorder.RecordLog("petRightKeyPanel.fxml");
                 Parent popupContent = loader.load();
 
                 System.out.println("Loaded petRightKeyPanel.fxml successfully");
+                LogRecorder.logRecorder.RecordLog("Loaded petRightKeyPanel.fxml successfully");
                 // 创建弹出窗口
                 popupStage = new Stage();
 //                if(popupStage==null)
@@ -69,6 +71,7 @@ public class RightKeyPanelController
 
                 if (popupTitleBar == null) {
                     System.out.println("popupTitleBar is null!");
+                    LogRecorder.logRecorder.RecordLog("popupTitleBar is null!");
                     //return;
                 }
                 popupTitleBar.setOnMousePressed((MouseEvent event) -> {
@@ -117,6 +120,7 @@ public class RightKeyPanelController
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Failed Exception in CreateSecondaryStage");
+            LogRecorder.logRecorder.RecordLog("Failed Exception in CreateSecondaryStage");
         }
     }
 
@@ -221,6 +225,7 @@ public class RightKeyPanelController
         if(Objects.equals(userText, ""))
             return;
         System.out.println(userText);
+        LogRecorder.logRecorder.RecordLog("User input: " + userText);
         inputField.clear();
 
         //我在想这么长的一系列lambda嵌套如果写成一行会有多长
@@ -239,34 +244,42 @@ public class RightKeyPanelController
                             case "（开心）"->{
                                 AnimationController.animationController.ChangeEmotion(Emotion.HAPPY);
                                 System.out.println("情感分析为开心");
+                                LogRecorder.logRecorder.RecordLog("Emotion analysis: HAPPY");
                             }
                             case "（伤心）"->{
                                 AnimationController.animationController.ChangeEmotion(Emotion.SAD);
                                 System.out.println("情感分析为伤心");
+                                LogRecorder.logRecorder.RecordLog("Emotion analysis: SAD");
                             }
                             case "（生气）"->{
                                 AnimationController.animationController.ChangeEmotion(Emotion.ANGRY);
                                 System.out.println("情感分析为生气");
+                                LogRecorder.logRecorder.RecordLog("Emotion analysis: ANGRY");
                             }
                             case "（惊讶）"->{
                                 AnimationController.animationController.ChangeEmotion(Emotion.SURPRISED);
                                 System.out.println("情感分析为惊讶");
+                                LogRecorder.logRecorder.RecordLog("Emotion analysis: SURPRISED");
                             }
                             case "（讨厌）"->{
                                 AnimationController.animationController.ChangeEmotion(Emotion.DISGUSTED);
                                 System.out.println("情感分析为讨厌");
+                                LogRecorder.logRecorder.RecordLog("Emotion analysis: DISGUSTED");
                             }
                             case "（激动）"->{
                                 AnimationController.animationController.ChangeEmotion(Emotion.EXCITED);
                                 System.out.println("情感分析为激动");
+                                LogRecorder.logRecorder.RecordLog("Emotion analysis: EXCITED");
                             }
                             case "（害羞）"->{
                                 AnimationController.animationController.ChangeEmotion(Emotion.SHY);
                                 System.out.println("情感分析为害羞");
+                                LogRecorder.logRecorder.RecordLog("Emotion analysis: SHY");
                             }
                             default-> {
                                 AnimationController.animationController.ChangeEmotion(Emotion.QUIET);
                                 System.out.println("情感分析为安静");
+                                LogRecorder.logRecorder.RecordLog("Emotion analysis: QUIET");
                             }
                         }
 
@@ -286,6 +299,7 @@ public class RightKeyPanelController
                         Platform.runLater(() -> {
                             //chatArea.appendText("桌宠：" + reply + "\n");
                             System.out.println("开始打字");
+                            LogRecorder.logRecorder.RecordLog("开始打字   AI reply: " + finalReply);
 
                             OpenDialog();
                             PrinterFlow(finalReply + "\n");
@@ -328,17 +342,23 @@ public class RightKeyPanelController
         //System.out.println("dialogPrinter.fxml");
         //Parent tempContent = loader.load();
         System.out.println("Loaded dialogPrinter.fxml successfully");
+        LogRecorder.logRecorder.RecordLog("Loaded dialogPrinter.fxml successfully");
         dialogStage=new Stage();
         //dialogStage
         try{
             dialogScene = new Scene(loader.load());
         }catch (IOException e){
             System.out.println("未加载");
+            LogRecorder.logRecorder.RecordLog("Failed to load dialogPrinter.fxml");
+            e.printStackTrace();
             URL url = getClass().getResource("dialogPrinter.fxml");
             if (url == null) {
                 System.out.println("找不到FXML文件！");
+                LogRecorder.logRecorder.RecordLog("Cannot find dialogPrinter.fxml!");
                 System.out.println("当前类路径: " + getClass().getPackage().getName());
+                LogRecorder.logRecorder.RecordLog("Current class path: " + getClass().getPackage().getName());
                 System.out.println("应该在: " + getClass().getResource("."));
+                LogRecorder.logRecorder.RecordLog("Should be at: " + getClass().getResource("."));
             }
         }
 
@@ -477,6 +497,7 @@ public class RightKeyPanelController
                         dialogStage.setHeight(w2 + 35);
 
                         System.out.println("now dialog window height"+w1);
+                        LogRecorder.logRecorder.RecordLog("now dialog window height"+w1);
                     }
                     //if(w>=200)
                     //{

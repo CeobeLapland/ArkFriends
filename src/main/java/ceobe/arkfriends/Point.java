@@ -1,6 +1,6 @@
 package ceobe.arkfriends;
 public class Point
-{
+{//本来是打算用泛型的
     public int x, y;
     //public float waitTime;
     public Point(int x, int y)//,float waitTime)

@@ -37,6 +37,9 @@ public class WindowsScanner
     {
         if(windowsScanner==null)
             windowsScanner=this;
+        System.out.println("WindowsScanner初始化");
+        LogRecorder.logRecorder.RecordLog("WindowsScanner初始化");
+
         PrintAllWindows();
     }
 
@@ -98,6 +101,7 @@ public class WindowsScanner
     {
         GetWindows().forEach(System.out::println);
         System.out.println("分辨率"+User32.INSTANCE.GetSystemMetrics(0)+" <-x,y-> "+User32.INSTANCE.GetSystemMetrics(1));
+        LogRecorder.logRecorder.RecordLog("分辨率"+User32.INSTANCE.GetSystemMetrics(0)+" <-x,y-> "+User32.INSTANCE.GetSystemMetrics(1));
     }
 
     //筛选出大小大于特定值的且位于桌面最上方未被最小化的非系统窗口
@@ -123,6 +127,7 @@ public class WindowsScanner
             if(win.title.equals("Program Manager") || win.title.equals("Settings") || win.title.equals("Start"))
                 continue;
             System.out.println("找到合适的窗口："+win.title);
+            LogRecorder.logRecorder.RecordLog("找到合适的窗口："+win.title);
             result=win;
             //有一半概率跳过该窗口找下一个合适的
             //就是避免一直挑同一个
@@ -130,6 +135,7 @@ public class WindowsScanner
                 break;
         }
         System.out.println(result.toString());
+        LogRecorder.logRecorder.RecordLog(result.toString());
         return result;
     }
     //找窗口上下的界线
@@ -140,6 +146,7 @@ public class WindowsScanner
         if(curWindow==null)
         {
             System.out.println("未找到合适的窗口");
+            LogRecorder.logRecorder.RecordLog("未找到合适的窗口");
             //a=null;//指针引用，没有指针
             a.x=b.x=0;
             return;
@@ -158,6 +165,7 @@ public class WindowsScanner
         curWindow = FindTargetWindow(300, 300);
         if (curWindow == null) {
             System.out.println("未找到合适的窗口");
+            LogRecorder.logRecorder.RecordLog("未找到合适的窗口");
             a.y=b.y=0;
             return;
         }
@@ -171,6 +179,7 @@ public class WindowsScanner
         curWindow = FindTargetWindow(300, 300);
         if (curWindow == null) {
             System.out.println("未找到合适的窗口");
+            LogRecorder.logRecorder.RecordLog("未找到合适的窗口");
             a.y=b.y=0;
             return;
         }

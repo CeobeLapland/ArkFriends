@@ -68,6 +68,9 @@ public class Character
             e.printStackTrace();
         }
 
+        System.out.println("加载角色 " + name);
+        LogRecorder.logRecorder.RecordLog("加载角色 " + name);
+
         //curState=defaultState;
         //nextState=defaultState;
     }
@@ -87,6 +90,7 @@ public class Character
 //            e.printStackTrace();
 //        }
         System.out.println("Loading images from path: " + path);
+        LogRecorder.logRecorder.RecordLog("Loading images from path: " + path);
         Files.list(Paths.get(path))
                 .filter(p -> p.toString().endsWith(".png"))
                 .sorted()//确保按文件名排序

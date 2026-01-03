@@ -1,19 +1,130 @@
 package ceobe.arkfriends;
 
 import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 
 
 public class LogRecorder
 {
     public static LogRecorder logRecorder;
-    //存放日志的TXT文件路径
+    //存放日志的TXT文件夹
+    public String logFilePath = "D:\\ArkFriends\\ArkFriends\\temp\\logs";
+
+    //日志文件
+    private File logFile;
+
+    //缓冲区
+    private List<String> logBuffer;
+    java.io.FileWriter writer;
     //public String logFilePath = System.getProperty("user.home") + File.separator + "ArkFriendsLog.txt";
     //private File logFile = new File(logFilePath);
     public LogRecorder()
     {
         if (logRecorder == null)
             logRecorder = this;
+
+        logFile = CreateLogFile(logFilePath);
+        try {
+            writer = new java.io.FileWriter(logFile, true);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
+    public void ChangeLogFilePath(String newPath)
+    {
+        logFilePath = newPath;
+    }
+    //在文件夹里新建TXT并命名
+    public File CreateLogFile(String filePath)
+    {
+        File directory = new File(filePath);
+        if (!directory.exists()) {
+            directory.mkdirs(); // 创建文件夹
+        }
+        //给TXT重命名为当前时间
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        File logFile = new File(directory, "Log_" + timeStamp + ".txt");
+
+        try {
+            if (logFile.createNewFile()) {
+                System.out.println("日志文件已创建: " + logFile.getAbsolutePath());
+            } else {
+                System.out.println("日志文件已存在: " + logFile.getAbsolutePath());
+            }
+        } catch (IOException e) {
+            System.err.println("创建日志文件时出错: " + e.getMessage());
+        }
+
+        return logFile;
+    }
+
+    //加入缓冲区
+    public void AddLogToBuffer(String logMessage)
+    {
+        logBuffer.add(logMessage);
+    }
+    //将缓存区所有日志写入TXT
+    public void FlushLogBuffer()
+    {
+        for (String logMessage : logBuffer) {
+            RecordLog(logMessage);
+        }
+        logBuffer.clear();
+    }
+    //单条记录日志
+    public void RecordLog(String logMessage)
+    {
+        //向TXT写入日志
+        try {
+            if (logFile == null || !logFile.exists()) {
+                System.out.println("日志文件不存在，无法记录日志");
+                return;
+            }
+            //java.io.FileWriter writer = new java.io.FileWriter(logFile, true);
+            String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+            writer.write("[" + timeStamp + "] " + logMessage + System.lineSeparator());
+            //writer.close();
+        } catch (Exception e) {
+            System.out.println("记录日志时出错: " + e.getMessage());
+        }
+    }
+    //关闭日志记录器
+    public void CloseLogger()
+    {
+        try {
+            if (writer != null) {
+                writer.close();
+            }
+        } catch (IOException e) {
+            System.out.println("关闭日志记录器时出错: " + e.getMessage());
+        }
+    }
+    /*public void CreateLogFile(String filePath)
+    {
+        if(logFile!=null && logFile.exists())
+            return;
+        logFile = new File(filePath);
+        try {
+            if (logFile.createNewFile()) {
+                System.out.println("日志文件已创建: " + logFile.getAbsolutePath());
+            } else {
+                System.out.println("日志文件已存在: " + logFile.getAbsolutePath());
+            }
+        } catch (Exception e) {
+            System.out.println("创建日志文件时出错: " + e.getMessage());
+        }
+        //给TXT重命名为当前时间
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        File renamedFile = new File(logFile.getParent(), "Log_" + timeStamp + ".txt");
+        if (logFile.renameTo(renamedFile)) {
+            System.out.println("日志文件已重命名为: " + renamedFile.getAbsolutePath());
+        } else {
+            System.out.println("日志文件重命名失败");
+        }
+    }*/
 }
 
 // LogLevel.java

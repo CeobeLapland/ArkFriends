@@ -6,11 +6,21 @@ import jep.JepException;
 import jep.JepConfig;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
+
+
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import java.io.File;
 
 public class VoiceService
 {
@@ -30,6 +40,7 @@ public class VoiceService
     public VoiceService()
     {
         System.out.println("初始化VoiceService");
+        LogRecorder.logRecorder.RecordLog("初始化VoiceService");
         if (voiceService==null)
         {
             voiceService=this;
@@ -67,6 +78,7 @@ public class VoiceService
             jep.eval("import CosyVoiceManager");*/
 
             System.out.println("成功加载CosyVoiceManager.py");
+            LogRecorder.logRecorder.RecordLog("成功加载CosyVoiceManager.py");
 
             jep.eval("import sys");
             jep.eval("print(sys.path)");
@@ -75,27 +87,33 @@ public class VoiceService
         } catch (JepException e) {
             e.printStackTrace();
             System.out.println("加载CosyVoiceManager.py失败");
+            LogRecorder.logRecorder.RecordLog("加载CosyVoiceManager.py失败");
         }
 
-        /*System.out.println("启动语音服务程序");
+        System.out.println("启动语音服务程序");
+        LogRecorder.logRecorder.RecordLog("启动语音服务程序");
         //启动voiceServerDir下的exe文件
         try {
             ProcessBuilder processBuilder = new ProcessBuilder(voiceServerDir);
             processBuilder.start();
             System.out.println("成功启动exe文件：" + voiceServerDir);
+            LogRecorder.logRecorder.RecordLog("成功启动exe文件：" + voiceServerDir);
         } catch (Exception e) {
             e.printStackTrace();
             System.err.println("启动exe文件失败：" + voiceServerDir);
+            LogRecorder.logRecorder.RecordLog("启动exe文件失败：" + voiceServerDir);
         }
 
         try {
             ProcessBuilder processBuilder = new ProcessBuilder("D:\\cosyvoice3-rainfall-v2\\cosyvoice-rainfall-v2\\cosyvoice-rainfall\\CosyVoice3雨落版启动器.exe");
             processBuilder.start();
             System.out.println("成功启动exe文件：" + "D:\\cosyvoice3-rainfall-v2\\cosyvoice-rainfall-v2\\cosyvoice-rainfall\\CosyVoice3雨落版启动器.exe");
+            LogRecorder.logRecorder.RecordLog("成功启动exe文件：" + "D:\\cosyvoice3-rainfall-v2\\cosyvoice-rainfall-v2\\cosyvoice-rainfall\\CosyVoice3雨落版启动器.exe");
         } catch (Exception e) {
             e.printStackTrace();
             System.err.println("启动exe文件失败：" + "D:\\cosyvoice3-rainfall-v2\\cosyvoice-rainfall-v2\\cosyvoice-rainfall\\CosyVoice3雨落版启动器.exe");
-        }*/
+            LogRecorder.logRecorder.RecordLog("启动exe文件失败：" + "D:\\cosyvoice3-rainfall-v2\\cosyvoice-rainfall-v2\\cosyvoice-rainfall\\CosyVoice3雨落版启动器.exe");
+        }
 
 
         LoadVoicePresets();
@@ -128,9 +146,11 @@ public class VoiceService
             }
 
             System.out.println("成功加载角色语音预设！");
+            LogRecorder.logRecorder.RecordLog("成功加载角色语音预设！");
         } catch (IOException e) {
             e.printStackTrace();
             System.err.println("加载角色语音预设失败！");
+            LogRecorder.logRecorder.RecordLog("加载角色语音预设失败！");
         }
     }
     public void GetVoiceWithRainfallZeroShot(String inputText, String promptWav,
@@ -204,6 +224,114 @@ public class VoiceService
                     1, outputDir, "", "wav");
         } catch (JepException e) {
             e.printStackTrace();
+        }
+    }
+
+    //播放音频文件
+    public void PlayAudio(String audioPath)
+    {
+        new Thread(() -> {
+            try {
+                File audioFile = new File(audioPath);
+                if (!audioFile.exists()) {
+                    System.out.println("音频文件不存在: " + audioPath);
+                    LogRecorder.logRecorder.RecordLog("音频文件不存在: " + audioPath);
+                    return;
+                }
+
+                AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
+                Clip audioClip = AudioSystem.getClip();
+                audioClip.open(audioStream);
+                audioClip.start();
+
+                System.out.println("正在播放音频: " + audioPath);
+                LogRecorder.logRecorder.RecordLog("正在播放音频: " + audioPath);
+
+                // 等待音频播放完成
+                while (audioClip.isRunning()) {
+                    Thread.sleep(100);
+                }
+
+                audioClip.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+                //System.err.println("播放音频时出错: " + audioPath);
+                System.out.println("播放音频时出错: " + audioPath);
+                LogRecorder.logRecorder.RecordLog("播放音频时出错: " + audioPath);
+            }
+        }).start();
+    }
+
+    public void PlayAudioSynchronous(String audioPath)
+    {
+        try {
+            File audioFile = new File(audioPath);
+            if (!audioFile.exists()) {
+                //System.err.println("音频文件不存在: " + audioPath);
+                System.out.println("音频文件不存在: " + audioPath);
+                LogRecorder.logRecorder.RecordLog("音频文件不存在: " + audioPath);
+                return;
+            }
+
+            AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
+            Clip audioClip = AudioSystem.getClip();
+            audioClip.open(audioStream);
+            audioClip.start();
+
+            System.out.println("正在播放音频: " + audioPath);
+            LogRecorder.logRecorder.RecordLog("正在播放音频: " + audioPath);
+
+            // 等待音频播放完成
+            while (audioClip.isRunning()) {
+                Thread.sleep(100);
+            }
+
+            audioClip.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.println("播放音频时出错: " + audioPath);
+            LogRecorder.logRecorder.RecordLog("播放音频时出错: " + audioPath);
+        }
+    }
+
+    //删除路径下的音频文件
+    public void DeleteAudioFile(String audioPath)
+    {
+        File audioFile = new File(audioPath);
+        if (audioFile.exists()) {
+            if (audioFile.delete()) {
+                System.out.println("已删除音频文件: " + audioPath);
+                LogRecorder.logRecorder.RecordLog("已删除音频文件: " + audioPath);
+            } else {
+                System.out.println("删除音频文件失败: " + audioPath);
+                LogRecorder.logRecorder.RecordLog("删除音频文件失败: " + audioPath);
+            }
+        } else {
+            System.out.println("音频文件不存在: " + audioPath);
+            LogRecorder.logRecorder.RecordLog("音频文件不存在: " + audioPath);
+        }
+    }
+
+    public void StopVoiceService()
+    {
+        try {
+            jep.close();
+            System.out.println("VoiceService已关闭");
+            LogRecorder.logRecorder.RecordLog("VoiceService已关闭");
+            jep = null;
+            config = null;
+        } catch (JepException e) {
+            e.printStackTrace();
+        }
+        //关闭voiceServerDir下的exe文件
+        try {
+            ProcessBuilder processBuilder = new ProcessBuilder("taskkill", "/F", "/IM",
+                    "rainfall_starter.exe");
+            processBuilder.start();
+            System.out.println("已关闭语音服务程序");
+            LogRecorder.logRecorder.RecordLog("已关闭语音服务程序");
+        }catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 }

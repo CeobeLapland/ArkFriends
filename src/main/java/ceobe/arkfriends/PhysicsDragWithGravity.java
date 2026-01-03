@@ -26,7 +26,7 @@ public class PhysicsDragWithGravity implements IPhysicsDragController
     private double gravity = 2000; // px / s^2
 
     // 弹簧（拖拽）
-    private double stiffness = 40;
+    private double stiffness = 30;
     private double damping = 10;
 
     // 角度

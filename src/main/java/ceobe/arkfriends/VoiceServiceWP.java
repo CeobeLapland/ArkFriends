@@ -36,12 +36,14 @@ public class VoiceServiceWP
     {
         new File("temp").mkdirs();
         System.out.println("[Voice] Service started");
+        LogRecorder.logRecorder.RecordLog("[Voice] Service started");
     }
 
     public void StopService() {
         executor.shutdownNow();
         player.Stop();
         System.out.println("[Voice] Service stopped");
+        LogRecorder.logRecorder.RecordLog("[Voice] Service stopped");
     }
 
 
@@ -49,6 +51,7 @@ public class VoiceServiceWP
         try {
             recorder.Start(inputWav);
             System.out.println("[Voice] Recording...");
+            LogRecorder.logRecorder.RecordLog("[Voice] Recording...");
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -27,14 +27,18 @@ public class Launcher extends Application
         launcher=this;
         launcherStage=stage;
 
+        new LogRecorder();
+
         //if(PanelController.panelController==null)
         //    PanelController.panelController=new PanelController();
         //是不是这两个不一个，那边stage创建时自动创建了一个controller
 
-        //new VoiceService();
+        //new VoiceService();//abandoned
 
         launcherFxml = new FXMLLoader(Launcher.class.getResource("mainPanel.fxml"));
-        System.out.println("加载FXML");
+        System.out.println("加载主面板FXML文件");
+        LogRecorder.logRecorder.RecordLog("加载主面板FXML文件");
+
         launcherScene=new Scene(launcherFxml.load());
         stage.setScene(launcherScene);
 
@@ -50,13 +54,13 @@ public class Launcher extends Application
         //VoiceServiceWP.voice.Speak("博士、もう遅いです。もう休みましょう\n");
         //程序启动成功，博士，已经很晚了，该休息啦
 
-        /*new TrayManager();
+        new TrayManager();
         TrayManager.trayManager.init(stage);
         stage.setOnCloseRequest(event->{
             event.consume();
             //阻止事件传播
             stage.hide();
-        });*/
+        });
 
         //new VoiceService();//放下面了
 
@@ -111,8 +115,8 @@ public class Launcher extends Application
             {
                 AnimationController.animationController.DelayedInitialization();
 
-                new AIChatManager();
-                AIChatManager.ACM.ChangePresetDescription(AnimationController.animationController.curCharName);
+                //new AIChatManager();
+                //AIChatManager.ACM.ChangePresetDescription(AnimationController.animationController.curCharName);
 
                 //new VoiceService();
 
@@ -126,13 +130,33 @@ public class Launcher extends Application
 
                 timer.cancel();
             }
-        },500);//延迟一秒执行
+        },500);//延迟0.5秒执行
         //AnimationController.animationController.DelayedInitialization();
         //放到DelayedInitialization里去了
 
         //new AIChatManager();//放里面了
     }
 
+    @Override
+    public void stop() throws Exception
+    {
+        super.stop();
+        System.out.println("程序关闭");
+        LogRecorder.logRecorder.RecordLog("程序关闭");
+        //VoiceService.voiceService.StopService();
+        if(VoiceService.voiceService!=null)
+            VoiceService.voiceService.StopVoiceService();
+        if (AnimationController.animationController!=null)
+            AnimationController.animationController.StopAnimation();
+
+        if(AIChatManager.ACM!=null) {
+            AIChatManager.ACM.ClearMemory();
+            AIChatManager.ACM.StopOllamaService();
+        }
+        if (LogRecorder.logRecorder!=null)
+            LogRecorder.logRecorder.CloseLogger();
+        System.exit(0);
+    }
 
     /*@FXML private TextArea inputText;
     @FXML private TextField voiceFileField;
@@ -154,10 +178,12 @@ public class Launcher extends Application
             //statusLabel.setText("服务已连接");
             //statusLabel.setStyle("-fx-text-fill: green;");
             System.out.println("CosyVoice TTS服务已连接");
+            LogRecorder.logRecorder.RecordLog("CosyVoice TTS服务已连接");
         } else {
             //statusLabel.setText("服务未连接");
             //statusLabel.setStyle("-fx-text-fill: red;");
             System.out.println("无法连接到CosyVoice TTS服务，请确保服务正在运行");
+            LogRecorder.logRecorder.RecordLog("无法连接到CosyVoice TTS服务，请确保服务正在运行");
         }
 
         // 设置默认值

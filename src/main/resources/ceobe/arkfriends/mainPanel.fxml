@@ -570,13 +570,49 @@
                                                  </Label>
                                        <HBox alignment="CENTER" prefHeight="50.0" spacing="30.0">
                                           <children>
-                                             <Button fx:id="fps20Button" maxHeight="30.0" maxWidth="60.0" minHeight="30.0" minWidth="60.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="60.0" style="-fx-background-color: #00BFFF; -fx-text-fill: #ecf0f1; -fx-font-size: 14px; -fx-border-color: #4a6572; -fx-border-width: 1;" text="20 FPS" />
-                                             <Button fx:id="fps24Button" maxHeight="30.0" maxWidth="60.0" minHeight="30.0" minWidth="60.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="60.0" style="-fx-background-color: #00BFFF; -fx-text-fill: #ecf0f1; -fx-font-size: 14px; -fx-border-color: #4a6572; -fx-border-width: 1;" />
-                                             <Button fx:id="fps30Button" maxHeight="30.0" maxWidth="60.0" minHeight="30.0" minWidth="60.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="60.0" style="-fx-background-color: #00BFFF; -fx-text-fill: #ecf0f1; -fx-font-size: 14px; -fx-border-color: #4a6572; -fx-border-width: 1;" text="30 FPS" />
+                                             <Button fx:id="fps20Button" maxHeight="30.0" maxWidth="100.0" minHeight="30.0" minWidth="100.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #00BFFF; -fx-text-fill: #ecf0f1; -fx-font-size: 14px; -fx-border-color: #4a6572; -fx-border-width: 1;" text="20 FPS" />
+                                             <Button fx:id="fps24Button" maxHeight="30.0" maxWidth="100.0" minHeight="30.0" minWidth="100.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #00BFFF; -fx-text-fill: #ecf0f1; -fx-font-size: 14px; -fx-border-color: #4a6572; -fx-border-width: 1;" text="24 FPS" />
+                                             <Button fx:id="fps30Button" maxHeight="30.0" maxWidth="100.0" minHeight="30.0" minWidth="100.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #00BFFF; -fx-text-fill: #ecf0f1; -fx-font-size: 14px; -fx-border-color: #4a6572; -fx-border-width: 1;" text="30 FPS" />
                                           </children>
                                        </HBox>
                                              </children>
                                          </VBox>
+                                 <HBox spacing="10.0">
+                                    <children>
+                                       <VBox spacing="5.0" HBox.hgrow="ALWAYS">
+                                          <children>
+                                             <Label prefWidth="80.0" style="-fx-text-fill: #64748b; -fx-font-size: 13;" text="重力加速度">
+                                                <VBox.margin>
+                                                   <Insets />
+                                                </VBox.margin>
+                                             </Label>
+                                             <TextField fx:id="gravityField" maxHeight="30.0" maxWidth="200.0" minHeight="30.0" minWidth="200.0" prefHeight="30.0" prefWidth="200.0" promptText="500-5000" style="-fx-background-radius: 4; -fx-border-radius: 4; -fx-border-color: #cbd5e1; -fx-padding: 5;" text="2000" />
+                                             <Label prefWidth="80.0" style="-fx-text-fill: #64748b; -fx-font-size: 13;" text="线性刚度" />
+                                             <TextField fx:id="stiffnessField" maxHeight="30.0" maxWidth="200.0" minHeight="30.0" minWidth="200.0" prefHeight="30.0" prefWidth="200.0" promptText="10-100" style="-fx-background-radius: 4; -fx-border-radius: 4; -fx-border-color: #cbd5e1; -fx-padding: 5;" text="30" />
+                                             <Label prefWidth="80.0" style="-fx-text-fill: #64748b; -fx-font-size: 13;" text="反弹损失" />
+                                             <TextField fx:id="bounceField" maxHeight="30.0" maxWidth="200.0" minHeight="30.0" minWidth="200.0" prefHeight="30.0" prefWidth="200.0" promptText="0-1" style="-fx-background-radius: 4; -fx-border-radius: 4; -fx-border-color: #cbd5e1; -fx-padding: 5;" text="0.55" />
+                                             <Label prefWidth="80.0" style="-fx-text-fill: #64748b; -fx-font-size: 13;" text="线性阻尼" />
+                                             <TextField fx:id="dampingField" maxHeight="30.0" maxWidth="200.0" minHeight="30.0" minWidth="200.0" prefHeight="30.0" prefWidth="200.0" promptText="0-50" style="-fx-background-radius: 4; -fx-border-radius: 4; -fx-border-color: #cbd5e1; -fx-padding: 5;" text="10" />
+                                             <Label prefWidth="80.0" style="-fx-text-fill: #64748b; -fx-font-size: 13;" text="线性摩擦" />
+                                             <TextField fx:id="frictionField" maxHeight="30.0" maxWidth="200.0" minHeight="30.0" minWidth="200.0" prefHeight="30.0" prefWidth="200.0" promptText="0-1（其实反过来了）" style="-fx-background-radius: 4; -fx-border-radius: 4; -fx-border-color: #cbd5e1; -fx-padding: 5;" text="0.9" />
+                                          </children>
+                                       </VBox>
+                                       <VBox spacing="5.0" HBox.hgrow="ALWAYS">
+                                          <children>
+                                             <Label style="-fx-text-fill: #64748b; -fx-font-size: 13;" text="角阻尼" />
+                                             <TextField fx:id="angularDampingField" maxHeight="30.0" maxWidth="200.0" minHeight="30.0" minWidth="200.0" prefHeight="30.0" prefWidth="200.0" promptText="0-10" style="-fx-background-radius: 4; -fx-border-radius: 4; -fx-border-color: #cbd5e1; -fx-padding: 5;" text="5" />
+                                             <Label style="-fx-text-fill: #64748b; -fx-font-size: 13;" text="角刚度" />
+                                             <TextField fx:id="angularStiffnessField" maxHeight="30.0" maxWidth="200.0" minHeight="30.0" minWidth="200.0" prefHeight="30.0" prefWidth="200.0" promptText="10-100" style="-fx-background-radius: 4; -fx-border-radius: 4; -fx-border-color: #cbd5e1; -fx-padding: 5;" text="60" />
+                                             <Label style="-fx-text-fill: #64748b; -fx-font-size: 13;" text="最大旋转角度" />
+                                             <TextField fx:id="maxAngleField" maxHeight="30.0" maxWidth="200.0" minHeight="30.0" minWidth="200.0" prefHeight="30.0" prefWidth="200.0" promptText="0-180" style="-fx-background-radius: 4; -fx-border-radius: 4; -fx-border-color: #cbd5e1; -fx-padding: 5;" text="60" />
+                                             <Label style="-fx-text-fill: #64748b; -fx-font-size: 13;" text="任务栏偏移量" />
+                                             <TextField fx:id="groundExcursionField" maxHeight="30.0" maxWidth="200.0" minHeight="30.0" minWidth="200.0" prefHeight="30.0" prefWidth="200.0" promptText="0-500" style="-fx-background-radius: 4; -fx-border-radius: 4; -fx-border-color: #cbd5e1; -fx-padding: 5;" text="150" />
+                                             <Label style="-fx-text-fill: #64748b; -fx-font-size: 13;" text="屏幕边界偏移" />
+                                             <TextField fx:id="boundaryExcursionField" maxHeight="30.0" maxWidth="200.0" minHeight="30.0" minWidth="200.0" prefHeight="30.0" prefWidth="200.0" promptText="0-200" style="-fx-background-radius: 4; -fx-border-radius: 4; -fx-border-color: #cbd5e1; -fx-padding: 5;" text="100" />
+                                          </children>
+                                       </VBox>
+                                    </children>
+                                 </HBox>
 
                                          <!-- 缩放滑动条 -->
                                          <VBox spacing="8.0">
@@ -697,6 +733,16 @@
                                                  <Font size="16.0" />
                                              </font>
                                          </Label>
+                                 <VBox spacing="8.0">
+                                    <children>
+                                       <Label style="-fx-text-fill: #475569; -fx-font-weight: bold;" text="Ollama地址">
+                                          <font>
+                                             <Font size="14.0" />
+                                          </font>
+                                       </Label>
+                                       <TextField fx:id="ollamaPathField" promptText="请拷贝一下Ollama地址喵（不要带引号）" style="-fx-background-radius: 4; -fx-border-radius: 4; -fx-border-color: #cbd5e1; -fx-padding: 5;" />
+                                    </children>
+                                 </VBox>
 
                                          <!-- AI复选框 -->
                                          <GridPane hgap="20.0" vgap="10.0">
