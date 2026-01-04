@@ -28,7 +28,10 @@ public class Character
         this.name = name;
         this.states = new HashMap<>();
         try {
-            String jsonContent = new String(Files.readAllBytes(Paths.get("D:\\ArkFriends\\ArkFriends\\src\\main\\java\\ceobe\\jsons\\characterAnimation.json")));
+            //String jsonContent = new String(Files.readAllBytes(Paths.get("D:\\ArkFriends\\ArkFriends\\src\\main\\java\\ceobe\\jsons\\characterAnimation.json")));
+            //改成相对路径
+            String jsonContent = new String(Files.readAllBytes(Paths.get("src//main//java//ceobe//jsons//characterAnimation.json")));
+
             ObjectMapper objectMapper = new ObjectMapper();
             Map<String, Map<String, Object>> characters = objectMapper.readValue(jsonContent, new TypeReference<Map<String, Map<String, Object>>>() {});
 

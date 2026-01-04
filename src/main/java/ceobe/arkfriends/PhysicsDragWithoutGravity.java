@@ -27,12 +27,23 @@ public class PhysicsDragWithoutGravity implements IPhysicsDragController
     private double stiffness = 30;     // 弹性
     private double damping = 5;        // 阻尼
     private double angularStiffness = 30;
-    private double angularDamping = 1;
-    private double maxAngle = 50;      // 最大晃动角度
+    private double angularDamping = 2;
+    private double maxAngle = 60;      // 最大晃动角度
 
     public PhysicsDragWithoutGravity(DoublePoint startPos)
     {
         this.position = startPos;
+    }
+
+    public void InitializeParameters(double gravity, double stiffness, double damping,double bounce, double friction,
+                                     double angularStiffness, double angularDamping, double maxAngle,
+                                     double ground, double boundary)
+    {
+        this.stiffness = stiffness;
+        this.damping = damping;
+        this.angularStiffness = angularStiffness;
+        this.angularDamping = angularDamping;
+        this.maxAngle = maxAngle;
     }
 
     public void SetIsDragging(boolean dragging)

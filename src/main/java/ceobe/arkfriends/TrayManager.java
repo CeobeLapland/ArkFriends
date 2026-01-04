@@ -56,9 +56,13 @@ public class TrayManager
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
         }*/
+        //Image image = Toolkit.getDefaultToolkit().getImage(
+        //        new File("D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\icon\\syntheticJade.png").toURI().toString()
+        //);
         Image image = Toolkit.getDefaultToolkit().getImage(
-                new File("D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\icon\\syntheticJade.png").toURI().toString()
+                new File("src\\main\\resources\\icon\\syntheticJade.png").toURI().toString()
         );
+
 
         //System.setProperty("file.encoding", "UTF-8");
         //System.setProperty("sun.jnu.encoding", "UTF-8");

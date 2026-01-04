@@ -4,97 +4,97 @@
     "defaultState": "idle",
     "actions": {
       "idle": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\ceobe\\idle",
+        "path": "src\\main\\resources\\characters\\ceobe\\idle",
         "fps": 24,
         "loop": true,
         "move": false
       },
       "move": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\ceobe\\move",
+        "path": "src\\main\\resources\\characters\\ceobe\\move",
         "fps": 24,
         "loop": true,
         "move": true
       },
       "interact": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\ceobe\\interact",
+        "path": "src\\main\\resources\\characters\\ceobe\\interact",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "drag": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\ceobe\\drag",
+        "path": "src\\main\\resources\\characters\\ceobe\\drag",
         "fps": 24,
         "loop": true,
         "move": false
       },
       "sit": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\ceobe\\sit",
+        "path": "src\\main\\resources\\characters\\ceobe\\sit",
         "fps": 24,
         "loop": true,
         "move": false
       },
       "sleep": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\ceobe\\sleep",
+        "path": "src\\main\\resources\\characters\\ceobe\\sleep",
         "fps": 24,
         "loop": true,
         "move": false
       },
       "attack": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\ceobe\\attack",
+        "path": "src\\main\\resources\\characters\\ceobe\\attack",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "start": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\ceobe\\start",
+        "path": "src\\main\\resources\\characters\\ceobe\\start",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "happy": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\ceobe\\happy",
+        "path": "src\\main\\resources\\characters\\ceobe\\happy",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "sad": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\ceobe\\sad",
+        "path": "src\\main\\resources\\characters\\ceobe\\sad",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "angry": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\ceobe\\angry",
+        "path": "src\\main\\resources\\characters\\ceobe\\angry",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "surprised": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\ceobe\\surprised",
+        "path": "src\\main\\resources\\characters\\ceobe\\surprised",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "quiet": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\ceobe\\quiet",
+        "path": "src\\main\\resources\\characters\\ceobe\\quiet",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "excited": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\ceobe\\excited",
+        "path": "src\\main\\resources\\characters\\ceobe\\excited",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "disgusted": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\ceobe\\disgusted",
+        "path": "src\\main\\resources\\characters\\ceobe\\disgusted",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "shy": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\ceobe\\shy",
+        "path": "src\\main\\resources\\characters\\ceobe\\shy",
         "fps": 24,
         "loop": false,
         "move": false
@@ -106,97 +106,97 @@
     "defaultState": "idle",
     "actions": {
       "idle": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\texas\\idle",
+        "path": "src\\main\\resources\\characters\\texas\\idle",
         "fps": 24,
         "loop": true,
         "move": false
       },
       "move": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\texas\\move",
+        "path": "src\\main\\resources\\characters\\texas\\move",
         "fps": 24,
         "loop": true,
         "move": true
       },
       "interact": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\texas\\interact",
+        "path": "src\\main\\resources\\characters\\texas\\interact",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "drag": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\texas\\drag",
+        "path": "src\\main\\resources\\characters\\texas\\drag",
         "fps": 24,
         "loop": true,
         "move": false
       },
       "sit": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\texas\\sit",
+        "path": "src\\main\\resources\\characters\\texas\\sit",
         "fps": 24,
         "loop": true,
         "move": false
       },
       "sleep": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\texas\\sleep",
+        "path": "src\\main\\resources\\characters\\texas\\sleep",
         "fps": 24,
         "loop": true,
         "move": false
       },
       "attack": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\texas\\attack",
+        "path": "src\\main\\resources\\characters\\texas\\attack",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "start": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\texas\\start",
+        "path": "src\\main\\resources\\characters\\texas\\start",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "happy": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\texas\\happy",
+        "path": "src\\main\\resources\\characters\\texas\\happy",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "sad": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\texas\\sad",
+        "path": "src\\main\\resources\\characters\\texas\\sad",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "angry": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\texas\\angry",
+        "path": "src\\main\\resources\\characters\\texas\\angry",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "surprised": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\texas\\surprised",
+        "path": "src\\main\\resources\\characters\\texas\\surprised",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "quiet": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\texas\\quiet",
+        "path": "src\\main\\resources\\characters\\texas\\quiet",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "excited": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\texas\\excited",
+        "path": "src\\main\\resources\\characters\\texas\\excited",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "disgusted": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\texas\\disgusted",
+        "path": "src\\main\\resources\\characters\\texas\\disgusted",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "shy": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\texas\\shy",
+        "path": "src\\main\\resources\\characters\\texas\\shy",
         "fps": 24,
         "loop": false,
         "move": false
@@ -208,97 +208,97 @@
     "defaultState": "idle",
     "actions": {
       "idle": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\lapland\\idle",
+        "path": "src\\main\\resources\\characters\\lapland\\idle",
         "fps": 24,
         "loop": true,
         "move": false
       },
       "move": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\lapland\\move",
+        "path": "src\\main\\resources\\characters\\lapland\\move",
         "fps": 24,
         "loop": true,
         "move": true
       },
       "interact": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\lapland\\interact",
+        "path": "src\\main\\resources\\characters\\lapland\\interact",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "drag": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\lapland\\drag",
+        "path": "src\\main\\resources\\characters\\lapland\\drag",
         "fps": 24,
         "loop": true,
         "move": false
       },
       "sit": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\lapland\\sit",
+        "path": "src\\main\\resources\\characters\\lapland\\sit",
         "fps": 24,
         "loop": true,
         "move": false
       },
       "sleep": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\lapland\\sleep",
+        "path": "src\\main\\resources\\characters\\lapland\\sleep",
         "fps": 24,
         "loop": true,
         "move": false
       },
       "attack": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\lapland\\attack",
+        "path": "src\\main\\resources\\characters\\lapland\\attack",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "start": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\lapland\\start",
+        "path": "src\\main\\resources\\characters\\lapland\\start",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "happy": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\lapland\\happy",
+        "path": "src\\main\\resources\\characters\\lapland\\happy",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "sad": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\lapland\\sad",
+        "path": "src\\main\\resources\\characters\\lapland\\sad",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "angry": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\lapland\\angry",
+        "path": "src\\main\\resources\\characters\\lapland\\angry",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "surprised": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\lapland\\surprised",
+        "path": "src\\main\\resources\\characters\\lapland\\surprised",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "quiet": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\lapland\\quiet",
+        "path": "src\\main\\resources\\characters\\lapland\\quiet",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "excited": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\lapland\\excited",
+        "path": "src\\main\\resources\\characters\\lapland\\excited",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "disgusted": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\lapland\\disgusted",
+        "path": "src\\main\\resources\\characters\\lapland\\disgusted",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "shy": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\lapland\\shy",
+        "path": "src\\main\\resources\\characters\\lapland\\shy",
         "fps": 24,
         "loop": false,
         "move": false
@@ -310,97 +310,97 @@
     "defaultState": "idle",
     "actions": {
       "idle": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\exusiai\\idle",
+        "path": "src\\main\\resources\\characters\\exusiai\\idle",
         "fps": 24,
         "loop": true,
         "move": false
       },
       "move": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\exusiai\\move",
+        "path": "src\\main\\resources\\characters\\exusiai\\move",
         "fps": 24,
         "loop": true,
         "move": true
       },
       "interact": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\exusiai\\interact",
+        "path": "src\\main\\resources\\characters\\exusiai\\interact",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "drag": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\exusiai\\drag",
+        "path": "src\\main\\resources\\characters\\exusiai\\drag",
         "fps": 24,
         "loop": true,
         "move": false
       },
       "sit": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\exusiai\\sit",
+        "path": "src\\main\\resources\\characters\\exusiai\\sit",
         "fps": 24,
         "loop": true,
         "move": false
       },
       "sleep": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\exusiai\\sleep",
+        "path": "src\\main\\resources\\characters\\exusiai\\sleep",
         "fps": 24,
         "loop": true,
         "move": false
       },
       "attack": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\exusiai\\attack",
+        "path": "src\\main\\resources\\characters\\exusiai\\attack",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "start": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\exusiai\\start",
+        "path": "src\\main\\resources\\characters\\exusiai\\start",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "happy": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\exusiai\\happy",
+        "path": "src\\main\\resources\\characters\\exusiai\\happy",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "sad": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\exusiai\\sad",
+        "path": "src\\main\\resources\\characters\\exusiai\\sad",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "angry": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\exusiai\\angry",
+        "path": "src\\main\\resources\\characters\\exusiai\\angry",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "surprised": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\exusiai\\surprised",
+        "path": "src\\main\\resources\\characters\\exusiai\\surprised",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "quiet": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\exusiai\\quiet",
+        "path": "src\\main\\resources\\characters\\exusiai\\quiet",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "excited": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\exusiai\\excited",
+        "path": "src\\main\\resources\\characters\\exusiai\\excited",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "disgusted": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\exusiai\\disgusted",
+        "path": "src\\main\\resources\\characters\\exusiai\\disgusted",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "shy": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\,characters\\exusiai\\shy",
+        "path": "src\\main\\resources\\,characters\\exusiai\\shy",
         "fps": 24,
         "loop": false,
         "move": false
@@ -412,97 +412,97 @@
     "defaultState": "idle",
     "actions": {
       "idle": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\rope\\idle",
+        "path": "src\\main\\resources\\characters\\rope\\idle",
         "fps": 24,
         "loop": true,
         "move": false
       },
       "move": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\rope\\move",
+        "path": "src\\main\\resources\\characters\\rope\\move",
         "fps": 24,
         "loop": true,
         "move": true
       },
       "interact": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\rope\\interact",
+        "path": "src\\main\\resources\\characters\\rope\\interact",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "drag": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\rope\\drag",
+        "path": "src\\main\\resources\\characters\\rope\\drag",
         "fps": 24,
         "loop": true,
         "move": false
       },
       "sit": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\rope\\sit",
+        "path": "src\\main\\resources\\characters\\rope\\sit",
         "fps": 24,
         "loop": true,
         "move": false
       },
       "sleep": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\rope\\sleep",
+        "path": "src\\main\\resources\\characters\\rope\\sleep",
         "fps": 24,
         "loop": true,
         "move": false
       },
       "attack": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\rope\\attack",
+        "path": "src\\main\\resources\\characters\\rope\\attack",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "start": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\rope\\start",
+        "path": "src\\main\\resources\\characters\\rope\\start",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "happy": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\rope\\happy",
+        "path": "src\\main\\resources\\characters\\rope\\happy",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "sad": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\rope\\sad",
+        "path": "src\\main\\resources\\characters\\rope\\sad",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "angry": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\rope\\angry",
+        "path": "src\\main\\resources\\characters\\rope\\angry",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "surprised": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\rope\\surprised",
+        "path": "src\\main\\resources\\characters\\rope\\surprised",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "quiet": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\rope\\quiet",
+        "path": "src\\main\\resources\\characters\\rope\\quiet",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "excited": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\rope\\excited",
+        "path": "src\\main\\resources\\characters\\rope\\excited",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "disgusted": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\rope\\disgusted",
+        "path": "src\\main\\resources\\characters\\rope\\disgusted",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "shy": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\rope\\shy",
+        "path": "src\\main\\resources\\characters\\rope\\shy",
         "fps": 24,
         "loop": false,
         "move": false
@@ -514,97 +514,97 @@
     "defaultState": "idle",
     "actions": {
       "idle": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\amiya\\idle",
+        "path": "src\\main\\resources\\characters\\amiya\\idle",
         "fps": 24,
         "loop": true,
         "move": false
       },
       "move": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\amiya\\move",
+        "path": "src\\main\\resources\\characters\\amiya\\move",
         "fps": 24,
         "loop": true,
         "move": true
       },
       "interact": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\amiya\\interact",
+        "path": "src\\main\\resources\\characters\\amiya\\interact",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "drag": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\amiya\\drag",
+        "path": "src\\main\\resources\\characters\\amiya\\drag",
         "fps": 24,
         "loop": true,
         "move": false
       },
       "sit": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\amiya\\sit",
+        "path": "src\\main\\resources\\characters\\amiya\\sit",
         "fps": 24,
         "loop": true,
         "move": false
       },
       "sleep": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\amiya\\sleep",
+        "path": "src\\main\\resources\\characters\\amiya\\sleep",
         "fps": 24,
         "loop": true,
         "move": false
       },
       "attack": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\amiya\\attack",
+        "path": "src\\main\\resources\\characters\\amiya\\attack",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "start": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\amiya\\start",
+        "path": "src\\main\\resources\\characters\\amiya\\start",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "happy": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\amiya\\happy",
+        "path": "src\\main\\resources\\characters\\amiya\\happy",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "sad": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\amiya\\sad",
+        "path": "src\\main\\resources\\characters\\amiya\\sad",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "angry": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\amiya\\angry",
+        "path": "src\\main\\resources\\characters\\amiya\\angry",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "surprised": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\amiya\\surprised",
+        "path": "src\\main\\resources\\characters\\amiya\\surprised",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "quiet": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\amiya\\quiet",
+        "path": "src\\main\\resources\\characters\\amiya\\quiet",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "excited": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\amiya\\excited",
+        "path": "src\\main\\resources\\characters\\amiya\\excited",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "disgusted": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\amiya\\disgusted",
+        "path": "src\\main\\resources\\characters\\amiya\\disgusted",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "shy": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\amiya\\shy",
+        "path": "src\\main\\resources\\characters\\amiya\\shy",
         "fps": 24,
         "loop": false,
         "move": false
@@ -616,97 +616,97 @@
     "defaultState": "idle",
     "actions": {
       "idle": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\gravel\\idle",
+        "path": "src\\main\\resources\\characters\\gravel\\idle",
         "fps": 24,
         "loop": true,
         "move": false
       },
       "move": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\gravel\\move",
+        "path": "src\\main\\resources\\characters\\gravel\\move",
         "fps": 24,
         "loop": true,
         "move": true
       },
       "interact": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\gravel\\interact",
+        "path": "src\\main\\resources\\characters\\gravel\\interact",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "drag": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\gravel\\drag",
+        "path": "src\\main\\resources\\characters\\gravel\\drag",
         "fps": 24,
         "loop": true,
         "move": false
       },
       "sit": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\gravel\\sit",
+        "path": "src\\main\\resources\\characters\\gravel\\sit",
         "fps": 24,
         "loop": true,
         "move": false
       },
       "sleep": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\gravel\\sleep",
+        "path": "src\\main\\resources\\characters\\gravel\\sleep",
         "fps": 24,
         "loop": true,
         "move": false
       },
       "attack": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\gravel\\attack",
+        "path": "src\\main\\resources\\characters\\gravel\\attack",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "start": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\gravel\\start",
+        "path": "src\\main\\resources\\characters\\gravel\\start",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "happy": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\gravel\\happy",
+        "path": "src\\main\\resources\\characters\\gravel\\happy",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "sad": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\gravel\\sad",
+        "path": "src\\main\\resources\\characters\\gravel\\sad",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "angry": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\gravel\\angry",
+        "path": "src\\main\\resources\\characters\\gravel\\angry",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "surprised": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\gravel\\surprised",
+        "path": "src\\main\\resources\\characters\\gravel\\surprised",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "quiet": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\gravel\\quiet",
+        "path": "src\\main\\resources\\characters\\gravel\\quiet",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "excited": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\gravel\\excited",
+        "path": "src\\main\\resources\\characters\\gravel\\excited",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "disgusted": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\gravel\\disgusted",
+        "path": "src\\main\\resources\\characters\\gravel\\disgusted",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "shy": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\gravel\\shy",
+        "path": "src\\main\\resources\\characters\\gravel\\shy",
         "fps": 24,
         "loop": false,
         "move": false
@@ -718,97 +718,97 @@
     "defaultState": "idle",
     "actions": {
       "idle": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\platinum\\idle",
+        "path": "src\\main\\resources\\characters\\platinum\\idle",
         "fps": 24,
         "loop": true,
         "move": false
       },
       "move": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\platinum\\move",
+        "path": "src\\main\\resources\\characters\\platinum\\move",
         "fps": 24,
         "loop": true,
         "move": true
       },
       "interact": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\platinum\\interact",
+        "path": "src\\main\\resources\\characters\\platinum\\interact",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "drag": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\platinum\\drag",
+        "path": "src\\main\\resources\\characters\\platinum\\drag",
         "fps": 24,
         "loop": true,
         "move": false
       },
       "sit": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\platinum\\sit",
+        "path": "src\\main\\resources\\characters\\platinum\\sit",
         "fps": 24,
         "loop": true,
         "move": false
       },
       "sleep": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\platinum\\sleep",
+        "path": "src\\main\\resources\\characters\\platinum\\sleep",
         "fps": 24,
         "loop": true,
         "move": false
       },
       "attack": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\platinum\\attack",
+        "path": "src\\main\\resources\\characters\\platinum\\attack",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "start": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\platinum\\start",
+        "path": "src\\main\\resources\\characters\\platinum\\start",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "happy": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\platinum\\happy",
+        "path": "src\\main\\resources\\characters\\platinum\\happy",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "sad": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\platinum\\sad",
+        "path": "src\\main\\resources\\characters\\platinum\\sad",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "angry": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\platinum\\angry",
+        "path": "src\\main\\resources\\characters\\platinum\\angry",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "surprised": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\platinum\\surprised",
+        "path": "src\\main\\resources\\characters\\platinum\\surprised",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "quiet": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\platinum\\quiet",
+        "path": "src\\main\\resources\\characters\\platinum\\quiet",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "excited": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\platinum\\excited",
+        "path": "src\\main\\resources\\characters\\platinum\\excited",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "disgusted": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\platinum\\disgusted",
+        "path": "src\\main\\resources\\characters\\platinum\\disgusted",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "shy": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\platinum\\shy",
+        "path": "src\\main\\resources\\characters\\platinum\\shy",
         "fps": 24,
         "loop": false,
         "move": false
@@ -820,97 +820,97 @@
     "defaultState": "idle",
     "actions": {
       "idle": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\kaltsit\\idle",
+        "path": "src\\main\\resources\\characters\\kaltsit\\idle",
         "fps": 24,
         "loop": true,
         "move": false
       },
       "move": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\kaltsit\\move",
+        "path": "src\\main\\resources\\characters\\kaltsit\\move",
         "fps": 24,
         "loop": true,
         "move": true
       },
       "interact": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\kaltsit\\interact",
+        "path": "src\\main\\resources\\characters\\kaltsit\\interact",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "drag": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\kaltsit\\drag",
+        "path": "src\\main\\resources\\characters\\kaltsit\\drag",
         "fps": 24,
         "loop": true,
         "move": false
       },
       "sit": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\kaltsit\\sit",
+        "path": "src\\main\\resources\\characters\\kaltsit\\sit",
         "fps": 24,
         "loop": true,
         "move": false
       },
       "sleep": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\kaltsit\\sleep",
+        "path": "src\\main\\resources\\characters\\kaltsit\\sleep",
         "fps": 24,
         "loop": true,
         "move": false
       },
       "attack": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\kaltsit\\attack",
+        "path": "src\\main\\resources\\characters\\kaltsit\\attack",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "start": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\kaltsit\\start",
+        "path": "src\\main\\resources\\characters\\kaltsit\\start",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "happy": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\kaltsit\\happy",
+        "path": "src\\main\\resources\\characters\\kaltsit\\happy",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "sad": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\kaltsit\\sad",
+        "path": "src\\main\\resources\\characters\\kaltsit\\sad",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "angry": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\kaltsit\\angry",
+        "path": "src\\main\\resources\\characters\\kaltsit\\angry",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "surprised": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\kaltsit\\surprised",
+        "path": "src\\main\\resources\\characters\\kaltsit\\surprised",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "quiet": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\kaltsit\\quiet",
+        "path": "src\\main\\resources\\characters\\kaltsit\\quiet",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "excited": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\kaltsit\\excited",
+        "path": "src\\main\\resources\\characters\\kaltsit\\excited",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "disgusted": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\kaltsit\\disgusted",
+        "path": "src\\main\\resources\\characters\\kaltsit\\disgusted",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "shy": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\kaltsit\\shy",
+        "path": "src\\main\\resources\\characters\\kaltsit\\shy",
         "fps": 24,
         "loop": false,
         "move": false
@@ -922,97 +922,97 @@
     "defaultState": "idle",
     "actions": {
       "idle": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\angelina\\idle",
+        "path": "src\\main\\resources\\characters\\angelina\\idle",
         "fps": 24,
         "loop": true,
         "move": false
       },
       "move": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\angelina\\move",
+        "path": "src\\main\\resources\\characters\\angelina\\move",
         "fps": 24,
         "loop": true,
         "move": true
       },
       "interact": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\angelina\\interact",
+        "path": "src\\main\\resources\\characters\\angelina\\interact",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "drag": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\angelina\\drag",
+        "path": "src\\main\\resources\\characters\\angelina\\drag",
         "fps": 24,
         "loop": true,
         "move": false
       },
       "sit": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\angelina\\sit",
+        "path": "src\\main\\resources\\characters\\angelina\\sit",
         "fps": 24,
         "loop": true,
         "move": false
       },
       "sleep": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\angelina\\sleep",
+        "path": "src\\main\\resources\\characters\\angelina\\sleep",
         "fps": 24,
         "loop": true,
         "move": false
       },
       "attack": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\angelina\\attack",
+        "path": "src\\main\\resources\\characters\\angelina\\attack",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "start": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\angelina\\start",
+        "path": "src\\main\\resources\\characters\\angelina\\start",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "happy": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\angelina\\happy",
+        "path": "src\\main\\resources\\characters\\angelina\\happy",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "sad": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\angelina\\sad",
+        "path": "src\\main\\resources\\characters\\angelina\\sad",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "angry": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\angelina\\angry",
+        "path": "src\\main\\resources\\characters\\angelina\\angry",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "surprised": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\angelina\\surprised",
+        "path": "src\\main\\resources\\characters\\angelina\\surprised",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "quiet": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\angelina\\quiet",
+        "path": "src\\main\\resources\\characters\\angelina\\quiet",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "excited": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\angelina\\excited",
+        "path": "src\\main\\resources\\characters\\angelina\\excited",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "disgusted": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\angelina\\disgusted",
+        "path": "src\\main\\resources\\characters\\angelina\\disgusted",
         "fps": 24,
         "loop": false,
         "move": false
       },
       "shy": {
-        "path": "D:\\ArkFriends\\ArkFriends\\src\\main\\resources\\characters\\angelina\\shy",
+        "path": "src\\main\\resources\\characters\\angelina\\shy",
         "fps": 24,
         "loop": false,
         "move": false

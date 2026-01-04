@@ -3,11 +3,47 @@ from pathlib import Path
 import sys
 print(sys.path)
 #import sys
+import requests
+print(sys.executable)
+
+try:
+    response = requests.get("http://127.0.0.1:7860/")
+    if response.status_code != 200:
+        raise ValueError("服务未准备好")
+except Exception as e:
+    raise ValueError(f"无法连接到服务: {e}")
+
+import time
+time.sleep(5)  # 等待 5 秒
+
 sys.path.append("path_to_gradio_client")
+import time
 
-client = Client("http://127.0.0.1:7860/")
+def connect_to_gradio():
+    retries = 5
+    for i in range(retries):
+        try:
+            client = Client("http://127.0.0.1:7860/")
+            return client
+        except ValueError as e:
+            print(f"连接失败，重试 {i + 1}/{retries}...")
+            time.sleep(2)
+    raise ValueError("无法连接到 Gradio 服务")
+
+client = connect_to_gradio()
 
 
+#client = Client("http://127.0.0.1:7860/")
+import gradio as gr
+
+def my_function(input):
+    return f"Hello {input}!"
+
+iface = gr.Interface(fn=my_function, inputs="text", outputs="text")
+iface.launch(server_name="127.0.0.1", server_port=7860, show_error=True)
+
+
+#GetVoiceWithRainfallZeroShot
 #GetVoiceWithRainfallZeroShot
 def GetVoiceWithRainfallZeroShot(input_text, prompt_wav, prompt_text, speed, output_dir, output_file_name, single_file_suffix):
     return client.predict(

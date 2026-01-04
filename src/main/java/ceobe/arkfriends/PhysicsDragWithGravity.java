@@ -15,12 +15,12 @@ public class PhysicsDragWithGravity implements IPhysicsDragController
 
     public boolean isDragging = false;
 
-    /* ================== 鼠标 ================== */
+    //鼠标
 
     private DoublePoint mouseTarget = new DoublePoint(0, 0);
     private DoublePoint lastMouse = new DoublePoint(0, 0);
 
-    /* ================== 物理参数 ================== */
+    //物理参数
 
     // 重力
     private double gravity = 2000; // px / s^2
@@ -31,7 +31,7 @@ public class PhysicsDragWithGravity implements IPhysicsDragController
 
     // 角度
     private double angularStiffness = 30;
-    private double angularDamping = 5;
+    private double angularDamping = 2;
     private double maxAngle = 60;
 
     // 反弹 & 摩擦
@@ -53,6 +53,22 @@ public class PhysicsDragWithGravity implements IPhysicsDragController
         this.rightBound = bounds.getWidth() - petWidth+200;
         //this.groundY = bounds.getHeight() - petHeight;
         this.groundY = bounds.getHeight() - petHeight + 150; //预留任务栏高度
+    }
+
+    public void InitializeParameters(double gravity, double stiffness, double damping,double bounce, double friction,
+                                     double angularStiffness, double angularDamping, double maxAngle,
+                                     double ground, double boundary)
+    {
+        this.gravity = gravity;
+        this.stiffness = stiffness;
+        this.damping = damping;
+        this.bounce = bounce;
+        this.friction = friction;
+        this.angularStiffness = angularStiffness;
+        this.angularDamping = angularDamping;
+        this.maxAngle = maxAngle;
+        //this.groundY = ground;
+        //this.rightBound = boundary;
     }
 
     public void SetIsDragging(boolean dragging)

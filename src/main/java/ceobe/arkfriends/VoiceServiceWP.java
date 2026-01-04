@@ -1,4 +1,4 @@
-package ceobe.arkfriends;
+/*package ceobe.arkfriends;
 
 import java.io.File;
 import java.util.concurrent.ExecutorService;
@@ -220,4 +220,4 @@ class PiperSynthesizer
             return null;
         }
     }
-}
+}*/

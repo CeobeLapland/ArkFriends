@@ -149,6 +149,20 @@ public class AnimationController
                 physicsDragController = new PhysicsDragWithoutGravity(
                         new DoublePoint(stage.getX(), stage.getY()));
             }
+
+            physicsDragController.InitializeParameters(
+                    PanelController.panelController.gravityField.getText().isEmpty() ?2000:Double.parseDouble(PanelController.panelController.gravityField.getText()),
+                    PanelController.panelController.stiffnessField.getText().isEmpty() ?30:Double.parseDouble(PanelController.panelController.stiffnessField.getText()),
+                    PanelController.panelController.dampingField.getText().isEmpty() ?10:Double.parseDouble(PanelController.panelController.dampingField.getText()),
+                    PanelController.panelController.bounceField.getText().isEmpty() ?0.55:Double.parseDouble(PanelController.panelController.bounceField.getText()),
+                    PanelController.panelController.frictionField.getText().isEmpty() ?0.9:Double.parseDouble(PanelController.panelController.frictionField.getText()),
+
+                    PanelController.panelController.angularStiffnessField.getText().isEmpty() ?30:Double.parseDouble(PanelController.panelController.angularStiffnessField.getText()),
+                    PanelController.panelController.angularDampingField.getText().isEmpty() ?2:Double.parseDouble(PanelController.panelController.angularDampingField.getText()),
+                    PanelController.panelController.maxAngleField.getText().isEmpty() ?60:Double.parseDouble(PanelController.panelController.maxAngleField.getText()),
+                    PanelController.panelController.groundExcursionField.getText().isEmpty() ?60:Double.parseDouble(PanelController.panelController.maxAngleField.getText()),
+                    PanelController.panelController.boundaryExcursionField.getText().isEmpty() ?200:Double.parseDouble(PanelController.panelController.boundaryExcursionField.getText())
+            );
             //physicsDragController = new PhysicsDragWithGravity(new DoublePoint(stage.getX(), stage.getY()),200,200);
         }
 
@@ -356,6 +370,16 @@ public class AnimationController
         StartAnimation();
 
 
+        /*Timer t=new Timer();
+        t.schedule(new java.util.TimerTask(){;
+            @Override
+            public void run(){
+                Platform.runLater(() ->{
+                    PrintFlow("博士在干嘛呀~");
+                });
+                t.cancel();
+            }
+        },20000);*/
         //petWindowHandle= WindowsScanner.windowsScanner.GetStageHwnd(stage);
     }
 

@@ -21,4 +21,8 @@ public interface IPhysicsDragController
     void SetIsDragging(boolean dragging);
 
     DoublePoint GetVelocity();
+
+    void InitializeParameters(double gravity, double stiffness, double damping,double bounce, double friction,
+                              double angularStiffness, double angularDamping, double maxAngle,
+                              double ground, double boundary);
 }

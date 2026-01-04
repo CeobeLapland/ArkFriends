@@ -245,7 +245,8 @@ public class PanelController
 
             //System.out.println(1);
             // 读取 JSON 文件并将其映射到 Map
-            File jsonFile = new File("D:\\ArkFriends\\ArkFriends\\src\\main\\java\\ceobe\\jsons\\characterSearchData.json");
+            //File jsonFile = new File("D:\\ArkFriends\\ArkFriends\\src\\main\\java\\ceobe\\jsons\\characterSearchData.json");
+            File jsonFile = new File("src//main//resources//jsons//characterSearchData.json");
             //File jsonFile = new File("src/main/resources/jsons/characterSearchData.json");
             //System.out.println(2);
             if (!jsonFile.exists())

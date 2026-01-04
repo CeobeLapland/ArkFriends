@@ -98,7 +98,9 @@ public class AIChatManager
 
         try {
             //ObjectMapper om = new ObjectMapper();
-            File jsonFile = new File("D:\\ArkFriends\\ArkFriends\\src\\main\\java\\ceobe\\jsons\\characterPresetDescription.json");
+            //File jsonFile = new File("D:\\ArkFriends\\ArkFriends\\src\\main\\java\\ceobe\\jsons\\characterPresetDescription.json");
+            //改成相对路径
+            File jsonFile = new File("src//main//java//ceobe//jsons//characterPresetDescription.json");
 
             if (!jsonFile.exists())
             {

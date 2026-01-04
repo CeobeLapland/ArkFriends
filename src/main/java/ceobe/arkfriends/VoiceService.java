@@ -14,40 +14,49 @@ import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 
-
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import java.io.File;
+import java.util.Timer;
+import java.util.concurrent.CompletableFuture;
 
 public class VoiceService
 {
     public static VoiceService voiceService;
 
-    private Jep jep;
-    private JepConfig config;
+    private final PythonWorker pythonWorker;
 
-    public String outputDir="D:\\ArkFriends\\ArkFriends\\temp\\outputs";
+    //private Jep jep;
+    //private JepConfig config;
+
+    //public String outputDir="D:\\ArkFriends\\ArkFriends\\temp\\outputs";
     public String voiceServerDir="D:\\cosyvoice3-rainfall-v2\\cosyvoice-rainfall-v2\\cosyvoice-rainfall\\rainfall_starter.exe";
+
+    public String outputDir = "temp\\outputs";
+    //public String voiceServerDir = "cosyvoice-rainfall\\rainfall_starter.exe";
+
 
     public Map<String, CharacterVoicePresets> characterVoicePresetsMap;
     public String chineseVoicePreset;
     public String japaneseVoicePreset;
     public String englishVoicePreset;
 
-    public VoiceService()
+
+
+    public VoiceService(PythonWorker pythonWorker)
     {
-        System.out.println("初始化VoiceService");
-        LogRecorder.logRecorder.RecordLog("初始化VoiceService");
+        System.out.println("初始化VoiceService ing");
+        LogRecorder.logRecorder.RecordLog("初始化VoiceService ing");
+
+        this.pythonWorker = pythonWorker;
+
         if (voiceService==null)
         {
             voiceService=this;
         }
         //System.out.println(System.getProperty("java.library.path"));
 
-        config = new JepConfig();
+        /*config = new JepConfig();
         config.addIncludePaths("src//java//ceobe//arkfriends");
         try {
             jep = config.createSubInterpreter();
@@ -69,13 +78,13 @@ public class VoiceService
             //jep.eval("import CosyVoiceManager");
             // 获取 Python 文件的绝对路径
             //String pythonFilePath = "D:\\ArkFriends\\ArkFriends\\src\\main\\java\\ceobe\\arkfriends\\CosyVoiceManager.py";
-            /*String pythonFilePath = "D:\\ArkFriends\\ArkFriends\\src\\main\\py\\CosyVoiceManager.py";
-            File file = new File(pythonFilePath);
-            String parentDir = file.getParent();
+            //String pythonFilePath = "D:\\ArkFriends\\ArkFriends\\src\\main\\py\\CosyVoiceManager.py";
+            //File file = new File(pythonFilePath);
+            //String parentDir = file.getParent();
 
             jep.eval("import sys");
             jep.eval("sys.path.append(r'" + parentDir + "')");
-            jep.eval("import CosyVoiceManager");*/
+            jep.eval("import CosyVoiceManager");
 
             System.out.println("成功加载CosyVoiceManager.py");
             LogRecorder.logRecorder.RecordLog("成功加载CosyVoiceManager.py");
@@ -88,7 +97,7 @@ public class VoiceService
             e.printStackTrace();
             System.out.println("加载CosyVoiceManager.py失败");
             LogRecorder.logRecorder.RecordLog("加载CosyVoiceManager.py失败");
-        }
+        }*/
 
         System.out.println("启动语音服务程序");
         LogRecorder.logRecorder.RecordLog("启动语音服务程序");
@@ -106,6 +115,8 @@ public class VoiceService
 
         try {
             ProcessBuilder processBuilder = new ProcessBuilder("D:\\cosyvoice3-rainfall-v2\\cosyvoice-rainfall-v2\\cosyvoice-rainfall\\CosyVoice3雨落版启动器.exe");
+            //ProcessBuilder processBuilder = new ProcessBuilder("cosyvoice-rainfall\\CosyVoice3雨落版启动器.exe");
+
             processBuilder.start();
             System.out.println("成功启动exe文件：" + "D:\\cosyvoice3-rainfall-v2\\cosyvoice-rainfall-v2\\cosyvoice-rainfall\\CosyVoice3雨落版启动器.exe");
             LogRecorder.logRecorder.RecordLog("成功启动exe文件：" + "D:\\cosyvoice3-rainfall-v2\\cosyvoice-rainfall-v2\\cosyvoice-rainfall\\CosyVoice3雨落版启动器.exe");
@@ -117,8 +128,19 @@ public class VoiceService
 
 
         LoadVoicePresets();
-        chineseVoicePreset=characterVoicePresetsMap.get(AnimationController.animationController.curCharName).chinesePreset;
-        japaneseVoicePreset=characterVoicePresetsMap.get(AnimationController.animationController.curCharName).japanesePreset;
+
+        //chineseVoicePreset=characterVoicePresetsMap.get(AnimationController.animationController.curCharName).chinesePreset;
+        //japaneseVoicePreset=characterVoicePresetsMap.get(AnimationController.animationController.curCharName).japanesePreset;
+        ChangeCharacterVoicePreset(AnimationController.animationController.curCharName);
+
+        /*Timer testTimer=new Timer();
+        testTimer.schedule(new java.util.TimerTask(){
+            @Override
+            public void run()
+            {
+                GetVoiceWithRainfallZeroShot("博士博士晚上好呀，今天也要天天开心呀");
+            }
+        },30000);//延迟30秒执行*/
     }
     //从characterVoice.json读取json文件存入characterVoicePresetsMap里
     public void LoadVoicePresets()
@@ -127,7 +149,9 @@ public class VoiceService
         try {
             // 读取 JSON 文件并解析为 Map
             Map<String, Map<String, String>> data = objectMapper.readValue(
-                Paths.get("D:\\ArkFriends\\ArkFriends\\src\\main\\java\\ceobe\\jsons\\characterVoice.json").toFile(),
+                //Paths.get("D:\\ArkFriends\\ArkFriends\\src\\main\\java\\ceobe\\jsons\\characterVoice.json").toFile(),
+                Paths.get("src\\main\\java\\ceobe\\jsons\\characterVoice.json").toFile(),
+
                 objectMapper.getTypeFactory().constructMapType(Map.class, String.class, Map.class)
             );
 
@@ -135,7 +159,8 @@ public class VoiceService
             characterVoicePresetsMap = new HashMap<>();
 
             // 遍历 JSON 数据并填充 characterVoicePresetsMap
-            for (Map.Entry<String, Map<String, String>> entry : data.entrySet()) {
+            for (Map.Entry<String, Map<String, String>> entry : data.entrySet())
+            {
                 String characterName = entry.getKey();
                 Map<String, String> presets = entry.getValue();
                 String chinesePreset = presets.get("cn");
@@ -157,74 +182,151 @@ public class VoiceService
                                              String promptText, int speed, String outputDir,
                                              String outputFileName, String singleFileSuffix)
     {
-        try {
+        /*try {
             //jep.invoke("GetVoiceWithRainfallZeroShot", inputText, promptWav, promptText, speed, outputDir, outputFileName, singleFileSuffix);
             jep.eval("GetVoiceWithRainfallZeroShot(r'" + inputText + "', r'" + promptWav + "', r'" +promptText + "', " + speed + ", r'" + outputDir + "', r'" + outputFileName + "', r'" + singleFileSuffix + "')");
         } catch (JepException e) {
             e.printStackTrace();
-        }
+        }*/
+        pythonWorker.submit(jep-> {
+            jep.invoke("GetVoiceWithRainfallZeroShot", inputText, promptWav, promptText, speed, outputDir, outputFileName, singleFileSuffix);
+        });
     }
     public void GetVoiceWithRainfallZeroShot(String inputText)
     {
-        try {
+        /*try {
             jep.invoke("GetVoiceWithRainfallZeroShot", inputText, chineseVoicePreset, "",
                     1, outputDir, "", "wav");
             //jep.eval("GetVoiceWithRainfallZeroShot(r'" + inputText + "', r'" + chineseVoicePreset + "', r'', 1, r'" + outputDir + "', r'', r'wav')");
         } catch (JepException e) {
             e.printStackTrace();
-        }
+        }*/
+        pythonWorker.submit(jep-> {
+            jep.invoke("GetVoiceWithRainfallZeroShot", inputText, chineseVoicePreset, "",
+                    1, outputDir, "", "wav");
+        });
     }
 
     public void GetPromptWavRecognition(String audioPath)
     {
-        try {
+        /*try {
             jep.invoke("GetPromptWavRecognition", audioPath);
         } catch (JepException e) {
             e.printStackTrace();
-        }
+        }*/
+        pythonWorker.submit(jep-> {
+            jep.invoke("GetPromptWavRecognition", audioPath);
+        });
     }
 
+    //带返回值的进阶版
+
+    public CompletableFuture<Object> getVoiceAsync(String inputText)
+    {
+        CompletableFuture<Object> future = new CompletableFuture<>();
+
+        pythonWorker.submit(jep -> {
+            try {
+                Object result = jep.invoke(
+                        "GetVoiceWithRainfallZeroShot",
+                        inputText,
+                        chineseVoicePreset,
+                        "",
+                        1,
+                        outputDir,
+                        "",
+                        "wav"
+                );
+                future.complete(result);
+            } catch (Exception e) {
+                future.completeExceptionally(e);
+            }
+        });
+
+        return future;
+    }
+    /*
+    voiceService.getVoiceAsync(...)
+    .thenRun(() -> Platform.runLater(() -> playAudio()));
+    */
+
+
+
+    /*public void getVoiceWithRainfallZeroShot(
+            String inputText,
+            String chineseVoicePreset,
+            String outputDir
+    ) {
+        pythonWorker.submit(jep -> {
+            jep.invoke(
+                    "GetVoiceWithRainfallZeroShot",
+                    inputText,
+                    chineseVoicePreset,
+                    "",
+                    1,
+                    outputDir,
+                    "",
+                    "wav"
+            );
+        });
+    }*/
     public void GetVoiceWithRainfallSFT(String inputText, String sftDropdown, int speed,
                                         String outputDir, String outputFileName, String singleFileSuffix)
     {
-        try {
+        /*try {
             jep.invoke("GetVoiceWithRainfallSFT", inputText, sftDropdown, speed, outputDir,
                     outputFileName, singleFileSuffix);
         } catch (JepException e) {
             e.printStackTrace();
-        }
+        }*/
+        pythonWorker.submit(jep-> {
+            jep.invoke("GetVoiceWithRainfallSFT", inputText, sftDropdown, speed, outputDir,
+                    outputFileName, singleFileSuffix);
+        });
     }
     public void GetVoiceWithRainfallSFT(String inputText, String sftDropdown)
                                         //String outputDir, String outputFileName)
     {
-        try {
+        /*try {
             jep.invoke("GetVoiceWithRainfallSFT",
                     inputText, sftDropdown, 1, outputDir, "", "wav");
         } catch (JepException e) {
             e.printStackTrace();
-        }
+        }*/
+        pythonWorker.submit(jep-> {
+            jep.invoke("GetVoiceWithRainfallSFT",
+                    inputText, sftDropdown, 1, outputDir, "", "wav");
+        });
     }
 
     public void GetVoiceWithRainfallInstruct(String inputText, String sftDropdown,
                                              String instructText, int speed, String outputDir,
                                              String outputFileName, String singleFileSuffix)
     {
-        try {
+        /*try {
             jep.invoke("GetVoiceWithRainfallInstruct", inputText, sftDropdown, instructText,
                     speed, outputDir, outputFileName, singleFileSuffix);
         } catch (JepException e) {
             e.printStackTrace();
-        }
+        }*/
+        pythonWorker.submit(jep-> {
+            jep.invoke("GetVoiceWithRainfallInstruct", inputText, sftDropdown, instructText,
+                    speed, outputDir, outputFileName, singleFileSuffix);
+        });
     }
     public void GetVoiceWithRainfallInstruct(String inputText, String sftDropdown,
                                              String instructText)
     {
-        try {
+        /*try {
             jep.invoke("GetVoiceWithRainfallInstruct", inputText, sftDropdown, instructText,
                     1, outputDir, "", "wav");
         } catch (JepException e) {
             e.printStackTrace();
-        }
+        }*/
+        pythonWorker.submit(jep-> {
+            jep.invoke("GetVoiceWithRainfallInstruct", inputText, sftDropdown, instructText,
+                    1, outputDir, "", "wav");
+        });
     }
 
     //播放音频文件
@@ -312,9 +414,28 @@ public class VoiceService
         }
     }
 
+    //切换角色语音预设
+    public void ChangeCharacterVoicePreset(String characterName)
+    {
+        if (characterVoicePresetsMap.containsKey(characterName))
+        {
+            chineseVoicePreset=characterVoicePresetsMap.get(characterName).chinesePreset;
+            japaneseVoicePreset=characterVoicePresetsMap.get(characterName).japanesePreset;
+            System.out.println("已切换角色语音预设为：" + characterName);
+            LogRecorder.logRecorder.RecordLog("已切换角色语音预设为：" + characterName);
+        }
+        else
+        {
+            System.out.println("角色语音预设不存在：" + characterName);
+            LogRecorder.logRecorder.RecordLog("角色语音预设不存在：" + characterName);
+        }
+    }
+
     public void StopVoiceService()
     {
-        try {
+        pythonWorker.shutdown();
+
+        /*try {
             jep.close();
             System.out.println("VoiceService已关闭");
             LogRecorder.logRecorder.RecordLog("VoiceService已关闭");
@@ -322,7 +443,7 @@ public class VoiceService
             config = null;
         } catch (JepException e) {
             e.printStackTrace();
-        }
+        }*/
         //关闭voiceServerDir下的exe文件
         try {
             ProcessBuilder processBuilder = new ProcessBuilder("taskkill", "/F", "/IM",

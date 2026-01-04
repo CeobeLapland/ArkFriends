@@ -11,7 +11,8 @@ public class LogRecorder
 {
     public static LogRecorder logRecorder;
     //存放日志的TXT文件夹
-    public String logFilePath = "D:\\ArkFriends\\ArkFriends\\temp\\logs";
+    //public String logFilePath = "D:\\ArkFriends\\ArkFriends\\temp\\logs";
+    public String logFilePath = System.getProperty("user.home") + File.separator + "ArkFriendsLogs";
 
     //日志文件
     private File logFile;

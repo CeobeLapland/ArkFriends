@@ -36,6 +36,12 @@ public class Launcher extends Application
         //new VoiceService();//abandoned
 
         launcherFxml = new FXMLLoader(Launcher.class.getResource("mainPanel.fxml"));
+
+        //最后才加上这句话
+        if(PanelController.panelController==null)
+            new PanelController();
+        launcherFxml.setController(PanelController.panelController);
+
         System.out.println("加载主面板FXML文件");
         LogRecorder.logRecorder.RecordLog("加载主面板FXML文件");
 
@@ -70,6 +76,7 @@ public class Launcher extends Application
         //System.out.println("初始化后");
     }
 
+    private int initializationCount=0;
     public void StartRunning() throws IOException
     {
         //if(AnimationController.animationController==null)
@@ -107,6 +114,15 @@ public class Launcher extends Application
             System.out.println("content is null 3");*/
 
         //AnimationController.animationController.Initialize();
+        if(initializationCount!=0)
+        {
+            System.out.println("已经初始化过了，跳过DelayedInitialization");
+            LogRecorder.logRecorder.RecordLog("已经初始化过了，跳过DelayedInitialization");
+            return;
+        }
+        initializationCount++;
+
+
         Timer timer=new Timer();
         timer.schedule(new java.util.TimerTask()
         {
@@ -115,10 +131,16 @@ public class Launcher extends Application
             {
                 AnimationController.animationController.DelayedInitialization();
 
-                //new AIChatManager();
-                //AIChatManager.ACM.ChangePresetDescription(AnimationController.animationController.curCharName);
+                new AIChatManager();
+                AIChatManager.ACM.ChangePresetDescription(AnimationController.animationController.curCharName);
 
-                //new VoiceService();
+                //new VoiceService();abandoned
+
+                PythonWorker pythonWorker = new PythonWorker();
+                pythonWorker.start();
+
+                new VoiceService(pythonWorker);
+
 
                 //VoiceService.voiceService.GetVoiceWithRainfallZeroShot("博士博士晚上好呀，今天也要天天开心呀");
                 //这个也必须放在这里面

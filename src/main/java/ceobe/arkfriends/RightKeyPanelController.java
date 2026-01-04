@@ -184,12 +184,16 @@ public class RightKeyPanelController
     }
     public void ExitPet()
     {
+        //我直接
+        //Platform.exit();
+        //System.exit(0);
+
         AnimationController.animationController.StopAnimation();
         AnimationController.animationController.stage.close();
 
         //按理来说这样写绝对的违反设计流程
         //跨脚本乱调用函数
-        PanelController.panelController.launchButton.setDisable(false);
+        //PanelController.panelController.launchButton.setDisable(false);
     }
     //屏蔽掉所有鼠标点击事件
     public void ChangeToTransparent()

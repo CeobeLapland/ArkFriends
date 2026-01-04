@@ -5,7 +5,7 @@
   "outputLog": true,
   "initialX": "0.5",
   "initialY": "0.5",
-  "downloadPath": "C:/Downloads",
+  "downloadPath": "C:\\Downloads",
 
   "voiceInteraction": true,
   "aiDialogue": true,
